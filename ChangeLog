@@ -1,0 +1,2 @@
+* support the search dialog and search folders
+* stop double-quoting the display name even if it contains commas when there is only one display name

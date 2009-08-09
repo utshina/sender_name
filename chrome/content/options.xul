@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="options.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://messenger/locale/addressbook/abCardOverlay.dtd">
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	id="SenderNameOptions"
+	title="SenderName Options"
+	windowtype="mail:addressbook"
+	persist="width height screenX screenY sizemode"
+	onload="SenderNameOptions.onLoad();"
+	ondialogaccept="return SenderNameOptions.onAccept();">
+
+  <script type="application/x-javascript" src="chrome://sender_name/content/library.js"/>
+  <script type="application/x-javascript" src="chrome://sender_name/content/options.js"/>
+  <style type="text/css">
+  </style>
+
+  <vbox id="senderNameOptions">
+    <tabbox>
+      <tabs>
+	<tab label="Display Attributes"/>
+	<tab label="Format"/>
+      </tabs>
+
+      <tabpanels>
+	<vbox index="Display Attributes" flex="1">
+	  <hbox>
+	    <vbox>
+	      <groupbox flex="1">
+		<caption label="&Name.box;"/>
+		<vbox>
+		  <hbox><checkbox id="lastName.enabled" label="&NameField1.label;"/><textbox id="lastName.label"/></hbox>
+		  <hbox><checkbox id="firstName.enabled" label="&NameField2.label;"/><textbox id="firstName.label"/></hbox>
+		  <hbox><checkbox id="phoneticLastName.enabled" label="&PhoneticField1.label;"/><textbox id="phoneticLastName.label"/></hbox>
+		  <hbox><checkbox id="phoneticFirstName.enabledx" label="&PhoneticField2.label;"/><textbox id="phoneticFirstName.label"/></hbox>
+		  <hbox><checkbox id="displayName.enabled" label="&DisplayName.label;"/><textbox id="displayName.label"/></hbox>
+		  <hbox><checkbox id="nickName.enabled" label="&NickName.label;"/><textbox id="nickName.label"/></hbox>
+		</vbox>
+	      </groupbox>
+
+	      <groupbox flex="1">
+		<caption label="&Internet.box;"/>
+		<hbox><checkbox id="primaryEmail.enabled" label="&PrimaryEmail.label;"/><textbox id="primaryEmail.label"/></hbox>
+		<hbox><checkbox id="secondEmail.enabled" label="&SecondEmail.label;"/><textbox id="secondEmail.label"/></hbox>
+		<hbox><checkbox id="preferMailFormat.enabled" label="&PreferMailFormat.label;"/><textbox id="preferMailFormat.label"/></hbox>
+		<hbox><checkbox id="aimScreenName.enabled" label="&ScreenName.label;"/><textbox id="aimScreenName.label"/></hbox>
+		<vbox>
+		</vbox>
+	      </groupbox>
+
+	      <groupbox flex="1">
+		<caption label="&Phones.box;"/>
+		<vbox>
+		  <hbox><checkbox id="workPhone.enabled" label="&WorkPhone.label;"/><textbox id="workPhone.label"/></hbox>
+		  <hbox><checkbox id="homePhone.enabled" label="&HomePhone.label;"/><textbox id="homePhone.label"/></hbox>
+		  <hbox><checkbox id="faxNumber.enabled" label="&FaxNumber.label;"/><textbox id="faxNumber.label"/></hbox>
+		  <hbox><checkbox id="pagerNumber.enabled" label="&PagerNumber.label;"/><textbox id="pagerNumber.label"/></hbox>
+		  <hbox><checkbox id="cellularNumber.enabled" label="&CellularNumber.label;"/><textbox id="cellularNumber.label"/></hbox>
+		</vbox>
+	      </groupbox>
+	    </vbox>
+
+	    <vbox>
+	      <groupbox flex="1">
+		<caption label="&Home.box;"/>
+		<vbox>
+		  <hbox><checkbox id="homeAddress.enabled" label="&HomeAddress.label;"/><textbox id="homeAddress.label"/></hbox>
+		  <hbox><checkbox id="homeAddress2.enabled" label="&HomeAddress2.label;"/><textbox id="homeAddress2.label"/></hbox>
+		  <hbox><checkbox id="homeCity.enabled" label="&HomeCity.label;"/><textbox id="homeCity.label"/></hbox>
+		  <hbox><checkbox id="homeState.enabled" label="&HomeState.label;"/><textbox id="homeState.label"/></hbox>
+		  <hbox><checkbox id="homeZipCode.enabled" label="&HomeZipCode.label;"/><textbox id="homeZipCode.label"/></hbox>
+		  <hbox><checkbox id="homeCountry.enabled" label="&HomeCountry.label;"/><textbox id="homeCountry.label"/></hbox>
+		  <hbox><checkbox id="webPage1.enabled" label="&HomeWebPage.label;"/><textbox id="webPage1.label"/></hbox>
+		</vbox>
+	      </groupbox>
+
+	      <groupbox flex="1">
+		<caption label="&Work.box;"/>
+		<vbox>
+		  <hbox><checkbox id="jobTitle.enabled" label="&JobTitle.label;"/><textbox id="jobTitle.label"/></hbox>
+		  <hbox><checkbox id="department.enabled" label="&Department.label;"/><textbox id="department.label"/></hbox>
+		  <hbox><checkbox id="company.enabled" label="&Company.label;"/><textbox id="company.label"/></hbox>
+		  <hbox><checkbox id="workAddress.enabled" label="&WorkAddress.label;"/><textbox id="workAddress.label"/></hbox>
+		  <hbox><checkbox id="workAddress2.enabled" label="&WorkAddress2.label;"/><textbox id="workAddress2.label"/></hbox>
+		  <hbox><checkbox id="workCity.enabled" label="&WorkCity.label;"/><textbox id="workCity.label"/></hbox>
+		  <hbox><checkbox id="workState.enabled" label="&WorkState.label;"/><textbox id="workState.label"/></hbox>
+		  <hbox><checkbox id="workZipCode.enabled" label="&WorkZipCode.label;"/><textbox id="workZipCode.label"/></hbox>
+		  <hbox><checkbox id="workCountry.enabled" label="&WorkCountry.label;"/><textbox id="workCountry.label"/></hbox>
+		  <hbox><checkbox id="webPage2.enabled" label="&WorkWebPage.label;"/><textbox id="webPage2.label"/></hbox>
+		</vbox>
+	      </groupbox>
+	    </vbox>
+	    
+	    <vbox>
+	      <groupbox flex="1">
+		<caption label="&Other.tab;"/>
+		<vbox>
+		  <hbox><checkbox id="custom1.enabled" label="&Custom1.label;"/><textbox id="custom1.label"/></hbox>
+		  <hbox><checkbox id="custom2.enabled" label="&Custom2.label;"/><textbox id="custom2.label"/></hbox>
+		  <hbox><checkbox id="custom3.enabled" label="&Custom3.label;"/><textbox id="custom3.label"/></hbox>
+		  <hbox><checkbox id="custom4.enabled" label="&Custom4.label;"/><textbox id="custom4.label"/></hbox>
+		  <hbox><checkbox id="notes.enabled" label="&Notes.box;"/><textbox id="notes.label"/></hbox>
+		</vbox>
+	      </groupbox>
+	    </vbox>
+
+	  </hbox>
+
+	</vbox>
+      </tabpanels>
+    </tabbox>
+
+  </vbox>
+</dialog>
