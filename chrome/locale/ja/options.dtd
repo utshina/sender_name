@@ -1,0 +1,56 @@
+<!ENTITY dialog.title			"Sender Name 設定">
+<!ENTITY tab.displayAttribute		"表示する属性">
+<!ENTITY tab.format			"フォーマット">
+<!ENTITY msg.displayAttribute		"表示する属性にチェックを入れてください．カラムの名称を変えたい場合は，テキストボックス内に入力してください．">
+
+<!ENTITY Name.box			"名前"> 
+<!ENTITY NameField1.label		"姓">
+<!ENTITY NameField2.label		"名">
+<!ENTITY PhoneticField1.label		"よみがな(姓)">
+<!ENTITY PhoneticField2.label		"よみがな(名)">
+<!ENTITY DisplayName.label		"表示名">
+<!ENTITY NickName.label			"ニックネーム">
+
+<!ENTITY Internet.box			"インターネット">
+<!ENTITY PrimaryEmail.label		"メールアドレス">
+<!ENTITY SecondEmail.label		"別のメールアドレス">
+<!ENTITY PreferMailFormat.label		"使用メール形式">
+<!ENTITY PlainText.label		"テキスト">
+<!ENTITY HTML.label			"HTML">
+<!ENTITY Unknown.label			"不明">
+<!ENTITY ScreenName.label		"スクリーンネーム">
+
+<!ENTITY Phones.box			"電話番号">
+<!ENTITY WorkPhone.label		"勤務先">
+<!ENTITY HomePhone.label		"自宅">
+<!ENTITY FaxNumber.label		"FAX">
+<!ENTITY PagerNumber.label		"ポケットベル">
+<!ENTITY CellularNumber.label		"携帯電話">
+
+<!ENTITY Address.tab			"住所"> 
+<!ENTITY Home.box			"自宅"> 
+<!ENTITY HomeAddress.label		"番地"> 
+<!ENTITY HomeAddress2.label		"番地2"> 
+<!ENTITY HomeCity.label			"市町村"> 
+<!ENTITY HomeState.label		"都道府県"> 
+<!ENTITY HomeZipCode.label		"郵便番号"> 
+<!ENTITY HomeCountry.label		"国">
+<!ENTITY HomeWebPage.label		"Web ページ"> 
+<!ENTITY Work.box			"勤務先"> 
+<!ENTITY JobTitle.label			"役職"> 
+<!ENTITY Department.label		"部門"> 
+<!ENTITY Company.label			"組織"> 
+<!ENTITY WorkAddress.label		"番地"> 
+<!ENTITY WorkAddress2.label		"番地2"> 
+<!ENTITY WorkCity.label			"市町村"> 
+<!ENTITY WorkState.label		"都道府県"> 
+<!ENTITY WorkZipCode.label		"郵便番号"> 
+<!ENTITY WorkCountry.label		"国">
+<!ENTITY WorkWebPage.label		"Web ページ"> 
+
+<!ENTITY Other.tab			"その他">
+<!ENTITY Custom1.label			"追加情報 1">
+<!ENTITY Custom2.label			"追加情報 2">
+<!ENTITY Custom3.label			"追加情報 3">
+<!ENTITY Custom4.label			"追加情報 4">
+<!ENTITY Notes.box			"メモ">
