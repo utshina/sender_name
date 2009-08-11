@@ -6,24 +6,6 @@
 
 var SenderNameOptions = {
 
-    setCheckBoxes: function () {
-        var cols = SenderNameLibs.Preference.getBranch("attr.enabled.").getChildList("", {});
-        cols.forEach(function (attr) {
-            var enabled = SenderNameLibs.Preference.getBoolPref("attr.enabled." + attr);
-            if (enabled)
-                document.getElementById(attr + ".enabled").setAttribute("checked", true);
-        });
-
-        var labels = SenderNameLibs.Preference.getBranch("attr.label.").getChildList("", {});
-        labels.forEach(function (attr) {
-            var key = "attr.label." + attr;
-            if (SenderNameLibs.Preference.prefHasUserValue(key)) {
-                var label = SenderNameLibs.Preference.getComplexValue(key);
-                document.getElementById(attr + ".label").setAttribute("value", label);
-            }
-        });
-    },
-
     onAccept: function () {
         var checkboxes = document.getElementsByTagName("checkbox");
 
@@ -47,6 +29,24 @@ var SenderNameOptions = {
         }
 
         return true;
+    },
+
+    setCheckBoxes: function () {
+        var cols = SenderNameLibs.Preference.getBranch("attr.enabled.").getChildList("", {});
+        cols.forEach(function (attr) {
+            var enabled = SenderNameLibs.Preference.getBoolPref("attr.enabled." + attr);
+            if (enabled)
+                document.getElementById(attr + ".enabled").setAttribute("checked", true);
+        });
+
+        var labels = SenderNameLibs.Preference.getBranch("attr.label.").getChildList("", {});
+        labels.forEach(function (attr) {
+            var key = "attr.label." + attr;
+            if (SenderNameLibs.Preference.prefHasUserValue(key)) {
+                var label = SenderNameLibs.Preference.getComplexValue(key);
+                document.getElementById(attr + ".label").setAttribute("value", label);
+            }
+        });
     },
 
     onLoad: function () {

@@ -33,6 +33,13 @@ var SenderName = {
 
         flush: function () { cardCache = new Object(); },
 
+        onChange: function() { alert("update"); flush(); }, 
+
+        // nsIAbListener
+        onItemAdded: function(aParentDir, aItem) { onChange(); },
+        onItemRemoved: function(aParentDir, aItem) { onChange(); },
+        onItemPropertyChanged: function(aItem, aProperty, aOldValue, aNewValue) { onChange(); },
+
         init: function () {
             var nsIAddressBook = SenderNameLibs.getService("addressbook;1", "nsIAddressBook");
             var nsIRDFService = SenderNameLibs.getService("rdf/rdf-service;1", "nsIRDFService");
@@ -48,6 +55,14 @@ var SenderName = {
                 if (uri.indexOf("history.mab") >= 0)
                     continue;
                 this.addrDBs.push(nsIAddressBook.getAbDatabaseFromURI(uri));
+            }
+
+            // notify on address book changes (Thunderbird 3.0)
+            var abmanager = Components.classes["@mozilla.org/abmanager;1"];
+            if (abmanager) {
+                var nsIAbManager = abmanager.getService(Components.interfaces.nsIAbManager);
+                var flag = Components.interfaces.nsIAbListener.all;
+                nsIAbManager.addAddressBookListener(this.AddressBook, flag);
             }
         }
     },
@@ -122,10 +137,15 @@ var SenderName = {
                 return this.getAttributeValue(hdr);
             },
 
+            getCellProperties: function (row, col, props) {
+                // var aserv = Components.classes["@mozilla.org/atom-service;1"]
+                // .createInstance(Components.interfaces.nsIAtomService);
+                // props.AppendElement(aserv.getAtom("undef"));
+            },
+
             isEditable:        function (row, col) { return false; },
             cycleCell:         function (row, col) { },
             isString:          function () { return true; },
-            getCellProperties: function (row, col, props) {},
             getRowProperties:  function (row, props) {},
             getImageSrc:       function (row, col) { return null; },
             getSortLongForRow: function (hdr) { return 0; },
@@ -247,14 +267,18 @@ var SenderName = {
         }
     },
 
-    init: function () {
-        SenderNameLibs.init();
-        this.ColumnHandler_init();
+    onLoad: function () {
         this.AddressBook.init();
         this.Formatter.init();
         this.ThreadPane.init();
         this.Observer.register();
     },
+
+    init: function () {
+        SenderNameLibs.init();
+        this.ColumnHandler_init();
+    },
 };
 
-window.addEventListener("load", function () { SenderName.init(); }, false);
+SenderName.init();
+window.addEventListener("load", function () { SenderName.onLoad(); }, false);

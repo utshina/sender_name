@@ -1,4 +1,4 @@
-pref("extensions.sender_name.description", "chrome://sender_name/locale/sender_name.properties");
+pref("extensions.{52b8c721-5d3a-4a2b-835e-d3f044b74351}.description", "chrome://sender_name/locale/sender_name.properties");
 
 pref("extensions.sender_name.attr.label.lastName", "chrome://sender_name/locale/sender_name.properties");
 pref("extensions.sender_name.attr.label.firstName", "chrome://sender_name/locale/sender_name.properties");

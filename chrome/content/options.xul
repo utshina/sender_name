@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="options.css" type="text/css"?>
-<!DOCTYPE overlay SYSTEM "chrome://messenger/locale/addressbook/abCardOverlay.dtd">
+<!DOCTYPE overlay SYSTEM "chrome://sender_name/locale/options.dtd">
 
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	id="SenderNameOptions"
-	title="SenderName Options"
+	title="&dialog.title;"
 	windowtype="mail:addressbook"
 	persist="width height screenX screenY sizemode"
 	onload="SenderNameOptions.onLoad();"
@@ -21,12 +21,13 @@
   <vbox id="senderNameOptions">
     <tabbox>
       <tabs>
-	<tab label="Display Attributes"/>
-	<tab label="Format"/>
+	<tab label="&tab.displayAttribute;"/>
+	<tab label="&tab.format;"/>
       </tabs>
 
       <tabpanels>
-	<vbox index="Display Attributes" flex="1">
+	<vbox>
+	  <label value="&msg.displayAttribute;"/>
 	  <hbox>
 	    <vbox>
 	      <groupbox flex="1">
