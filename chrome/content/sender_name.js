@@ -1,10 +1,24 @@
 /* -*- Mode: JavaScript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
- * Sender Name v0.3 (by Takahiro Shinagawa)
+ * Sender Name 0.3 (written by Takahiro Shinagawa)
  *
  */
 
-var SenderName = {
+// define a namespace using an anonymous function
+(function (namespace) {
+    var ns = this;
+    var as = namespace.split(".");
+    while (a = as.shift()) {
+        if (typeof(ns[a]) == "undefined") ns[a] = {};
+        ns = ns[a];
+    }
+})("jp.ac.tsukuba.cs.shina");
+
+
+// define the SenderName class
+with(jp.ac.tsukuba.cs.shina) {
+
+SenderName = {
 
     ID: "{52b8c721-5d3a-4a2b-835e-d3f044b74351}",
 
@@ -64,7 +78,7 @@ var SenderName = {
                 var flag = Components.interfaces.nsIAbListener.all;
                 nsIAbManager.addAddressBookListener(this.AddressBook, flag);
             }
-        }
+        },
     },
 
     Formatter: {
@@ -90,7 +104,7 @@ var SenderName = {
             count = this.headerParser.parseHeadersWithArray(line, addrs, names, fulls, count);
             for (var i = 0; i < count; i++) {
                 var addr = addrs.value[i];
-                var card = SenderName.AddressBook.getCard(addr);
+                var card = this.AddressBook.getCard(addr);
                 var value = card ? card[attr] : this.formatUndef(attr, addr, names.value[i]);
                 if (count > 1 && value.indexOf(',') >= 0)
                     value = this.formatCommaIncluded(value);
@@ -110,7 +124,7 @@ var SenderName = {
     },
 
     ColumnHandler_init: function () {
-        SenderName.ColumnHandler.prototype = {
+        this.ColumnHandler.prototype = {
             flush: function () { this.cache = new Object(); },
 
             getAttributeValue: function (hdr) {
@@ -119,7 +133,7 @@ var SenderName = {
 
                 // should use nsIAddrDBAnnouncer
                 if (this.cache[uri] == undefined)
-                    this.cache[uri] = SenderName.Formatter.formatAttrValue(author, this.attr);
+                    this.cache[uri] = this.Formatter.formatAttrValue(author, this.attr);
                 return this.cache[uri];
             },
 
@@ -247,19 +261,19 @@ var SenderName = {
 
         addColumnHandlers: function () {
             for (var id in this.attrList)
-                GetDBView().addColumnHandler(id, new SenderName.ColumnHandler(this.attrList[id]));
+                GetDBView().addColumnHandler(id, new this.ColumnHandler(this.attrList[id]));
         }
     },
 
     Observer: {
         // Implement nsIObserver interface
         observe: function (subject, topic, data) {
-            SenderName.ThreadPane.addColumnHandlers();
+            this.ThreadPane.addColumnHandlers();
         },
 
         register: function () {
             if (gSearchView)
-                SenderName.ThreadPane.addColumnHandlers();
+                this.ThreadPane.addColumnHandlers();
             else {
                 SenderNameLibs.getService("observer-service;1", "nsIObserverService")
                 .addObserver(this, "MsgCreateDBView", false);
@@ -280,5 +294,6 @@ var SenderName = {
     },
 };
 
-SenderName.init();
-window.addEventListener("load", function () { SenderName.onLoad(); }, false);
+    SenderName.init();
+    window.addEventListener("load", function () { SenderName.onLoad(); }, false);
+}

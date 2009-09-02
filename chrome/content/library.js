@@ -4,7 +4,19 @@
  *
  */
 
-var SenderNameLibs = {
+// define a namespace using an anonymous function
+(function (namespace) {
+    var ns = this;
+    var as = namespace.split(".");
+    while (a = as.shift()) {
+        if (typeof(ns[a]) == "undefined") ns[a] = {};
+        ns = ns[a];
+    }
+})("jp.ac.tsukuba.cs.shina");
+
+
+// define the SenderNameLibs class
+SenderNameLibs = {
 
     getService: function (class, interface) {
         return Components.classes["@mozilla.org/" + class].getService(Components.interfaces[interface]);
@@ -100,4 +112,3 @@ var SenderNameLibs = {
 	    this.Property.init();
     },
 };
-
