@@ -12,17 +12,21 @@
         if (typeof(ns[a]) == "undefined") ns[a] = {};
         ns = ns[a];
     }
-})("jp.ac.tsukuba.cs.shina");
+})("jp.ac.tsukuba.cs.shina.SenderName");
 
+with(jp.ac.tsukuba.cs.shina.SenderName) {
 
-// define the SenderNameLibs class
-SenderNameLibs = {
+    Service = {
+        getService: function (class, interface) {
+            var class = Components.classes["@mozilla.org/" + class];
+            if (class)
+                return class.getService(Components.interfaces[interface]);
+            else
+                return null;
+        }
+    };
 
-    getService: function (class, interface) {
-        return Components.classes["@mozilla.org/" + class].getService(Components.interfaces[interface]);
-    },
-
-    Preference: {
+    Preference = {
         prefix: "extensions.sender_name.",
 
         getBranch: function (key) { return this.prefs.getBranch(this.prefix + key); },
@@ -50,29 +54,29 @@ SenderNameLibs = {
         },
 
         setComplexValue: function(key, value) {
-            var str = SenderNameLibs.getService("supports-string;1", "nsISupportsString");
+            var str = Service.getService("supports-string;1", "nsISupportsString");
             str.data = value;
             this.branch.setComplexValue(key, Components.interfaces.nsISupportsString, str);
         },
 
         init: function () {
-            this.prefs = SenderNameLibs.getService("preferences-service;1", "nsIPrefService");
+            this.prefs = Service.getService("preferences-service;1", "nsIPrefService");
             this.branch = this.prefs.getBranch(this.prefix);
         },
-    },
+    };
 
-    Property: {
+    Property = {
         getString: function (key) { return this.bundle.GetStringFromName(key); },
         getFormattedString: function (key, array) {
             return this.bundle.formatStringFromName(key, array, array.length);
         },
         init: function () {
-            this.bundle = SenderNameLibs.getService("intl/stringbundle;1", "nsIStringBundleService")
+            this.bundle = Service.getService("intl/stringbundle;1", "nsIStringBundleService")
             .createBundle("chrome://sender_name/locale/sender_name.properties");
         },
-    },
+    };
 
-    LocalStore: {
+    LocalStore = {
         nsIRDFDataSource: Components.interfaces.nsIRDFDataSource,
         nsIRDFResource: Components.interfaces.nsIRDFResource,
         nsIRDFLiteral: Components.interfaces.nsIRDFLiteral,
@@ -93,7 +97,7 @@ SenderNameLibs = {
         },
 
         setAttribute: function (elements, baseURI) {
-            var RDF = this.getService("rdf/rdf-service;1", "nsIRDFService");
+            var RDF = Service.getService("rdf/rdf-service;1", "nsIRDFService");
             var DS = RDF.GetDataSource("rdf:local-store").QueryInterface(this.nsIRDFDataSource);
             var allResource = DS.GetAllResources();
             while (allResource.hasMoreElements()){
@@ -105,10 +109,8 @@ SenderNameLibs = {
                 }
             }
         }
-    },
+    };
 
-    init: function () {
-	    this.Preference.init();
-	    this.Property.init();
-    },
-};
+	Preference.init();
+	Property.init();
+}

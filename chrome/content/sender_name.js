@@ -12,17 +12,13 @@
         if (typeof(ns[a]) == "undefined") ns[a] = {};
         ns = ns[a];
     }
-})("jp.ac.tsukuba.cs.shina");
+})("jp.ac.tsukuba.cs.shina.SenderName");
 
+with(jp.ac.tsukuba.cs.shina.SenderName) {
 
-// define the SenderName class
-with(jp.ac.tsukuba.cs.shina) {
+    ID = "{52b8c721-5d3a-4a2b-835e-d3f044b74351}";
 
-SenderName = {
-
-    ID: "{52b8c721-5d3a-4a2b-835e-d3f044b74351}",
-
-    AddressBook: {
+    AddressBook = {
         addrDBs: new Array(),
         cardCache: new Object(),
 
@@ -55,8 +51,8 @@ SenderName = {
         onItemPropertyChanged: function(aItem, aProperty, aOldValue, aNewValue) { onChange(); },
 
         init: function () {
-            var nsIAddressBook = SenderNameLibs.getService("addressbook;1", "nsIAddressBook");
-            var nsIRDFService = SenderNameLibs.getService("rdf/rdf-service;1", "nsIRDFService");
+            var nsIAddressBook = Service.getService("addressbook;1", "nsIAddressBook");
+            var nsIRDFService = Service.getService("rdf/rdf-service;1", "nsIRDFService");
             var nsIAbDirectory = Components.interfaces.nsIAbDirectory;
             var parentDir = nsIRDFService.GetResource("moz-abdirectory://").QueryInterface(nsIAbDirectory);
             var enumerator = parentDir.childNodes;
@@ -72,16 +68,16 @@ SenderName = {
             }
 
             // notify on address book changes (Thunderbird 3.0)
-            var abmanager = Components.classes["@mozilla.org/abmanager;1"];
-            if (abmanager) {
-                var nsIAbManager = abmanager.getService(Components.interfaces.nsIAbManager);
+            var nsIAbManager = Service.getService("abmanager;1", "nsIAbManager");
+            if (nsIAbManager) {
                 var flag = Components.interfaces.nsIAbListener.all;
-                nsIAbManager.addAddressBookListener(this.AddressBook, flag);
+                nsIAbManager.addAddressBookListener(AddressBook, flag);
             }
-        },
-    },
 
-    Formatter: {
+        },
+    };
+
+    Formatter = {
         undef_format: "(%s)",
         incom_format: '"%s"',
         separator: ", ",
@@ -104,7 +100,7 @@ SenderName = {
             count = this.headerParser.parseHeadersWithArray(line, addrs, names, fulls, count);
             for (var i = 0; i < count; i++) {
                 var addr = addrs.value[i];
-                var card = this.AddressBook.getCard(addr);
+                var card = AddressBook.getCard(addr);
                 var value = card ? card[attr] : this.formatUndef(attr, addr, names.value[i]);
                 if (count > 1 && value.indexOf(',') >= 0)
                     value = this.formatCommaIncluded(value);
@@ -114,59 +110,57 @@ SenderName = {
         },
 
         init: function () {
-            this.headerParser = SenderNameLibs.getService("messenger/headerparser;1", "nsIMsgHeaderParser");
+            this.headerParser = Service.getService("messenger/headerparser;1", "nsIMsgHeaderParser");
         },
-    },
+    };
 
-    ColumnHandler: function (attr) {
+    ColumnHandler = function (attr) {
         this.attr = attr;
         this.cache = new Object();
-    },
+    };
 
-    ColumnHandler_init: function () {
-        this.ColumnHandler.prototype = {
-            flush: function () { this.cache = new Object(); },
+    ColumnHandler.prototype = {
+        flush: function () { this.cache = new Object(); },
 
-            getAttributeValue: function (hdr) {
-                var uri = hdr.folder.getUriForMsg(hdr);
-                var author = hdr.mime2DecodedAuthor;
+        getAttributeValue: function (hdr) {
+            var uri = hdr.folder.getUriForMsg(hdr);
+            var author = hdr.mime2DecodedAuthor;
 
-                // should use nsIAddrDBAnnouncer
-                if (this.cache[uri] == undefined)
-                    this.cache[uri] = this.Formatter.formatAttrValue(author, this.attr);
-                return this.cache[uri];
-            },
+            // should use nsIAddrDBAnnouncer
+            if (this.cache[uri] == undefined)
+                this.cache[uri] = Formatter.formatAttrValue(author, this.attr);
+            return this.cache[uri];
+        },
 
-            // Implement nsIMsgCustomColumnHandler interface
-            getCellText: function (row, col) {
-                var dbview = GetDBView();
-                var key = dbview.getKeyAt(row);
-                var folder = dbview.getFolderForViewIndex(row);
-                var hdr = folder.GetMessageHeader(key);
+        // Implement nsIMsgCustomColumnHandler interface
+        getCellText: function (row, col) {
+            var dbview = GetDBView();
+            var key = dbview.getKeyAt(row);
+            var folder = dbview.getFolderForViewIndex(row);
+            var hdr = folder.GetMessageHeader(key);
 
-                return this.getAttributeValue(hdr);
-            },
+            return this.getAttributeValue(hdr);
+        },
 
-            getSortStringForRow: function (hdr) {
-                return this.getAttributeValue(hdr);
-            },
+        getSortStringForRow: function (hdr) {
+            return this.getAttributeValue(hdr);
+        },
 
-            getCellProperties: function (row, col, props) {
-                // var aserv = Components.classes["@mozilla.org/atom-service;1"]
-                // .createInstance(Components.interfaces.nsIAtomService);
-                // props.AppendElement(aserv.getAtom("undef"));
-            },
+        getCellProperties: function (row, col, props) {
+            // var aserv = Components.classes["@mozilla.org/atom-service;1"]
+            // .createInstance(Components.interfaces.nsIAtomService);
+            // props.AppendElement(aserv.getAtom("undef"));
+        },
 
-            isEditable:        function (row, col) { return false; },
-            cycleCell:         function (row, col) { },
-            isString:          function () { return true; },
-            getRowProperties:  function (row, props) {},
-            getImageSrc:       function (row, col) { return null; },
-            getSortLongForRow: function (hdr) { return 0; },
-        };
-    },
+        isEditable:        function (row, col) { return false; },
+        cycleCell:         function (row, col) { },
+        isString:          function () { return true; },
+        getRowProperties:  function (row, props) {},
+        getImageSrc:       function (row, col) { return null; },
+        getSortLongForRow: function (hdr) { return 0; },
+    };
 
-    ThreadPane: {
+    ThreadPane = {
         prefix: "senderNameCol",
         attrList: new Object,
 
@@ -179,8 +173,8 @@ SenderName = {
 
         createTreecol: function (id, attr) {
             var treecol = document.createElement("treecol");
-            var label = SenderNameLibs.Property.getString(attr);
-            var tooltip = SenderNameLibs.Property.getFormattedString("tooltip", [label]);
+            var label = Property.getString(attr);
+            var tooltip = Property.getFormattedString("tooltip", [label]);
 
             treecol.setAttribute("id", id);
             treecol.setAttribute("persist", "hidden ordinal width");
@@ -211,15 +205,15 @@ SenderName = {
             var elements = new Object;
             this.createColumns(elements);
             this.appendColumns(elements, threadCols);
-            SenderNameLibs.LocalStore.setAttribute(elements, threadCols.baseURI);
+            LocalStore.setAttribute(elements, threadCols.baseURI);
         },
 
         // Text-based overlay
         createColumnXML: function (id, attr) {
             var treecol = '<splitter class="tree-splitter" />' + 
                 '<treecol id="%id%" persist="hidden ordinal width" flex="2" label="%label%" tooltiptext="%tooltip%" />';
-            var label = SenderNameLibs.Preference.getComplexValue("attr.label." + attr);
-            var tooltip = SenderNameLibs.Property.getFormattedString("tooltip", [label]);
+            var label = Preference.getComplexValue("attr.label." + attr);
+            var tooltip = Property.getFormattedString("tooltip", [label]);
 
             treecol = treecol.replace("%id%", id);
             treecol = treecol.replace("%label%", label);
@@ -242,10 +236,10 @@ SenderName = {
         },
 
         loadPreferences: function () {
-            var cols = SenderNameLibs.Preference.getBranch("attr.enabled.").getChildList("", {});
+            var cols = Preference.getBranch("attr.enabled.").getChildList("", {});
             for (var i in cols) {
                 var attr = cols[i];
-                var enabled = SenderNameLibs.Preference.getBoolPref("attr.enabled." + attr);
+                var enabled = Preference.getBoolPref("attr.enabled." + attr);
                 if (enabled) {
                     var id = this.prefix + "." + attr;
                     this.attrList[id] = attr;
@@ -261,39 +255,32 @@ SenderName = {
 
         addColumnHandlers: function () {
             for (var id in this.attrList)
-                GetDBView().addColumnHandler(id, new this.ColumnHandler(this.attrList[id]));
+                GetDBView().addColumnHandler(id, new ColumnHandler(this.attrList[id]));
         }
-    },
+    };
 
-    Observer: {
+    Observer = {
         // Implement nsIObserver interface
         observe: function (subject, topic, data) {
-            this.ThreadPane.addColumnHandlers();
+            ThreadPane.addColumnHandlers();
         },
 
         register: function () {
             if (gSearchView)
-                this.ThreadPane.addColumnHandlers();
+                ThreadPane.addColumnHandlers();
             else {
-                SenderNameLibs.getService("observer-service;1", "nsIObserverService")
+                Service.getService("observer-service;1", "nsIObserverService")
                 .addObserver(this, "MsgCreateDBView", false);
             }
         }
-    },
+    };
 
-    onLoad: function () {
-        this.AddressBook.init();
-        this.Formatter.init();
-        this.ThreadPane.init();
-        this.Observer.register();
-    },
+    function onLoad () {
+        AddressBook.init();
+        Formatter.init();
+        ThreadPane.init();
+        Observer.register();
+    }
 
-    init: function () {
-        SenderNameLibs.init();
-        this.ColumnHandler_init();
-    },
-};
-
-    SenderName.init();
-    window.addEventListener("load", function () { SenderName.onLoad(); }, false);
+    window.addEventListener("load", onLoad, false);
 }
