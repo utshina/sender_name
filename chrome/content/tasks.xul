@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://sender_name/content/sender_name.css" type="text/css"?>
+
+<overlay id="sender_name_tasks" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script type="application/x-javascript" src="chrome://sender_name/content/tasks.js"/>
+  <menupopup id="taskPopup">
+    <menuseparator/>
+    <menuitem id="sender_name_options" label="Sender Name" oncommand="jp.ac.tsukuba.cs.shina.SenderName.Tasks.openDialog()"/>
+  </menupopup>
+</overlay>
