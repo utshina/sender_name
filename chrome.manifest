@@ -3,3 +3,4 @@ locale  sender_name en chrome/locale/en/
 locale  sender_name ja chrome/locale/ja/
 overlay	chrome://messenger/content/messenger.xul chrome://sender_name/content/sender_name.xul
 overlay	chrome://messenger/content/SearchDialog.xul chrome://sender_name/content/sender_name.xul
+overlay	chrome://messenger/content/mailWindowOverlay.xul chrome://sender_name/content/tasks.xul

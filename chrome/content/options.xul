@@ -8,10 +8,9 @@
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	id="SenderNameOptions"
 	title="&dialog.title;"
-	windowtype="mail:addressbook"
 	persist="width height screenX screenY sizemode"
-	onload="SenderNameOptions.onLoad();"
-	ondialogaccept="return SenderNameOptions.onAccept();">
+	onload="jp.ac.tsukuba.cs.shina.SenderName.Options.onLoad();"
+	ondialogaccept="return jp.ac.tsukuba.cs.shina.SenderName.Options.onAccept();">
 
   <script type="application/x-javascript" src="chrome://sender_name/content/library.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/options.js"/>
@@ -19,6 +18,7 @@
   </style>
 
   <vbox id="senderNameOptions">
+    <description>Please restart after changing settings</description>
     <tabbox>
       <tabs>
 	<tab label="&tab.displayAttribute;"/>
@@ -27,7 +27,7 @@
 
       <tabpanels>
 	<vbox>
-	  <label value="&msg.displayAttribute;"/>
+	  <description>&Description.displayAttribute;</description>
 	  <hbox>
 	    <vbox>
 	      <groupbox flex="1">
@@ -111,7 +111,29 @@
 	  </hbox>
 
 	</vbox>
+
+	<vbox>
+	  <description>&Description.format;</description>
+	  <vbox>
+	    <groupbox>
+	      <caption label="&Format.tab;"/>
+	      <grid>
+		<columns>
+		  <column/>
+		  <column/>
+		</columns>
+		<rows>
+		  <row><label id="format.undefined.label" value="&Format.undefined.label;"/><textbox id="format.undefined.string"/></row>
+		  <row><label id="format.separator.label" value="&Format.separator.label;"/><textbox id="format.separator.string"/></row>
+		  <row><label id="format.insep.label" value="&Format.insep.label;"/><textbox id="format.insep.string"/></row>
+		</rows>
+	      </grid>
+	    </groupbox>
+	  </vbox>
+	</vbox>
+
       </tabpanels>
+
     </tabbox>
 
   </vbox>

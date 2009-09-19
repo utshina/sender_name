@@ -1,7 +1,8 @@
 <!ENTITY dialog.title			"Sender Name Options">
 <!ENTITY tab.displayAttribute		"Display Attribute">
 <!ENTITY tab.format			"Format">
-<!ENTITY msg.displayAttribute		"Check the attributes to be displayed. If you want to change the column name, input the alternate string into the textbox.">
+
+<!ENTITY Description.displayAttribute	"Check the attributes to be displayed. If you want to change the column name, input the alternate string into the textbox.">
 
 <!ENTITY Name.box			"Name"> 
 <!ENTITY NameField1.label		"Last Name">
@@ -51,3 +52,9 @@
 <!ENTITY Custom3.label			"Custom 3">
 <!ENTITY Custom4.label			"Custom 4">
 <!ENTITY Notes.box			"Notes">
+
+<!ENTITY Description.format		"Input the display format in case the mail address is not included in any address book. &#x0025;s will be replaced with the mail address.">
+<!ENTITY Format.tab			"Format Options">
+<!ENTITY Format.undefined.label		"The format string used for the mail address is not included in any address book: ">
+<!ENTITY Format.separator.label		"The separator character used for separating multiple senders: ">
+<!ENTITY Format.insep.label		"The format string used when the separator is included in the address book field: ">

@@ -43,4 +43,8 @@ pref("extensions.sender_name.attr.label.custom3", "chrome://sender_name/locale/s
 pref("extensions.sender_name.attr.label.custom4", "chrome://sender_name/locale/sender_name.properties");
 pref("extensions.sender_name.attr.label.notes", "chrome://sender_name/locale/sender_name.properties");
 
+pref("extensions.sender_name.format.undefined", "chrome://sender_name/locale/sender_name.properties");
+pref("extensions.sender_name.format.separator", "chrome://sender_name/locale/sender_name.properties");
+pref("extensions.sender_name.format.insep", "chrome://sender_name/locale/sender_name.properties");
+
 pref("extensions.sender_name.attr.enabled.displayName", true);
