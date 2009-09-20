@@ -1,22 +1,28 @@
 /* -*- Mode: JavaScript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
- * Sender Name 0.3: library file
+ * Sender Name: library file
  *
  */
 
 (function () {
-    const namespace = "jp.ac.tsukuba.cs.shina.SenderName";
+    // I propose to use this format as namespaces for extensions
+    const namespace = "extensions.{52b8c721-5d3a-4a2b-835e-d3f044b74351}";
 
-    // define the namespace
-    var as = namespace.split("."); var ns = this;
-    for (var a; a = as.shift(); ns = ns[a])
-        if (typeof(ns[a]) == "undefined")
-	    ns[a] = new Object;
+    // define the namespace (generic enough to define any dot-separated namespace)
+    var domains = namespace.split(".");
+    var subdomain = this; // top-level domain
+    for (var d; d = domains.shift(); subdomain = subdomain[d])
+        if (typeof(subdomain[d]) == "undefined")
+	        subdomain[d] = new Object;
 
     // begin the namespace
-    const SenderName = jp.ac.tsukuba.cs.shina.SenderName;
-    with (jp.ac.tsukuba.cs.shina.SenderName) {
+    const SenderName = extensions["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
+    with (SenderName) {
         
+	    SenderName.ID = "{52b8c721-5d3a-4a2b-835e-d3f044b74351}";
+
+        SenderName.Components = Components; // cache
+
         SenderName.Service = {
             getService: function (class, interface) {
                 var class = Components.classes["@mozilla.org/" + class];
@@ -36,6 +42,8 @@
 
         SenderName.Preference = {
             branch: PreferenceRoot.getBranch(""),
+            nsISupportsString: Components.interfaces.nsISupportsString,
+            nsIPrefLocalizedString: Components.interfaces.nsIPrefLocalizedString,
 
             getBranch: function (key) { return PreferenceRoot.getBranch(key); },
             getCharPref: function (key) { return this.branch.getCharPref(key); },
@@ -57,15 +65,24 @@
                     this.branch.setBoolPref(key, false);
             },
 
-            getComplexValue: function(key) {
-                return this.branch.getComplexValue(key, Components.interfaces.nsIPrefLocalizedString).data;
+            getLocalizedString: function (key) {
+                return this.branch.getComplexValue(key, this.nsIPrefLocalizedString).data;
             },
 
-            setComplexValue: function(key, value) {
+            getUnicodePref: function (key) {
+                return this.branch.getComplexValue(key, this.nsISupportsString).data;
+            },
+
+            setUnicodePref: function (key, value) {
                 var str = Service.getService("supports-string;1", "nsISupportsString");
                 str.data = value;
-                this.branch.setComplexValue(key, Components.interfaces.nsISupportsString, str);
+                this.branch.setComplexValue(key, this.nsISupportsString, str);
             },
+
+            addObserver: function (key, observer) {
+                this.branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
+                this.branch.addObserver(key, observer, false);      
+            }
         };
 
         SenderName.Property = {

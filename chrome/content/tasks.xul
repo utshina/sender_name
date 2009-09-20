@@ -6,6 +6,6 @@
   <script type="application/x-javascript" src="chrome://sender_name/content/tasks.js"/>
   <menupopup id="taskPopup">
     <menuseparator/>
-    <menuitem id="sender_name_options" label="Sender Name" oncommand="jp.ac.tsukuba.cs.shina.SenderName.Tasks.openDialog()"/>
+    <menuitem id="sender_name_options" label="Sender Name" oncommand="extensions['{52b8c721-5d3a-4a2b-835e-d3f044b74351}'].Tasks.openDialog()"/>
   </menupopup>
 </overlay>
