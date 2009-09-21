@@ -56,8 +56,12 @@
 <!ENTITY Custom4.label			"追加情報 4">
 <!ENTITY Notes.box			"メモ">
 
-<!ENTITY Description.format		"メールアドレスがアドレス帳にない場合などの表示のフォーマットを指定してください．&#x0025;s がメールアドレスで置き換わります．">
-<!ENTITY Format.tab			"フォーマットの設定">
+<!ENTITY Format.tab.displayName		"「表示名」の設定">
+<!ENTITY Format.tab.displayName.description1	"&#x0025;s は，From 欄に名前がある場合はその名前，ない場合はメールアドレスで置き換わります．">
+<!ENTITY Format.tab.displayName.description2	"&#x0025;n は，From 欄の名前で置き換わります．">
+<!ENTITY Format.tab.displayName.description3	"&#x0025;a は，メールアドレスで置き換わります．">
 <!ENTITY Format.undefined.label		"メールアドレスがアドレス帳にない場合のフォーマット文字列: ">
+
+<!ENTITY Format.tab.separator		"区切り文字の設定">
 <!ENTITY Format.separator.label		"送信者が複数いる場合の区切り文字: ">
-<!ENTITY Format.insep.label		"メールアドレスに区切り文字が含まれていた場合のフォーマット文字列: ">
+<!ENTITY Format.insep.label		"表示内容に区切り文字が含まれていた場合のフォーマット文字列: ">

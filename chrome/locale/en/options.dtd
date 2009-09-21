@@ -53,8 +53,12 @@
 <!ENTITY Custom4.label			"Custom 4">
 <!ENTITY Notes.box			"Notes">
 
-<!ENTITY Description.format		"Input the display format in case the mail address is not included in any address book. &#x0025;s will be replaced with the mail address.">
-<!ENTITY Format.tab			"Format Options">
-<!ENTITY Format.undefined.label		"The format string used for the mail address is not included in any address book: ">
+<!ENTITY Format.tab.displayName		'Options for "Display Name"'>
+<!ENTITY Format.tab.displayName.description1	"&#x0025;s is replaced with the name in the From field if it exists, or replaced with the mail address.">
+<!ENTITY Format.tab.displayName.description2	"&#x0025;n is replaced with the name in the From field.">
+<!ENTITY Format.tab.displayName.description3	"&#x0025;a is replaced with the mail address.">
+<!ENTITY Format.undefined.label		"The format string used when the mail address is not included in any address book: ">
+
+<!ENTITY Format.tab.separator		"Options for separators">
 <!ENTITY Format.separator.label		"The separator character used for separating multiple senders: ">
 <!ENTITY Format.insep.label		"The format string used when the separator is included in the address book field: ">

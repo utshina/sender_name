@@ -298,25 +298,33 @@
     </preferences>
 
     <vbox>
-      <description>&Description.format;</description>
       <vbox>
 	<groupbox>
-	  <caption label="&Format.tab;"/>
+	  <caption label="&Format.tab.displayName;"/>
+	  <hbox align="center">
+	    <label id="format.undefined.label" value="&Format.undefined.label;"/>
+	    <textbox id="format.undefined.string" preference="extensions.sender_name.format.undefined"/>
+	  </hbox>
+	  <vbox>
+	    <description>&Format.tab.displayName.description1;</description>
+	    <description>&Format.tab.displayName.description2;</description>
+	    <description>&Format.tab.displayName.description3;</description>
+	  </vbox>
+	</groupbox>
+
+	<groupbox>
+	  <caption label="&Format.tab.separator;"/>
 	  <grid>
 	    <columns>
 	      <column/>
 	      <column/>
 	    </columns>
 	    <rows>
-	      <row>
-		<label id="format.undefined.label" value="&Format.undefined.label;"/>
-		<textbox id="format.undefined.string" preference="extensions.sender_name.format.undefined"/>
-	      </row>
-	      <row>
+	      <row align="center">
 		<label id="format.separator.label" value="&Format.separator.label;"/>
 		<textbox id="format.separator.string" preference="extensions.sender_name.format.separator"/>
 	      </row>
-	      <row>
+	      <row align="center">
 		<label id="format.insep.label" value="&Format.insep.label;"/>
 		<textbox id="format.insep.string" preference="extensions.sender_name.format.insep"/>
 	      </row>

@@ -33,14 +33,10 @@
                 return this.cardCache[addr];
             },
 
-            flush: function () { cardCache = new Object; },
-
-            onChange: function() { flush(); }, 
-
-            // nsIAbListener (Thunderbird 3.0)
-            onItemAdded: function(aParentDir, aItem) { onChange(); },
-            onItemRemoved: function(aParentDir, aItem) { onChange(); },
-            onItemPropertyChanged: function(aItem, aProperty, aOldValue, aNewValue) { onChange(); },
+            onChange: function() { 
+                this.cardCache = new Object;
+                ThreadPane.flush();
+            }, 
 
             init: function () {
                 var nsIAddressBook = Service.getService("addressbook;1", "nsIAddressBook");
@@ -49,6 +45,7 @@
                 var parentDir = nsIRDFService.GetResource("moz-abdirectory://").QueryInterface(nsIAbDirectory);
                 var enumerator = parentDir.childNodes;
 
+                // enumerate address books
                 while (enumerator.hasMoreElements()) {
                     var addrbook = enumerator.getNext();
                     if (! (addrbook instanceof Components.interfaces.nsIAbMDBDirectory))
@@ -59,24 +56,29 @@
                     this.addrDBs.push(nsIAddressBook.getAbDatabaseFromURI(uri));
                 }
 
-                // notify on address book changes (Thunderbird 3.0)
-                var nsIAbManager = Service.getService("abmanager;1", "nsIAbManager");
-                if (nsIAbManager) {
-                    var flag = Components.interfaces.nsIAbListener.all;
-                    nsIAbManager.addAddressBookListener(AddressBook, flag);
-                }
-
+                // register address book listener
+                var addrbookSession = Service.getService("addressbook/services/session;1", "nsIAddrBookSession");
+                addrbookSession.addAddressBookListener(this, Components.interfaces.nsIAddrBookSession.all);
             },
+
+            // Implement nsIAbListener
+            onItemAdded: function(parentDir, item) { this.onChange(); },
+            onItemRemoved: function(parentDir, item) { this.onChange(); },
+            onItemPropertyChanged: function(item, property, oldValue, newValue) { this.onChange(); },
         };
 
         SenderName.Formatter = {
             headerParser: Service.getService("messenger/headerparser;1", "nsIMsgHeaderParser"),
             format: new Object,
-            format_list: ["undefined", "separator", "insep"],
 
             formatUndefined: function (attr, addr, name) {
-                return attr == "displayName" ?
-                    this.format.undefined.replace("%s", name ? name : addr) : "";
+                if (attr != "displayName")
+                    return "";
+
+                var string = this.format.undefined.replace("%s", name ? name : addr);
+                string = string.replace("%n", name);
+                string = string.replace("%a", addr);
+                return string;
             },
 
             formatInsep: function (value) {
@@ -100,10 +102,9 @@
             },
 
             init: function () {
-                for (var id in this.format_list) {
-                    var type = this.format_list[id];
+                var types = Preference.getBranch("format.").getChildList("", {});
+                for (var type; type = types.shift();)
                     this.format[type] = Preference.getUnicodePref("format." + type);
-                }
                 Preference.addObserver("format.", this);
             },
 
@@ -127,7 +128,7 @@
                 var author = hdr.mime2DecodedAuthor;
 
                 // should use nsIAddrDBAnnouncer
-                if (this.cache[uri] == undefined)
+               if (this.cache[uri] == undefined)
                     this.cache[uri] = Formatter.formatAttrValue(author, this.attr);
                 return this.cache[uri];
             },
@@ -163,181 +164,123 @@
         SenderName.ThreadPane = {
             prefix: "senderNameCol.",
             attrEnabled: null,
+            treecols: new Object,
             columnHandlerList: new Array,
 
+            // column handlers
             flush: function () {
                 for (var id in this.columnHandlerList)
                     this.columnHandlerList[id].flush();
-                var tree = GetThreadTree();
-                tree.treeBoxObject.invalidate();
+                GetThreadTree().treeBoxObject.invalidate();
             },
 
             addColumnHandlers: function () {
                 for (var attr in this.attrEnabled) {
-                    if (this.attrEnabled[attr]) {
-                        var id = this.prefix + attr;
-                        var handler = new ColumnHandler(attr);
-                        this.columnHandlerList[id] = handler;
-                        GetDBView().addColumnHandler(id, handler);
-                    }
+                    if (!this.attrEnabled[attr])
+                        continue;
+
+                    var id = this.prefix + attr;
+                    var handler = new ColumnHandler(attr);
+                    this.columnHandlerList[id] = handler;
+                    GetDBView().addColumnHandler(id, handler);
                 }
             },
 
-            // createElement-based
+            // handle treecol
             createSplitter: function () {
 		        var splitter = document.createElement("splitter");
 		        splitter.setAttribute("class", "tree-splitter");
 		        return splitter;
             },
 
-            createTreecol: function (id, attr) {
-		        var treecol = document.createElement("treecol");
+            setLabels: function (treecol, attr) {
 		        var label = Preference.getLocalizedString("attr.label." + attr);
                 var tooltip = Property.getFormattedString("tooltip", [label]);
 
-		        treecol.setAttribute("id", id);
-		        treecol.setAttribute("persist", "hidden ordinal width");
-		        treecol.setAttribute("flex", "4");
 		        treecol.setAttribute("label", label);
 		        treecol.setAttribute("tooltiptext", tooltip);
+            },
+
+            createTreecol: function (attr) {
+		        var treecol = document.createElement("treecol");
+
+		        treecol.setAttribute("id", this.prefix + attr);
+		        treecol.setAttribute("persist", "hidden ordinal width");
+		        treecol.setAttribute("flex", "4");
+                this.setLabels(treecol, attr);
+                this.treecols[attr] = treecol;
 		        return treecol;
             },
 
-            createColumns: function (elements) {
-		        for (var id in this.attrList) {
-                    var attr = this.attrList[id];
-                    elements[attr] = this.createTreecol(id, attr);
-		        }
-            },
-
-            appendColumns: function (elements, threadCols) {
-		        for (var id in this.attrList) {
-                    var s = this.createSplitter();
-                    var e = elements[this.attrList[id]];
-                    threadCols.appendChild(s);
-                    threadCols.appendChild(e);
-		        }
-            },
-
-            loadElements: function () {
-		        var threadCols = document.getElementById('threadCols');
-		        var elements = new Object;
-		        this.createColumns(elements);
-		        this.appendColumns(elements, threadCols);
-            },
-
-            loadPreferences: function () {
-                this.attrList = new Object;
-                var attrs = Preference.getBranch("attr.enabled.").getChildList("", {});
-                for (var i in attrs) {
-                    var attr = attrs[i];
-                    var enabled = Preference.getBoolPref("attr.enabled." + attr);
-                    if (enabled) {
-                        var id = this.prefix + "." + attr;
-                        this.attrList[id] = attr;
-                    }
-                }
-            },
-
-
-
-            removeColumn: function (threadCols, id) {
-                for (var i in threadCols.childNodes) {
-                    var c = threadCols.childNodes[i];
-                    if (c.id == id) {
-                        threadCols.removeChild(threadCols.childNodes[i - 1]);
-                        threadCols.removeChild(c);
-                    }
-                }
-            },
-
-            reloadColumn: function (treecol, id, attr) {
-		        var label = Preference.getLocalizedString("attr.label." + attr);
-                var tooltip = Property.getFormattedString("tooltip", [label]);
-
-		        treecol.setAttribute("label", label);
-		        treecol.setAttribute("tooltiptext", tooltip);
-            },
-
-            appendColumn: function (threadCols, id, attr) {
+            appendTreecol: function (threadCols, attr) {
                 threadCols.appendChild(this.createSplitter());
-                threadCols.appendChild(this.createTreecol(id, attr));
+                threadCols.appendChild(this.createTreecol(attr));
             },
 
-            findChild: function (id, threadCols) {
-                for (var i in threadCols.childNodes) {
-                    var child = threadCols.childNodes[i];
-                    if (child.id == id)
-                        return child;
-                }
-                return null;
-            },
-
-            loadElements2: function () {
+            // set columns
+            setThreadCols: function () {
 		        var threadCols = document.getElementById('threadCols');
                 for (var attr in this.attrEnabled) {
-                    var id = this.prefix + attr;
-                    var child = this.findChild(id, threadCols);
+                    var treecol = this.treecols[attr];
                     
                     if (this.attrEnabled[attr])
-                        child ? this.reloadColumn(child, id, attr) : this.appendColumn(threadCols, id, attr);
-                    else if (child)
-                        this.removeColumn(threadCols, id);
+                        treecol ? this.setLabels(treecol, attr) :
+                                  this.appendTreecol(threadCols, attr);
+                    else if (treecol)
+                        threadCols.removeChild(treecol);
                 }
             },
 
-            loadPreferences2: function () {
+            getPreferences: function () {
                 this.attrEnabled = new Object;
                 var branch = Preference.getBranch("attr.enabled.");
                 var attrs = branch.getChildList("", {});
-                for (var i in attrs) {
-                    var attr = attrs[i];
+                for (var attr; attr = attrs.shift();)
                     this.attrEnabled[attr] = branch.getBoolPref(attr);
-                }
             },
 
-            load: function () {
-                this.loadPreferences2();
-                this.loadElements2();
+            setColumns: function () {
+                this.getPreferences();
+                this.setThreadCols();
             },
 
             init: function () {
-                this.load();
+                this.setColumns();
                 Preference.addObserver("attr.", this);
             },
 
-            observe: function (subject, topic, data) {
-                if(topic != "nsPref:changed") return;
-                this.load();
-            },
-
-        };
-
-        SenderName.Observer = {
             // Implement nsIObserver interface
             observe: function (subject, topic, data) {
-                ThreadPane.addColumnHandlers();
+                switch (topic) {
+                case "nsPref:changed": // nsIPrefBranch2
+                    this.setColumns();
+                    break;
+
+                case "MsgCreateDBView": // nsIObserverService
+                    this.addColumnHandlers();
+                    break;
+                }
             },
 
             register: function () {
                 if (gSearchView)
-                    ThreadPane.addColumnHandlers();
+                    this.addColumnHandlers();
                 else {
                     Service.getService("observer-service;1", "nsIObserverService")
-                    .addObserver(this, "MsgCreateDBView", false);
+                    .addObserver(ThreadPane, "MsgCreateDBView", false);
                 }
-            }
+            },
         };
 
         SenderName.Main = {
             onLoad: function () {
                 AddressBook.init();
-                Formatter.init();
-                Observer.register();
+                ThreadPane.register();
             },
 
             main: function () {
                 ThreadPane.init();
+                Formatter.init();
                 window.addEventListener("load", Main.onLoad, false);
             },
         };
