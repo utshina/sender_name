@@ -11,6 +11,10 @@ pref("extensions.sender_name.attr.label.primaryEmail", "chrome://sender_name/loc
 pref("extensions.sender_name.attr.label.secondEmail", "chrome://sender_name/locale/sender_name.properties");
 pref("extensions.sender_name.attr.label.aimScreenName", "chrome://sender_name/locale/sender_name.properties");
 pref("extensions.sender_name.attr.label.preferMailFormat", "chrome://sender_name/locale/sender_name.properties");
+pref("extensions.sender_name.attr.label.unknown", "chrome://sender_name/locale/sender_name.properties");
+pref("extensions.sender_name.attr.label.plainText", "chrome://sender_name/locale/sender_name.properties");
+pref("extensions.sender_name.attr.label.HTML", "chrome://sender_name/locale/sender_name.properties");
+pref("extensions.sender_name.attr.label.undefined", "chrome://sender_name/locale/sender_name.properties");
 
 pref("extensions.sender_name.attr.label.workPhone", "chrome://sender_name/locale/sender_name.properties");
 pref("extensions.sender_name.attr.label.homePhone", "chrome://sender_name/locale/sender_name.properties");

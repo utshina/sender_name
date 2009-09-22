@@ -5,7 +5,7 @@
  */
 
 (function () {
-    // I propose to use this format as namespaces for extensions
+    // I propose to use this format as the namespaces for extensions
     const namespace = "extensions.{52b8c721-5d3a-4a2b-835e-d3f044b74351}";
 
     // define the namespace (generic enough to define any dot-separated namespace)
@@ -13,13 +13,13 @@
     var subdomain = this; // top-level domain
     for (var d; d = domains.shift(); subdomain = subdomain[d])
         if (typeof(subdomain[d]) == "undefined")
-	        subdomain[d] = new Object;
+            subdomain[d] = new Object;
 
     // begin the namespace
     const SenderName = extensions["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
     with (SenderName) {
         
-	    SenderName.ID = "{52b8c721-5d3a-4a2b-835e-d3f044b74351}";
+        SenderName.ID = "{52b8c721-5d3a-4a2b-835e-d3f044b74351}";
 
         SenderName.Components = Components; // cache
 
@@ -38,10 +38,12 @@
             prefs: Service.getService("preferences-service;1", "nsIPrefService"),
 
             getBranch: function (key) { return this.prefs.getBranch(this.prefix + key); },
+            getDefaultBranch: function (key) { return this.prefs.getDefaultBranch(this.prefix + key); },
         };
 
         SenderName.Preference = {
             branch: PreferenceRoot.getBranch(""),
+            defaultBranch: PreferenceRoot.getDefaultBranch(""),
             nsISupportsString: Components.interfaces.nsISupportsString,
             nsIPrefLocalizedString: Components.interfaces.nsIPrefLocalizedString,
 
@@ -65,8 +67,16 @@
                     this.branch.setBoolPref(key, false);
             },
 
+            getDefaultLocalizedString: function (key) {
+                return this.defaultBranch.getComplexValue(key, this.nsIPrefLocalizedString).data;
+            },
+
             getLocalizedString: function (key) {
                 return this.branch.getComplexValue(key, this.nsIPrefLocalizedString).data;
+            },
+
+            getDefaultUnicodePref: function (key) {
+                return this.defaultBranch.getComplexValue(key, this.nsISupportsString).data;
             },
 
             getUnicodePref: function (key) {
@@ -78,6 +88,8 @@
                 str.data = value;
                 this.branch.setComplexValue(key, this.nsISupportsString, str);
             },
+
+
 
             addObserver: function (key, observer) {
                 this.branch.QueryInterface(Components.interfaces.nsIPrefBranch2);

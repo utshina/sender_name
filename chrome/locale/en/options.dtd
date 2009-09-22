@@ -1,6 +1,6 @@
-<!ENTITY dialog.title			"Sender Name Options">
-<!ENTITY tab.displayAttribute		"Display Attribute">
-<!ENTITY tab.format			"Format">
+<!ENTITY prefwindow.title		"Sender Name Options">
+<!ENTITY prefpane.displayAttribute	"Display Attribute">
+<!ENTITY prefpane.format		"Format">
 
 <!ENTITY Description.displayAttribute	"Check the attributes to be displayed. If you want to change the column name, input the alternate string into the textbox.">
 

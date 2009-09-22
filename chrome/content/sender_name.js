@@ -39,11 +39,11 @@
             }, 
 
             init: function () {
-                var nsIAddressBook = Service.getService("addressbook;1", "nsIAddressBook");
-                var nsIRDFService = Service.getService("rdf/rdf-service;1", "nsIRDFService");
-                var nsIAbDirectory = Components.interfaces.nsIAbDirectory;
-                var parentDir = nsIRDFService.GetResource("moz-abdirectory://").QueryInterface(nsIAbDirectory);
-                var enumerator = parentDir.childNodes;
+                const nsIAddressBook = Service.getService("addressbook;1", "nsIAddressBook");
+                const nsIRDFService = Service.getService("rdf/rdf-service;1", "nsIRDFService");
+                const nsIAbDirectory = Components.interfaces.nsIAbDirectory;
+                const parentDir = nsIRDFService.GetResource("moz-abdirectory://").QueryInterface(nsIAbDirectory);
+                const enumerator = parentDir.childNodes;
 
                 // enumerate address books
                 while (enumerator.hasMoreElements()) {
@@ -71,6 +71,12 @@
             headerParser: Service.getService("messenger/headerparser;1", "nsIMsgHeaderParser"),
             format: new Object,
 
+            formatMultiSender: function (value) {
+                if (value.indexOf(this.format.separator.replace(/^\s+|\s+$/g, '')) < 0)
+                    return value;
+                return this.format.insep.replace("%s", value);
+            },
+
             formatUndefined: function (attr, addr, name) {
                 if (attr != "displayName")
                     return "";
@@ -81,8 +87,23 @@
                 return string;
             },
 
-            formatInsep: function (value) {
-                return this.format.insep.replace("%s", value);
+            formatAttribute: function (attr, value) {
+                if (attr == "preferMailFormat") {
+                    var type;
+                    switch (value) {
+                    case 0:
+                        type = "unknown"; break;
+                    case 1:
+                        type = "plainText"; break;
+                    case 2:
+                        type = "HTML"; break;
+                    default:
+                        type = "undefined"; break;
+                    }
+                    return Preference.getLocalizedString("attr.label." + type);
+                } else if (attr == "notes")
+                    return value.replace("\n", " ", "g");
+                return value;
             },
 
             formatAttrValue: function (line, attr) {
@@ -93,9 +114,10 @@
                 for (var i = 0; i < count; i++) {
                     var addr = addrs.value[i];
                     var card = AddressBook.getCard(addr);
-                    var value = card ? card[attr] : this.formatUndefined(attr, addr, names.value[i]);
-                    if (count > 0 && value.indexOf(this.format.separator.replace(/^\s+|\s+$/g, '')) >= 0)
-                        value = this.formatInsep(value);
+                    var value = card ? this.formatAttribute(attr, card[attr]) :
+                                       this.formatUndefined(attr, addr, names.value[i]);
+                    if (count > 0)
+                        value = this.formatMultiSender(value);
                     values.push(value);
                 }
                 return values.join(this.format.separator);
@@ -226,12 +248,14 @@
                     if (this.attrEnabled[attr])
                         treecol ? this.setLabels(treecol, attr) :
                                   this.appendTreecol(threadCols, attr);
-                    else if (treecol)
+                    else if (treecol) {
                         threadCols.removeChild(treecol);
+                        this.treecols[attr] = null;
+                    }
                 }
             },
 
-            getPreferences: function () {
+            loadPreferences: function () {
                 this.attrEnabled = new Object;
                 var branch = Preference.getBranch("attr.enabled.");
                 var attrs = branch.getChildList("", {});
@@ -240,8 +264,14 @@
             },
 
             setColumns: function () {
-                this.getPreferences();
+                this.loadPreferences();
                 this.setThreadCols();
+                if (GetDBView())
+                    this.addColumnHandlers();
+                else {
+                    Service.getService("observer-service;1", "nsIObserverService")
+                           .addObserver(ThreadPane, "MsgCreateDBView", false);
+                }
             },
 
             init: function () {
@@ -261,21 +291,11 @@
                     break;
                 }
             },
-
-            register: function () {
-                if (gSearchView)
-                    this.addColumnHandlers();
-                else {
-                    Service.getService("observer-service;1", "nsIObserverService")
-                    .addObserver(ThreadPane, "MsgCreateDBView", false);
-                }
-            },
         };
 
         SenderName.Main = {
             onLoad: function () {
                 AddressBook.init();
-                ThreadPane.register();
             },
 
             main: function () {

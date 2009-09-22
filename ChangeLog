@@ -1,2 +1,8 @@
-* support the search dialog and search folders
-* stop double-quoting the display name even if it contains commas when there is only one display name
+0.3:
+	* Add options to select attributes and labels to be displayed, and to specify format strings
+	* Add support of displaying any address book attributes
+	* Add support of displaying columns in the search dialog and search folders
+	* Add a namespace scheme to avoid conflict with other extensions
+	* Change the default column label for the "Display Name" attribute to "Sender Name"
+	* Fix the bug that column positions are not saved
+	* Fix the bug double-quoting the display name when it contains commas

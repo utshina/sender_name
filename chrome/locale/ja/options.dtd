@@ -1,6 +1,6 @@
-<!ENTITY dialog.title			"Sender Name 設定">
-<!ENTITY tab.displayAttribute		"表示する属性">
-<!ENTITY tab.format			"フォーマット">
+<!ENTITY prefwindow.title		"Sender Name 設定">
+<!ENTITY prefpane.displayAttribute	"表示する属性">
+<!ENTITY prefpane.format		"フォーマット">
 
 <!ENTITY Description.displayAttribute	"表示する属性にチェックを入れてください．カラムの名称を変えたい場合は，テキストボックス内に入力してください．">
 
@@ -9,16 +9,13 @@
 <!ENTITY NameField2.label		"名">
 <!ENTITY PhoneticField1.label		"よみがな(姓)">
 <!ENTITY PhoneticField2.label		"よみがな(名)">
-<!ENTITY DisplayName.label		"表示名">
+<!ENTITY DisplayName.label		"表示名（差出人）">
 <!ENTITY NickName.label			"ニックネーム">
 
 <!ENTITY Internet.box			"インターネット">
 <!ENTITY PrimaryEmail.label		"メールアドレス">
 <!ENTITY SecondEmail.label		"別のメールアドレス">
 <!ENTITY PreferMailFormat.label		"使用メール形式">
-<!ENTITY PlainText.label		"テキスト">
-<!ENTITY HTML.label			"HTML">
-<!ENTITY Unknown.label			"不明">
 <!ENTITY ScreenName.label		"スクリーンネーム">
 
 <!ENTITY Phones.box			"電話番号">
