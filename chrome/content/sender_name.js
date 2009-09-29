@@ -5,26 +5,68 @@
  */
 
 (function () {
+
     // begin the namespace
     const SenderName = extensions["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
     with (SenderName) {
+
+        // For compatibility with Thunderbird 2.0 and 3.0
+        SenderName.Thunderbird = {
+            getDBView: function () {
+                if (gDBView)
+                    return gDBView;
+                else if (typeof(GetDBView) == "function")
+                    return GetDBView();
+                return null;
+            },
+
+            getAddrbooks: function () {
+                // Thunderbird 3.0
+                const abManager = Service.getService("abmanager;1", "nsIAbManager");
+                if (abManager)
+                    return abManager.directories;
+                // Thunderbird 2.0
+                const RDF = Service.getService("rdf/rdf-service;1", "nsIRDFService");
+                const nsIAbDirectory = Components.interfaces.nsIAbDirectory;
+                const parentDir = RDF.GetResource("moz-abdirectory://").QueryInterface(nsIAbDirectory);
+                return parentDir.childNodes;
+            },
+
+            getAddrbookURI: function (addrbook) {
+                // Thunderbird 3.0
+                if (addrbook.URI)
+                    return addrbook.URI;
+                // Thunderbird 2.0
+                else if (addrbook instanceof Components.interfaces.nsIAbMDBDirectory &&
+                         typeof(addrbook.getDirUri) == "function")
+                    return addrbook.getDirUri();
+                return "";
+            },
+
+            addAddressBookListener: function (listener) {
+                // Thunderbird 3.0
+                const abManager = Service.getService("abmanager;1", "nsIAbManager");
+                if (abManager) {
+                    abManager.addAddressBookListener(listener, Components.interfaces.nsIAbListener.all);
+                    return;
+                }
+                // Thunderbird 2.0
+                const addrbookSession = Service.getService("addressbook/services/session;1", "nsIAddrBookSession");
+                addrbookSession.addAddressBookListener(listener, Components.interfaces.nsIAddrBookSession.all);
+            },
+        },
 
         SenderName.AddressBook = {
             addrDBs: new Array,
             cardCache: new Object,
 
             getCardFromDB: function (addr) {
-                var card = null;
-                Search: for (var i in this.addrDBs) {
-                    var db = this.addrDBs[i];
-                    var fields = ["LowercasePrimaryEmail", "SecondEmail"];
-                    for (var field; field = fields.shift(); ) {
-                        card = db.getCardFromAttribute(null, field, addr, true);
-                        if (card != null)
-                            break Search;
-                    }
+                for (var i in this.addrDBs) {
+                    var card = this.addrDBs[i].cardForEmailAddress(addr);
+                    if (card != null)
+                        return card;
                 }
-                return card;
+                return null;
             },
 
             getCard: function (addr) {
@@ -33,32 +75,22 @@
                 return this.cardCache[addr];
             },
 
-            onChange: function() { 
+            onChange: function() {
                 this.cardCache = new Object;
                 ThreadPane.flush();
-            }, 
+            },
 
             init: function () {
-                const nsIAddressBook = Service.getService("addressbook;1", "nsIAddressBook");
-                const nsIRDFService = Service.getService("rdf/rdf-service;1", "nsIRDFService");
-                const nsIAbDirectory = Components.interfaces.nsIAbDirectory;
-                const parentDir = nsIRDFService.GetResource("moz-abdirectory://").QueryInterface(nsIAbDirectory);
-                const enumerator = parentDir.childNodes;
-
-                // enumerate address books
-                while (enumerator.hasMoreElements()) {
-                    var addrbook = enumerator.getNext();
-                    if (! (addrbook instanceof Components.interfaces.nsIAbMDBDirectory))
+                var addrbooks = Thunderbird.getAddrbooks();
+                while (addrbooks.hasMoreElements()) {
+                    var addrbook = addrbooks.getNext();
+                    if (!(addrbook instanceof Components.interfaces.nsIAbDirectory))
                         continue;
-                    var uri = addrbook.getDirUri();
-                    if (uri.indexOf("history.mab") >= 0)
+                    if (!addrbook.isRemote && Thunderbird.getAddrbookURI(addrbook).indexOf("history.mab") >= 0)
                         continue;
-                    this.addrDBs.push(nsIAddressBook.getAbDatabaseFromURI(uri));
+                    this.addrDBs.push(addrbook);
                 }
-
-                // register address book listener
-                var addrbookSession = Service.getService("addressbook/services/session;1", "nsIAddrBookSession");
-                addrbookSession.addAddressBookListener(this, Components.interfaces.nsIAddrBookSession.all);
+                Thunderbird.addAddressBookListener(this);
             },
 
             // Implement nsIAbListener
@@ -149,7 +181,6 @@
                 var uri = hdr.folder.getUriForMsg(hdr);
                 var author = hdr.mime2DecodedAuthor;
 
-                // should use nsIAddrDBAnnouncer
                if (this.cache[uri] == undefined)
                     this.cache[uri] = Formatter.formatAttrValue(author, this.attr);
                 return this.cache[uri];
@@ -157,7 +188,7 @@
 
             // Implement nsIMsgCustomColumnHandler interface
             getCellText: function (row, col) {
-                var dbview = GetDBView();
+                var dbview = Thunderbird.getDBView();
                 var key = dbview.getKeyAt(row);
                 var folder = dbview.getFolderForViewIndex(row);
                 var hdr = folder.GetMessageHeader(key);
@@ -169,15 +200,10 @@
                 return this.getAttributeValue(hdr);
             },
 
-            getCellProperties: function (row, col, props) {
-                // var aserv = Components.classes["@mozilla.org/atom-service;1"]
-                // .createInstance(Components.interfaces.nsIAtomService);
-                // props.AppendElement(aserv.getAtom("undef"));
-            },
-
             isEditable:        function (row, col) { return false; },
             cycleCell:         function (row, col) { },
             isString:          function () { return true; },
+            getCellProperties: function (row, col, props) { },
             getRowProperties:  function (row, props) {},
             getImageSrc:       function (row, col) { return null; },
             getSortLongForRow: function (hdr) { return 0; },
@@ -204,7 +230,7 @@
                     var id = this.prefix + attr;
                     var handler = new ColumnHandler(attr);
                     this.columnHandlerList[id] = handler;
-                    GetDBView().addColumnHandler(id, handler);
+                    Thunderbird.getDBView().addColumnHandler(id, handler);
                 }
             },
 
@@ -266,12 +292,14 @@
             setColumns: function () {
                 this.loadPreferences();
                 this.setThreadCols();
-                if (GetDBView())
+            },
+
+            onLoad: function () {
+                Service.getService("observer-service;1", "nsIObserverService")
+                       .addObserver(this, "MsgCreateDBView", false);
+                // For Search Dialog
+                if (Thunderbird.getDBView())
                     this.addColumnHandlers();
-                else {
-                    Service.getService("observer-service;1", "nsIObserverService")
-                           .addObserver(ThreadPane, "MsgCreateDBView", false);
-                }
             },
 
             init: function () {
@@ -296,6 +324,7 @@
         SenderName.Main = {
             onLoad: function () {
                 AddressBook.init();
+                ThreadPane.onLoad();
             },
 
             main: function () {

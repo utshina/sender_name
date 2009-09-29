@@ -5,6 +5,7 @@
  */
 
 (function () {
+
     // begin the namespace
     const SenderName = extensions["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
     with (SenderName) {
