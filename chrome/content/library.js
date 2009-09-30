@@ -11,12 +11,11 @@
     with (SenderName) {
         
         SenderName.ID = "{52b8c721-5d3a-4a2b-835e-d3f044b74351}";
-
         SenderName.Components = Components; // cache
 
         SenderName.Service = {
             getService: function (class, interface) {
-                var class = Components.classes["@mozilla.org/" + class];
+                const class = Components.classes["@mozilla.org/" + class];
                 if (class)
                     return class.getService(Components.interfaces[interface]);
                 else

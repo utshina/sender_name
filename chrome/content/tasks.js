@@ -12,9 +12,8 @@
         SenderName.Tasks = {
             openDialog: function () {
                 const optionsURL = "chrome://sender_name/content/options.xul";
-
-                var wm = Service.getService("appshell/window-mediator;1", "nsIWindowMediator");
-                var windows = wm.getEnumerator(null);
+                const wm = Service.getService("appshell/window-mediator;1", "nsIWindowMediator");
+                const windows = wm.getEnumerator(null);
                 while (windows.hasMoreElements()) {
                     var win = windows.getNext();
                     if (win.document.documentURI == optionsURL) {

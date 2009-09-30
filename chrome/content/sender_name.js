@@ -6,12 +6,13 @@
 
 (function () {
 
-    // begin the namespace
+    // begin the namespace (defined in "namespace.js")
     const SenderName = extensions["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
     with (SenderName) {
 
         // For compatibility with Thunderbird 2.0 and 3.0
         SenderName.Thunderbird = {
+
             getDBView: function () {
                 if (gDBView)
                     return gDBView;
@@ -81,7 +82,7 @@
             },
 
             init: function () {
-                var addrbooks = Thunderbird.getAddrbooks();
+                const addrbooks = Thunderbird.getAddrbooks();
                 while (addrbooks.hasMoreElements()) {
                     var addrbook = addrbooks.getNext();
                     if (!(addrbook instanceof Components.interfaces.nsIAbDirectory))
@@ -102,6 +103,7 @@
         SenderName.Formatter = {
             headerParser: Service.getService("messenger/headerparser;1", "nsIMsgHeaderParser"),
             format: new Object,
+            preferMailFormats: ["unknown", "plainText", "HTML"],
 
             formatMultiSender: function (value) {
                 if (value.indexOf(this.format.separator.replace(/^\s+|\s+$/g, '')) < 0)
@@ -112,26 +114,13 @@
             formatUndefined: function (attr, addr, name) {
                 if (attr != "displayName")
                     return "";
-
-                var string = this.format.undefined.replace("%s", name ? name : addr);
-                string = string.replace("%n", name);
-                string = string.replace("%a", addr);
-                return string;
+                const args = { s: name ? name : addr, n: name, a: addr};
+                return this.format.undefined.replace(/%([sna])/g, function (all, key) { return args[key]; });
             },
 
             formatAttribute: function (attr, value) {
                 if (attr == "preferMailFormat") {
-                    var type;
-                    switch (value) {
-                    case 0:
-                        type = "unknown"; break;
-                    case 1:
-                        type = "plainText"; break;
-                    case 2:
-                        type = "HTML"; break;
-                    default:
-                        type = "undefined"; break;
-                    }
+                    const type = value <= 2 ? this.preferMailFormats[value] : "undefined";
                     return Preference.getLocalizedString("attr.label." + type);
                 } else if (attr == "notes")
                     return value.replace("\n", " ", "g");
@@ -142,11 +131,11 @@
                 var addrs = new Object; var names = new Object; var fulls = new Object;
                 var values = new Array;
 
-                var count = this.headerParser.parseHeadersWithArray(line, addrs, names, fulls);
+                const count = this.headerParser.parseHeadersWithArray(line, addrs, names, fulls);
                 for (var i = 0; i < count; i++) {
-                    var addr = addrs.value[i];
-                    var card = AddressBook.getCard(addr);
-                    var value = card ? this.formatAttribute(attr, card[attr]) :
+                    const addr = addrs.value[i];
+                    const card = AddressBook.getCard(addr);
+                    const value = card ? this.formatAttribute(attr, card[attr]) :
                                        this.formatUndefined(attr, addr, names.value[i]);
                     if (count > 0)
                         value = this.formatMultiSender(value);
@@ -156,7 +145,7 @@
             },
 
             init: function () {
-                var types = Preference.getBranch("format.").getChildList("", {});
+                const types = Preference.getBranch("format.").getChildList("", {});
                 for (var type; type = types.shift();)
                     this.format[type] = Preference.getUnicodePref("format." + type);
                 Preference.addObserver("format.", this);
@@ -178,20 +167,20 @@
             flush: function () { this.cache = new Object; },
 
             getAttributeValue: function (hdr) {
-                var uri = hdr.folder.getUriForMsg(hdr);
-                var author = hdr.mime2DecodedAuthor;
+                const uri = hdr.folder.getUriForMsg(hdr);
+                const author = hdr.mime2DecodedAuthor;
 
-               if (this.cache[uri] == undefined)
+                if (this.cache[uri] == undefined)
                     this.cache[uri] = Formatter.formatAttrValue(author, this.attr);
                 return this.cache[uri];
             },
 
             // Implement nsIMsgCustomColumnHandler interface
             getCellText: function (row, col) {
-                var dbview = Thunderbird.getDBView();
-                var key = dbview.getKeyAt(row);
-                var folder = dbview.getFolderForViewIndex(row);
-                var hdr = folder.GetMessageHeader(key);
+                const dbview = Thunderbird.getDBView();
+                const key = dbview.getKeyAt(row);
+                const folder = dbview.getFolderForViewIndex(row);
+                const hdr = folder.GetMessageHeader(key);
 
                 return this.getAttributeValue(hdr);
             },
@@ -236,21 +225,21 @@
 
             // handle treecol
             createSplitter: function () {
-		        var splitter = document.createElement("splitter");
+		        const splitter = document.createElement("splitter");
 		        splitter.setAttribute("class", "tree-splitter");
 		        return splitter;
             },
 
             setLabels: function (treecol, attr) {
-		        var label = Preference.getLocalizedString("attr.label." + attr);
-                var tooltip = Property.getFormattedString("tooltip", [label]);
+		        const label = Preference.getLocalizedString("attr.label." + attr);
+                const tooltip = Property.getFormattedString("tooltip", [label]);
 
 		        treecol.setAttribute("label", label);
 		        treecol.setAttribute("tooltiptext", tooltip);
             },
 
             createTreecol: function (attr) {
-		        var treecol = document.createElement("treecol");
+		        const treecol = document.createElement("treecol");
 
 		        treecol.setAttribute("id", this.prefix + attr);
 		        treecol.setAttribute("persist", "hidden ordinal width");
@@ -267,7 +256,7 @@
 
             // set columns
             setThreadCols: function () {
-		        var threadCols = document.getElementById('threadCols');
+		        const threadCols = document.getElementById('threadCols');
                 for (var attr in this.attrEnabled) {
                     var treecol = this.treecols[attr];
                     
@@ -283,8 +272,8 @@
 
             loadPreferences: function () {
                 this.attrEnabled = new Object;
-                var branch = Preference.getBranch("attr.enabled.");
-                var attrs = branch.getChildList("", {});
+                const branch = Preference.getBranch("attr.enabled.");
+                const attrs = branch.getChildList("", {});
                 for (var attr; attr = attrs.shift();)
                     this.attrEnabled[attr] = branch.getBoolPref(attr);
             },
