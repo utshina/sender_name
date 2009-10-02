@@ -1,0 +1,4 @@
+treechildren::-moz-tree-cell(undef)
+{
+   background: yellow;
+}

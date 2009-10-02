@@ -93,3 +93,5 @@ pref("extensions.sender_name.attr.enabled.custom4", false);
 pref("extensions.sender_name.format.undefined", "(%s)");
 pref("extensions.sender_name.format.separator", ",");
 pref("extensions.sender_name.format.insep", '"%s"');
+
+pref("extensions.sender_name.options.create_display_name_column", false);

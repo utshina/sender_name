@@ -1,6 +1,6 @@
 /* -*- Mode: JavaScript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
- * Sender Name 0.3: main file
+ * Sender Name: main file
  *
  */
 
@@ -212,12 +212,9 @@
             },
 
             addColumnHandlers: function () {
-                for (var attr in this.attrEnabled) {
-                    if (!this.attrEnabled[attr])
-                        continue;
-
-                    var id = this.prefix + attr;
-                    var handler = new ColumnHandler(attr);
+                for (var attr in this.treecols) {
+                    const id = this.treecols[attr].getAttribute("id");
+                    const handler = new ColumnHandler(attr);
                     this.columnHandlerList[id] = handler;
                     Thunderbird.getDBView().addColumnHandler(id, handler);
                 }
@@ -230,7 +227,7 @@
 		        return splitter;
             },
 
-            setLabels: function (treecol, attr) {
+            setLabels: function (attr, treecol) {
 		        const label = Preference.getLocalizedString("attr.label." + attr);
                 const tooltip = Property.getFormattedString("tooltip", [label]);
 
@@ -244,29 +241,41 @@
 		        treecol.setAttribute("id", this.prefix + attr);
 		        treecol.setAttribute("persist", "hidden ordinal width");
 		        treecol.setAttribute("flex", "4");
-                this.setLabels(treecol, attr);
-                this.treecols[attr] = treecol;
+                this.setLabels(attr, treecol);
 		        return treecol;
             },
 
-            appendTreecol: function (threadCols, attr) {
-                threadCols.appendChild(this.createSplitter());
-                threadCols.appendChild(this.createTreecol(attr));
+            initTreecol: function (attr) {
+                var treecol;
+                if (attr == "displayName" && !Options.createDisplayNameColumn) {
+                    treecol = document.getElementById('senderCol');
+                    this.setLabels(attr, treecol);
+                } else {
+		            const threadCols = document.getElementById('threadCols');
+                    threadCols.appendChild(this.createSplitter());
+                    threadCols.appendChild(treecol = this.createTreecol(attr));
+                }
+                this.treecols[attr] = treecol;
             },
 
-            // set columns
-            setThreadCols: function () {
-		        const threadCols = document.getElementById('threadCols');
+            exitTreecol: function (attr, treecol) {
+                if (attr == "displayName" && !Options.createDisplayNameColumn) {
+                    Thunderbird.getDBView().removeColumnHandler(attr);
+                } else {
+		            const threadCols = document.getElementById('threadCols');
+                    threadCols.removeChild(treecol);
+                }
+                this.treecols[attr] = null;
+            },
+
+            initThreadCols: function () {
                 for (var attr in this.attrEnabled) {
                     var treecol = this.treecols[attr];
-                    
                     if (this.attrEnabled[attr])
-                        treecol ? this.setLabels(treecol, attr) :
-                                  this.appendTreecol(threadCols, attr);
-                    else if (treecol) {
-                        threadCols.removeChild(treecol);
-                        this.treecols[attr] = null;
-                    }
+                        treecol ? this.setLabels(attr, treecol) :
+                                  this.initTreecol(attr);
+                    else if (treecol)
+                        this.exitTreecol(attr, treecol);
                 }
             },
 
@@ -280,7 +289,7 @@
 
             setColumns: function () {
                 this.loadPreferences();
-                this.setThreadCols();
+                this.initThreadCols();
             },
 
             onLoad: function () {
@@ -324,6 +333,7 @@
         };
 
         Main.main();
+
     } // end namespace
 
 })();
