@@ -1,6 +1,7 @@
 <!ENTITY prefwindow.title		"Sender Name Options">
 <!ENTITY prefpane.displayAttribute	"Display Attribute">
 <!ENTITY prefpane.format		"Format">
+<!ENTITY prefpane.options		"Option">
 
 <!ENTITY Description.displayAttribute	"Check the attributes to be displayed. If you want to change the column name, input the alternate string into the textbox.">
 
@@ -62,3 +63,6 @@
 <!ENTITY Format.tab.separator		"Options for separators">
 <!ENTITY Format.separator.label		"The separator character used for separating multiple senders: ">
 <!ENTITY Format.insep.label		"The format string used when the separator is included in the address book field: ">
+
+<!ENTITY Options.tab.columns		"Options for columns">
+<!ENTITY Options.create_display_name_column.label	"Create a new column for display names, instead of replacing the content of the existing columns">

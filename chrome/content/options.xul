@@ -334,4 +334,25 @@
       </vbox>
     </vbox>
   </prefpane>
+
+  <prefpane id="prefpane.options" label="&prefpane.options;">
+    <preferences>
+      <!-- format -->
+      <preference id="options.create_display_name_column" name="extensions.sender_name.options.create_display_name_column" type="bool"/>
+    </preferences>
+
+    <vbox>
+      <vbox>
+	<groupbox>
+	  <caption label="&Options.tab.columns;"/>
+	  <vbox>
+	    <checkbox id="options.create_display_name_column.enabled" preference="options.create_display_name_column" label="&Options.create_display_name_column.label;"/>
+	  </vbox>
+	</groupbox>
+      </vbox>
+    </vbox>
+  </prefpane>
+
+
+
 </prefwindow>

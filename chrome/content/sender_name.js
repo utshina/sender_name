@@ -10,13 +10,13 @@
     const SenderName = extensions["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
     with (SenderName) {
 
-        // For compatibility with Thunderbird 2.0 and 3.0
+        // for compatibility with Thunderbird 2.0 and 3.0
         SenderName.Thunderbird = {
 
             getDBView: function () {
                 if (gDBView)
                     return gDBView;
-                else if (typeof(GetDBView) == "function")
+                else if (typeof(GetDBView) == "function") // for Search Dialog
                     return GetDBView();
                 return null;
             },
@@ -158,7 +158,8 @@
             },
         };
 
-        SenderName.ColumnHandler = function (attr) {
+        SenderName.ColumnHandler = function (field, attr) {
+            this.field = field;
             this.attr = attr;
             this.cache = new Object;
         };
@@ -168,10 +169,10 @@
 
             getAttributeValue: function (hdr) {
                 const uri = hdr.folder.getUriForMsg(hdr);
-                const author = hdr.mime2DecodedAuthor;
+                const line = hdr[this.field];
 
                 if (this.cache[uri] == undefined)
-                    this.cache[uri] = Formatter.formatAttrValue(author, this.attr);
+                    this.cache[uri] = Formatter.formatAttrValue(line, this.attr);
                 return this.cache[uri];
             },
 
@@ -203,6 +204,8 @@
             attrEnabled: null,
             treecols: new Object,
             columnHandlerList: new Array,
+            defaultLabel: null,
+            defaultTooltip: null,
 
             // column handlers
             flush: function () {
@@ -214,7 +217,7 @@
             addColumnHandlers: function () {
                 for (var attr in this.treecols) {
                     const id = this.treecols[attr].getAttribute("id");
-                    const handler = new ColumnHandler(attr);
+                    const handler = new ColumnHandler('mime2DecodedAuthor', attr);
                     this.columnHandlerList[id] = handler;
                     Thunderbird.getDBView().addColumnHandler(id, handler);
                 }
@@ -249,6 +252,8 @@
                 var treecol;
                 if (attr == "displayName" && !Options.createDisplayNameColumn) {
                     treecol = document.getElementById('senderCol');
+                    this.defaultLabel = treecol.getAttribute("label");
+                    this.defaultTooltip = treecol.getAttribute("tooltip");
                     this.setLabels(attr, treecol);
                 } else {
 		            const threadCols = document.getElementById('threadCols');
@@ -260,12 +265,15 @@
 
             exitTreecol: function (attr, treecol) {
                 if (attr == "displayName" && !Options.createDisplayNameColumn) {
-                    Thunderbird.getDBView().removeColumnHandler(attr);
+                    Thunderbird.getDBView().removeColumnHandler('senderCol');
+                    treecol = document.getElementById('senderCol');
+		            treecol.setAttribute("label", this.defaultLabel);
+		            treecol.setAttribute("tooltip", this.defaultTooltip);
                 } else {
 		            const threadCols = document.getElementById('threadCols');
                     threadCols.removeChild(treecol);
                 }
-                this.treecols[attr] = null;
+                delete this.treecols[attr];
             },
 
             initThreadCols: function () {
@@ -277,6 +285,7 @@
                     else if (treecol)
                         this.exitTreecol(attr, treecol);
                 }
+                this.flush();
             },
 
             loadPreferences: function () {
@@ -295,8 +304,8 @@
             onLoad: function () {
                 Service.getService("observer-service;1", "nsIObserverService")
                        .addObserver(this, "MsgCreateDBView", false);
-                // For Search Dialog
-                if (Thunderbird.getDBView())
+                
+                if (Thunderbird.getDBView()) // for Search Dialog
                     this.addColumnHandlers();
             },
 
@@ -305,11 +314,13 @@
                 Preference.addObserver("attr.", this);
             },
 
-            // Implement nsIObserver interface
+            // implement nsIObserver interface
             observe: function (subject, topic, data) {
                 switch (topic) {
                 case "nsPref:changed": // nsIPrefBranch2
                     this.setColumns();
+                    this.addColumnHandlers();
+                    this.flush();
                     break;
 
                 case "MsgCreateDBView": // nsIObserverService
