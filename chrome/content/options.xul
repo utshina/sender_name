@@ -14,277 +14,63 @@
 
     <preferences>
       <!-- enabled attributes -->
-      <preference id="attr.enabled.lastName" name="extensions.sender_name.attr.enabled.lastName" type="bool"/>
-      <preference id="attr.enabled.firstName" name="extensions.sender_name.attr.enabled.firstName" type="bool"/>
-      <preference id="attr.enabled.phoneticLastName" name="extensions.sender_name.attr.enabled.phoneticLastName" type="bool"/>
-      <preference id="attr.enabled.phoneticFirstName" name="extensions.sender_name.attr.enabled.phoneticFirstName" type="bool"/>
-      <preference id="attr.enabled.displayName" name="extensions.sender_name.attr.enabled.displayName" type="bool"/>
-      <preference id="attr.enabled.nickName" name="extensions.sender_name.attr.enabled.nickName" type="bool"/>
-
-      <preference id="attr.enabled.primaryEmail" name="extensions.sender_name.attr.enabled.primaryEmail" type="bool"/>
-      <preference id="attr.enabled.secondEmail" name="extensions.sender_name.attr.enabled.secondEmail" type="bool"/>
-      <preference id="attr.enabled.aimScreenName" name="extensions.sender_name.attr.enabled.aimScreenName" type="bool"/>
-      <preference id="attr.enabled.preferMailFormat" name="extensions.sender_name.attr.enabled.preferMailFormat" type="bool"/>
-
-      <preference id="attr.enabled.workPhone" name="extensions.sender_name.attr.enabled.workPhone" type="bool"/>
-      <preference id="attr.enabled.homePhone" name="extensions.sender_name.attr.enabled.homePhone" type="bool"/>
-      <preference id="attr.enabled.faxNumber" name="extensions.sender_name.attr.enabled.faxNumber" type="bool"/>
-      <preference id="attr.enabled.pagerNumber" name="extensions.sender_name.attr.enabled.pagerNumber" type="bool"/>
-      <preference id="attr.enabled.cellularNumber" name="extensions.sender_name.attr.enabled.cellularNumber" type="bool"/>
-
-      <preference id="attr.enabled.homeAddress" name="extensions.sender_name.attr.enabled.homeAddress" type="bool"/>
-      <preference id="attr.enabled.homeAddress2" name="extensions.sender_name.attr.enabled.homeAddress2" type="bool"/>
-      <preference id="attr.enabled.homeCity" name="extensions.sender_name.attr.enabled.homeCity" type="bool"/>
-      <preference id="attr.enabled.homeState" name="extensions.sender_name.attr.enabled.homeState" type="bool"/>
-      <preference id="attr.enabled.homeZipCode" name="extensions.sender_name.attr.enabled.homeZipCode" type="bool"/>
-      <preference id="attr.enabled.homeCountry" name="extensions.sender_name.attr.enabled.homeCountry" type="bool"/>
-      <preference id="attr.enabled.webPage1" name="extensions.sender_name.attr.enabled.webPage1" type="bool"/>
-
-      <preference id="attr.enabled.jobTitle" name="extensions.sender_name.attr.enabled.jobTitle" type="bool"/>
-      <preference id="attr.enabled.department" name="extensions.sender_name.attr.enabled.department" type="bool"/>
-      <preference id="attr.enabled.company" name="extensions.sender_name.attr.enabled.company" type="bool"/>
-      <preference id="attr.enabled.workAddress" name="extensions.sender_name.attr.enabled.workAddress" type="bool"/>
-      <preference id="attr.enabled.workAddress2" name="extensions.sender_name.attr.enabled.workAddress2" type="bool"/>
-      <preference id="attr.enabled.workCity" name="extensions.sender_name.attr.enabled.workCity" type="bool"/>
-      <preference id="attr.enabled.workState" name="extensions.sender_name.attr.enabled.workState" type="bool"/>
-      <preference id="attr.enabled.workZipCode" name="extensions.sender_name.attr.enabled.workZipCode" type="bool"/>
-      <preference id="attr.enabled.workCountry" name="extensions.sender_name.attr.enabled.workCountry" type="bool"/>
-      <preference id="attr.enabled.webPage2" name="extensions.sender_name.attr.enabled.webPage2" type="bool"/>
-
-      <preference id="attr.enabled.notes" name="extensions.sender_name.attr.enabled.notes" type="bool"/>
-      <preference id="attr.enabled.custom1" name="extensions.sender_name.attr.enabled.custom1" type="bool"/>
-      <preference id="attr.enabled.custom2" name="extensions.sender_name.attr.enabled.custom2" type="bool"/>
-      <preference id="attr.enabled.custom3" name="extensions.sender_name.attr.enabled.custom3" type="bool"/>
-      <preference id="attr.enabled.custom4" name="extensions.sender_name.attr.enabled.custom4" type="bool"/>
-
-      <!-- attributes labels -->
-      <preference id="attr.label.lastName" name="extensions.sender_name.attr.label.lastName" type="wstring"/>
-      <preference id="attr.label.firstName" name="extensions.sender_name.attr.label.firstName" type="wstring"/>
-      <preference id="attr.label.phoneticLastName" name="extensions.sender_name.attr.label.phoneticLastName" type="wstring"/>
-      <preference id="attr.label.phoneticFirstName" name="extensions.sender_name.attr.label.phoneticFirstName" type="wstring"/>
-      <preference id="attr.label.displayName" name="extensions.sender_name.attr.label.displayName" type="wstring"/>
-      <preference id="attr.label.nickName" name="extensions.sender_name.attr.label.nickName" type="wstring"/>
-
-      <preference id="attr.label.primaryEmail" name="extensions.sender_name.attr.label.primaryEmail" type="wstring"/>
-      <preference id="attr.label.secondEmail" name="extensions.sender_name.attr.label.secondEmail" type="wstring"/>
-      <preference id="attr.label.aimScreenName" name="extensions.sender_name.attr.label.aimScreenName" type="wstring"/>
-      <preference id="attr.label.preferMailFormat" name="extensions.sender_name.attr.label.preferMailFormat" type="wstring"/>
-
-      <preference id="attr.label.workPhone" name="extensions.sender_name.attr.label.workPhone" type="wstring"/>
-      <preference id="attr.label.homePhone" name="extensions.sender_name.attr.label.homePhone" type="wstring"/>
-      <preference id="attr.label.faxNumber" name="extensions.sender_name.attr.label.faxNumber" type="wstring"/>
-      <preference id="attr.label.pagerNumber" name="extensions.sender_name.attr.label.pagerNumber" type="wstring"/>
-      <preference id="attr.label.cellularNumber" name="extensions.sender_name.attr.label.cellularNumber" type="wstring"/>
-
-      <preference id="attr.label.homeAddress" name="extensions.sender_name.attr.label.homeAddress" type="wstring"/>
-      <preference id="attr.label.homeAddress2" name="extensions.sender_name.attr.label.homeAddress2" type="wstring"/>
-      <preference id="attr.label.homeCity" name="extensions.sender_name.attr.label.homeCity" type="wstring"/>
-      <preference id="attr.label.homeState" name="extensions.sender_name.attr.label.homeState" type="wstring"/>
-      <preference id="attr.label.homeZipCode" name="extensions.sender_name.attr.label.homeZipCode" type="wstring"/>
-      <preference id="attr.label.homeCountry" name="extensions.sender_name.attr.label.homeCountry" type="wstring"/>
-      <preference id="attr.label.webPage1" name="extensions.sender_name.attr.label.webPage1" type="wstring"/>
-
-      <preference id="attr.label.jobTitle" name="extensions.sender_name.attr.label.jobTitle" type="wstring"/>
-      <preference id="attr.label.department" name="extensions.sender_name.attr.label.department" type="wstring"/>
-      <preference id="attr.label.company" name="extensions.sender_name.attr.label.company" type="wstring"/>
-      <preference id="attr.label.workAddress" name="extensions.sender_name.attr.label.workAddress" type="wstring"/>
-      <preference id="attr.label.workAddress2" name="extensions.sender_name.attr.label.workAddress2" type="wstring"/>
-      <preference id="attr.label.workCity" name="extensions.sender_name.attr.label.workCity" type="wstring"/>
-      <preference id="attr.label.workState" name="extensions.sender_name.attr.label.workState" type="wstring"/>
-      <preference id="attr.label.workZipCode" name="extensions.sender_name.attr.label.workZipCode" type="wstring"/>
-      <preference id="attr.label.workCountry" name="extensions.sender_name.attr.label.workCountry" type="wstring"/>
-      <preference id="attr.label.webPage2" name="extensions.sender_name.attr.label.webPage2" type="wstring"/>
-
-      <preference id="attr.label.notes" name="extensions.sender_name.attr.label.notes" type="wstring"/>
-      <preference id="attr.label.custom1" name="extensions.sender_name.attr.label.custom1" type="wstring"/>
-      <preference id="attr.label.custom2" name="extensions.sender_name.attr.label.custom2" type="wstring"/>
-      <preference id="attr.label.custom3" name="extensions.sender_name.attr.label.custom3" type="wstring"/>
-      <preference id="attr.label.custom4" name="extensions.sender_name.attr.label.custom4" type="wstring"/>
+      <preference id="column.enabled.sender.displayName"
+		  name="extensions.sender_name.column.enabled.sender.displayName" type="bool"/>
+      <preference id="column.enabled.recipient.displayName"
+		  name="extensions.sender_name.column.enabled.recipient.displayName" type="bool"/>
+      <preference id="column.label.sender.displayName"
+		  name="extensions.sender_name.column.label.sender.displayName" type="wstring"/>
+      <preference id="column.label.recipient.displayName"
+		  name="extensions.sender_name.column.label.recipient.displayName" type="wstring"/>
     </preferences>
     
     <vbox>
-      <description>&Description.displayAttribute;</description>
-      <hbox>
-	<vbox>
-	  <groupbox flex="1">
-	    <caption label="&Name.box;"/>
-	    <hbox>
-	      <checkbox id="lastName.enabled" preference="attr.enabled.lastName" label="&NameField1.label;"/>
-	      <textbox id="lastName.label" preference="attr.label.lastName"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="firstName.enabled" preference="attr.enabled.firstName" label="&NameField2.label;"/>
-	      <textbox id="firstName.label" preference="attr.label.firstName"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="phoneticLastName.enabled" preference="attr.enabled.phoneticLastName" label="&PhoneticField1.label;"/>
-	      <textbox id="phoneticLastName.label" preference="attr.label.phoneticLastName"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="phoneticFirstName.enabled" preference="attr.enabled.phoneticFirstName" label="&PhoneticField2.label;"/>
-	      <textbox id="phoneticFirstName.label" preference="attr.label.phoneticFirstName"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="displayName.enabled" preference="attr.enabled.displayName" label="&DisplayName.label;"/>
-	      <textbox id="displayName.label" preference="attr.label.displayName" />
-	    </hbox>
-	    <hbox>
-	      <checkbox id="nickName.enabled" preference="attr.enabled.nickName" label="&NickName.label;"/>
-	      <textbox id="nickName.label" preference="attr.label.nickName"/>
-	    </hbox>
-	  </groupbox>
+      <vbox>
+	<groupbox>
+	  <caption label="Display Columns"/>
+	  <hbox>
 
-	  <groupbox flex="1">
-	    <caption label="&Internet.box;"/>
-	    <hbox>
-	      <checkbox id="primaryEmail.enabled" preference="attr.enabled.primaryEmail" label="&PrimaryEmail.label;"/>
-	      <textbox id="primaryEmail.label" preference="attr.label.primaryEmail"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="secondEmail.enabled" preference="attr.enabled.secondEmail" label="&SecondEmail.label;"/>
-	      <textbox id="secondEmail.label" preference="attr.label.secondEmail"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="preferMailFormat.enabled" preference="attr.enabled.preferMailFormat" label="&PreferMailFormat.label;"/>
-	      <textbox id="preferMailFormat.label" preference="attr.label.preferMailFormat"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="aimScreenName.enabled" preference="attr.enabled.aimScreenName" label="&ScreenName.label;"/>
-	      <textbox id="aimScreenName.label" preference="attr.label.aimScreenName"/>
-	    </hbox>
-	  </groupbox>
+<tree flex="1" rows="5" editable="true">
 
-	  <groupbox flex="1">
-	    <caption label="&Phones.box;"/>
-	    <hbox>
-	      <checkbox id="workPhone.enabled" preference="attr.enabled.workPhone" label="&WorkPhone.label;"/>
-	      <textbox id="workPhone.label" preference="attr.label.workPhone"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="homePhone.enabled" preference="attr.enabled.homePhone" label="&HomePhone.label;"/>
-	      <textbox id="homePhone.label" preference="attr.label.homePhone"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="faxNumber.enabled" preference="attr.enabled.faxNumber" label="&FaxNumber.label;"/>
-	      <textbox id="faxNumber.label" preference="attr.label.faxNumber"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="pagerNumber.enabled" preference="attr.enabled.pagerNumber" label="&PagerNumber.label;"/>
-	      <textbox id="pagerNumber.label" preference="attr.label.pagerNumber"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="cellularNumber.enabled" preference="attr.enabled.cellularNumber" label="&CellularNumber.label;"/>
-	      <textbox id="cellularNumber.label" preference="attr.label.cellularNumber"/>
-	    </hbox>
-	  </groupbox>
-	</vbox>
+  <treecols>
+    <treecol label="On" type="checkbox" editable="true"/>
+    <treecol label="Column Label" flex="1"/>
+    <treecol label="Field Name" flex="1"/>
+    <treecol label="AddressBook Attribute" flex="1"/>
+    <treecol label="Custom Format" flex="1"/>
+  </treecols>
 
-	<vbox>
-	  <groupbox flex="1">
-	    <caption label="&Home.box;"/>
-	    <hbox>
-	      <checkbox id="homeAddress.enabled" preference="attr.enabled.homeAddress" label="&HomeAddress.label;"/>
-	      <textbox id="homeAddress.label" preference="attr.label.homeAddress"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="homeAddress2.enabled" preference="attr.enabled.homeAddress2" label="&HomeAddress2.label;"/>
-	      <textbox id="homeAddress2.label" preference="attr.label.homeAddress2"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="homeCity.enabled" preference="attr.enabled.homeCity" label="&HomeCity.label;"/>
-	      <textbox id="homeCity.label" preference="attr.label.homeCity"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="homeState.enabled" preference="attr.enabled.homeState" label="&HomeState.label;"/>
-	      <textbox id="homeState.label" preference="attr.label.homeState"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="homeZipCode.enabled" preference="attr.enabled.homeZipCode" label="&HomeZipCode.label;"/>
-	      <textbox id="homeZipCode.label" preference="attr.label.homeZipCode"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="homeCountry.enabled" preference="attr.enabled.homeCountry" label="&HomeCountry.label;"/>
-	      <textbox id="homeCountry.label" preference="attr.label.homeCountry"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="webPage1.enabled" preference="attr.enabled.webPage1" label="&HomeWebPage.label;"/>
-	      <textbox id="webPage1.label" preference="attr.label.webPage1"/>
-	    </hbox>
-	  </groupbox>
+  <treechildren>
+    <treeitem>
+      <treerow>
+      	<treecell value="true"/>
+        <treecell label="Sender Name"/>
+        <treecell label="From"/>
+        <treecell label="Display Name"/>
+        <treecell label="none"/>
+      </treerow>
+    </treeitem>
+    <treeitem>
+      <treerow>
+      	<treecell value="true"/>
+        <treecell label="Recipient Name"/>
+        <treecell label="To"/>
+        <treecell label="Display Name"/>
+        <treecell label="none"/>
+      </treerow>
+    </treeitem>
+  </treechildren>
 
-	  <groupbox flex="1">
-	    <caption label="&Work.box;"/>
-	    <hbox>
-	      <checkbox id="jobTitle.enabled" preference="attr.enabled.jobTitle" label="&JobTitle.label;"/>
-	      <textbox id="jobTitle.label" preference="attr.label.jobTitle"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="department.enabled" preference="attr.enabled.department" label="&Department.label;"/>
-	      <textbox id="department.label" preference="attr.label.department"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="company.enabled" preference="attr.enabled.company" label="&Company.label;"/>
-	      <textbox id="company.label" preference="attr.label.company"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="workAddress.enabled" preference="attr.enabled.workAddress" label="&WorkAddress.label;"/>
-	      <textbox id="workAddress.label" preference="attr.label.workAddress"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="workAddress2.enabled" preference="attr.enabled.workAddress2" label="&WorkAddress2.label;"/>
-	      <textbox id="workAddress2.label" preference="attr.label.workAddress2"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="workCity.enabled" preference="attr.enabled.workCity" label="&WorkCity.label;"/>
-	      <textbox id="workCity.label" preference="attr.label.workCity"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="workState.enabled" preference="attr.enabled.workState" label="&WorkState.label;"/>
-	      <textbox id="workState.label" preference="attr.label.workState"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="workZipCode.enabled" preference="attr.enabled.workZipCode" label="&WorkZipCode.label;"/>
-	      <textbox id="workZipCode.label" preference="attr.label.workZipCode"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="workCountry.enabled" preference="attr.enabled.workCountry" label="&WorkCountry.label;"/>
-	      <textbox id="workCountry.label" preference="attr.label.workCountry"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="webPage2.enabled" preference="attr.enabled.webPage2" label="&WorkWebPage.label;"/>
-	      <textbox id="webPage2.label" preference="attr.label.webPage2"/>
-	    </hbox>
-	  </groupbox>
-	</vbox>
-	
-	<vbox>
-	  <groupbox flex="1">
-	    <caption label="&Other.tab;"/>
-	    <hbox>
-	      <checkbox id="custom1.enabled" preference="attr.enabled.custom1" label="&Custom1.label;"/>
-	      <textbox id="custom1.label" preference="attr.label.custom1"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="custom2.enabled" preference="attr.enabled.custom2" label="&Custom2.label;"/>
-	      <textbox id="custom2.label" preference="attr.label.custom2"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="custom3.enabled" preference="attr.enabled.custom3" label="&Custom3.label;"/>
-	      <textbox id="custom3.label" preference="attr.label.custom3"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="custom4.enabled" preference="attr.enabled.custom4" label="&Custom4.label;"/>
-	      <textbox id="custom4.label" preference="attr.label.custom4"/>
-	    </hbox>
-	    <hbox>
-	      <checkbox id="notes.enabled" preference="attr.enabled.notes" label="&Notes.box;"/>
-	      <textbox id="notes.label" preference="attr.label.notes"/>
-	    </hbox>
-	  </groupbox>
-	</vbox>
+</tree>
 
-      </hbox>
-
+	  </hbox>
+	  <hbox>
+	    <button label="New" oncommand="alert('You pressed me!');"/>
+	    <button label="Edit" oncommand="alert('You pressed me!');"/>
+	    <button label="Delete" oncommand="alert('You pressed me!');"/>
+	  </hbox>
+	</groupbox>
+      </vbox>
     </vbox>
 
   </prefpane>
@@ -353,6 +139,8 @@
     </vbox>
   </prefpane>
 
-
+  <script type="application/x-javascript" src="chrome://sender_name/content/namespace.js"/>
+  <script type="application/x-javascript" src="chrome://sender_name/content/library.js"/>
+  <script type="application/x-javascript" src="chrome://sender_name/content/options.js"/>
 
 </prefwindow>

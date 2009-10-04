@@ -62,8 +62,8 @@
             cardCache: new Object,
 
             getCardFromDB: function (addr) {
-                for (var i in this.addrDBs) {
-                    var card = this.addrDBs[i].cardForEmailAddress(addr);
+                for each (var ab in this.addrDBs) {
+                    var card = ab.cardForEmailAddress(addr);
                     if (card != null)
                         return card;
                 }
@@ -104,6 +104,7 @@
             headerParser: Service.getService("messenger/headerparser;1", "nsIMsgHeaderParser"),
             format: new Object,
             preferMailFormats: ["unknown", "plainText", "HTML"],
+            fieldNames: { sender: "mime2DecodedAuthor", recipient: "mime2DecodedRecipients" },
 
             formatMultiSender: function (value) {
                 if (value.indexOf(this.format.separator.replace(/^\s+|\s+$/g, '')) < 0)
@@ -127,10 +128,12 @@
                 return value;
             },
 
-            formatAttrValue: function (line, attr) {
+            formatAttrValue: function (column, header) {
                 var addrs = new Object; var names = new Object; var fulls = new Object;
                 var values = new Array;
 
+                var line = header[this.fieldNames[column.field]];
+                var attr = column.attr;
                 const count = this.headerParser.parseHeadersWithArray(line, addrs, names, fulls);
                 for (var i = 0; i < count; i++) {
                     const addr = addrs.value[i];
@@ -158,21 +161,18 @@
             },
         };
 
-        SenderName.ColumnHandler = function (field, attr) {
-            this.field = field;
-            this.attr = attr;
+        SenderName.ColumnHandler = function (column) {
+            this.column = column;
             this.cache = new Object;
         };
 
         SenderName.ColumnHandler.prototype = {
             flush: function () { this.cache = new Object; },
 
-            getAttributeValue: function (hdr) {
-                const uri = hdr.folder.getUriForMsg(hdr);
-                const line = hdr[this.field];
-
+            getAttributeValue: function (header) {
+                const uri = header.folder.getUriForMsg(header);
                 if (this.cache[uri] == undefined)
-                    this.cache[uri] = Formatter.formatAttrValue(line, this.attr);
+                    this.cache[uri] = Formatter.formatAttrValue(this.column, header);
                 return this.cache[uri];
             },
 
@@ -200,25 +200,29 @@
         };
 
         SenderName.ThreadPane = {
-            prefix: "senderNameCol.",
-            attrEnabled: null,
+            prefix: "SenderNameCol.",
+            threadCols: document.getElementById('threadCols'),
+            defaultColumnIDs: { sender: "senderCol", recipient: "recipientCol" },
+            columns: null,
             treecols: new Object,
-            columnHandlerList: new Array,
-            defaultLabel: null,
-            defaultTooltip: null,
+            columnHandlers: new Array,
+            savedAttributes: new Object,
 
             // column handlers
             flush: function () {
-                for (var id in this.columnHandlerList)
-                    this.columnHandlerList[id].flush();
+                for each (var handler in this.columnHandlers)
+                    handler.flush();
                 GetThreadTree().treeBoxObject.invalidate();
             },
 
             addColumnHandlers: function () {
-                for (var attr in this.treecols) {
-                    const id = this.treecols[attr].getAttribute("id");
-                    const handler = new ColumnHandler('mime2DecodedAuthor', attr);
-                    this.columnHandlerList[id] = handler;
+                for (var cid in this.treecols) {
+                    const column = this.columns[cid];
+                    const treecol = this.treecols[cid];
+
+                    const id = treecol.getAttribute("id");
+                    const handler = new ColumnHandler(column);
+                    this.columnHandlers[id] = handler;
                     Thunderbird.getDBView().addColumnHandler(id, handler);
                 }
             },
@@ -230,70 +234,108 @@
 		        return splitter;
             },
 
-            setLabels: function (attr, treecol) {
-		        const label = Preference.getLocalizedString("attr.label." + attr);
+            setLabels: function (column, treecol) {
+                const label = column.label;
                 const tooltip = Property.getFormattedString("tooltip", [label]);
 
 		        treecol.setAttribute("label", label);
 		        treecol.setAttribute("tooltiptext", tooltip);
             },
 
-            createTreecol: function (attr) {
+            saveLabels: function (treecol) {
+                var id = treecol.getAttribute("id");
+                this.savedAttributes[id] = [treecol.getAttribute("label"), treecol.getAttribute("tooltip")];
+            },
+
+            restoreLabels: function (treecol) {
+                var id = treecol.getAttribute("id");
+                treecol.setAttribute("label", this.savedAttributes[id][0]);
+                treecol.setAttribute("tooltip", this.savedAttributes[id][1]);
+            },
+
+            createTreecol: function (column) {
 		        const treecol = document.createElement("treecol");
 
-		        treecol.setAttribute("id", this.prefix + attr);
+		        treecol.setAttribute("id", this.prefix + column.id);
 		        treecol.setAttribute("persist", "hidden ordinal width");
 		        treecol.setAttribute("flex", "4");
-                this.setLabels(attr, treecol);
+                treecol.isSenderNameCol = true;
 		        return treecol;
             },
 
-            initTreecol: function (attr) {
-                var treecol;
-                if (attr == "displayName" && !Options.createDisplayNameColumn) {
-                    treecol = document.getElementById('senderCol');
-                    this.defaultLabel = treecol.getAttribute("label");
-                    this.defaultTooltip = treecol.getAttribute("tooltip");
-                    this.setLabels(attr, treecol);
-                } else {
-		            const threadCols = document.getElementById('threadCols');
-                    threadCols.appendChild(this.createSplitter());
-                    threadCols.appendChild(treecol = this.createTreecol(attr));
-                }
-                this.treecols[attr] = treecol;
+            initThunderbirdTreecol: function (column) {
+                treecol = document.getElementById(this.defaultColumnIDs[column.field]);
+                this.saveLabels(treecol);
+                return treecol;
             },
 
-            exitTreecol: function (attr, treecol) {
-                if (attr == "displayName" && !Options.createDisplayNameColumn) {
-                    Thunderbird.getDBView().removeColumnHandler('senderCol');
-                    treecol = document.getElementById('senderCol');
-		            treecol.setAttribute("label", this.defaultLabel);
-		            treecol.setAttribute("tooltip", this.defaultTooltip);
-                } else {
-		            const threadCols = document.getElementById('threadCols');
-                    threadCols.removeChild(treecol);
-                }
-                delete this.treecols[attr];
+            exitThunderbirdTreecol: function (column, treecol) {
+                Thunderbird.getDBView().removeColumnHandler(this.defaultColumnIDs[column.field]);
+                this.restoreLabels(treecol);
+                delete this.treecols[column.id];
+            },
+
+            initSenderNameTreecol: function (column) {
+                treecol = this.createTreecol(column)
+                this.threadCols.appendChild(this.createSplitter());
+                this.threadCols.appendChild(treecol);
+                return treecol;
+            },
+
+            exitSenderNameTreecol: function (column, treecol) {
+                this.threadCols.removeChild(treecol);
+                delete this.treecols[column.id];
+            },
+
+            isReplaceDefaultColumn: function (column) {
+                if (column.attr == "displayName" && 
+                    !Preference.getBoolPref("options.create_display_name_column") &&
+                    this.defaultColumnIDs[column.field])
+                    return true;
+                return false;
             },
 
             initThreadCols: function () {
-                for (var attr in this.attrEnabled) {
-                    var treecol = this.treecols[attr];
-                    if (this.attrEnabled[attr])
-                        treecol ? this.setLabels(attr, treecol) :
-                                  this.initTreecol(attr);
-                    else if (treecol)
-                        this.exitTreecol(attr, treecol);
+                for (var id in this.columns) {
+                    var column = this.columns[id];
+                    var treecol = this.treecols[id];
+                    var replace = this.isReplaceDefaultColumn(column);
+
+                    if (treecol) {
+                        if (treecol.isSenderNameCol && (replace || !column.enabled))
+                            this.exitSenderNameTreecol(column, treecol);
+                        else if (!treecol.isSenderNameCol && (!replace || !column.enabled))
+                            this.exitThunderbirdTreecol(column, treecol);
+                    }
+
+                    if (column.enabled) {
+                        if (!this.treecols[id])
+                            this.treecols[id] = replace ?
+                            this.initThunderbirdTreecol(column) : this.initSenderNameTreecol(column);
+                        this.setLabels(column, this.treecols[id]);
+                    }
                 }
                 this.flush();
             },
 
             loadPreferences: function () {
-                this.attrEnabled = new Object;
-                const branch = Preference.getBranch("attr.enabled.");
-                const attrs = branch.getChildList("", {});
-                for (var attr; attr = attrs.shift();)
-                    this.attrEnabled[attr] = branch.getBoolPref(attr);
+                this.columns = new Object;
+                try {
+                    for (var i = 0; ; i++) {
+                        var column = new Object;
+                        var prefix = "column" + i;
+                        column.enabled = Preference.getBoolPref(prefix + ".enabled");
+                        column.field = Preference.getCharPref(prefix + ".field");
+                        column.attr = Preference.getCharPref(prefix + ".attr");
+                        column.label = Preference.getLocalizedString(prefix + ".label");
+                        if (Preference.prefHasUserValue(prefix + ".format"))
+                            column.format = Preference.getLocalizedString(prefix + ".format");
+                        column.id = column.field + "." + column.attr;
+                        if (column.field == "free")
+                            column.id = column.format;
+                        this.columns[column.id] = column;
+                    }
+                } catch (e) { }
             },
 
             setColumns: function () {
@@ -304,14 +346,14 @@
             onLoad: function () {
                 Service.getService("observer-service;1", "nsIObserverService")
                        .addObserver(this, "MsgCreateDBView", false);
-                
                 if (Thunderbird.getDBView()) // for Search Dialog
                     this.addColumnHandlers();
             },
 
             init: function () {
                 this.setColumns();
-                Preference.addObserver("attr.", this);
+                Preference.addObserver("column", this);
+                Preference.addObserver("options", this);
             },
 
             // implement nsIObserver interface
@@ -342,7 +384,6 @@
                 window.addEventListener("load", Main.onLoad, false);
             },
         };
-
         Main.main();
 
     } // end namespace

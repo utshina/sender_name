@@ -60,10 +60,6 @@
             },
         };
 
-        SenderName.Options = {
-            createDisplayNameColumn: Preference.getBoolPref("options.create_display_name_column"),
-        };
-
     } // end namespace
 
 })();
