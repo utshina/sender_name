@@ -315,7 +315,6 @@
                         this.setLabels(column, this.treecols[id]);
                     }
                 }
-                this.flush();
             },
 
             loadPreferences: function () {
@@ -360,6 +359,7 @@
             observe: function (subject, topic, data) {
                 switch (topic) {
                 case "nsPref:changed": // nsIPrefBranch2
+                    alert("prefchanged");
                     this.setColumns();
                     this.addColumnHandlers();
                     this.flush();

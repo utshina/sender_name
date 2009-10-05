@@ -8,20 +8,15 @@
 <prefwindow type="prefwindow"
 	    id="SenderNameOptions"
 	    title="&prefwindow.title;"
+	    onload="extensions['{52b8c721-5d3a-4a2b-835e-d3f044b74351}'].Options.onLoad();"
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <prefpane id="prefpane.displayAttribute" label="&prefpane.displayAttribute;">
 
-    <preferences>
+    <preferences id="columns.preferences">
       <!-- enabled attributes -->
-      <preference id="column.enabled.sender.displayName"
-		  name="extensions.sender_name.column.enabled.sender.displayName" type="bool"/>
-      <preference id="column.enabled.recipient.displayName"
-		  name="extensions.sender_name.column.enabled.recipient.displayName" type="bool"/>
-      <preference id="column.label.sender.displayName"
-		  name="extensions.sender_name.column.label.sender.displayName" type="wstring"/>
-      <preference id="column.label.recipient.displayName"
-		  name="extensions.sender_name.column.label.recipient.displayName" type="wstring"/>
+      <preference id="column0.enabled"
+		  name="extensions.sender_name.column0.enabled" type="bool"/>
     </preferences>
     
     <vbox>
@@ -31,36 +26,24 @@
 	  <hbox>
 
 <tree flex="1" rows="5" editable="true">
-
   <treecols>
-    <treecol label="On" type="checkbox" editable="true"/>
-    <treecol label="Column Label" flex="1"/>
-    <treecol label="Field Name" flex="1"/>
-    <treecol label="AddressBook Attribute" flex="1"/>
+    <treecol label="On" type="checkbox" editable="false"/>
+    <treecol label="Column Label"/>
+    <treecol label="Field Name"/>
+    <treecol label="AddressBook Attribute"/>
     <treecol label="Custom Format" flex="1"/>
   </treecols>
-
-  <treechildren>
+  <treechildren id="columns.list">
     <treeitem>
       <treerow>
-      	<treecell value="true"/>
-        <treecell label="Sender Name"/>
-        <treecell label="From"/>
-        <treecell label="Display Name"/>
-        <treecell label="none"/>
-      </treerow>
-    </treeitem>
-    <treeitem>
-      <treerow>
-      	<treecell value="true"/>
-        <treecell label="Recipient Name"/>
-        <treecell label="To"/>
-        <treecell label="Display Name"/>
-        <treecell label="none"/>
+	<treecell value="true"/>
+	<treecell label="1"/>
+	<treecell label="1"/>
+	<treecell label="1"/>
+	<treecell label="1"/>
       </treerow>
     </treeitem>
   </treechildren>
-
 </tree>
 
 	  </hbox>
@@ -68,6 +51,7 @@
 	    <button label="New" oncommand="alert('You pressed me!');"/>
 	    <button label="Edit" oncommand="alert('You pressed me!');"/>
 	    <button label="Delete" oncommand="alert('You pressed me!');"/>
+	    <checkbox id="treecell.column0.enabled" preference="column0.enabled" value="true"/>
 	  </hbox>
 	</groupbox>
       </vbox>
