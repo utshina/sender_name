@@ -1,5 +1,6 @@
-checkbox { width: 13em; }
-textbox { width: 10em; }
+textbox {
+   width: 10em;
+}
 treechildren::-moz-tree-checkbox(checked){
     /* css for checked cells */
     list-style-image: url("chrome://global/skin/checkbox/cbox-check.gif");

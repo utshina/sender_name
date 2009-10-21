@@ -8,52 +8,85 @@
 <prefwindow type="prefwindow"
 	    id="SenderNameOptions"
 	    title="&prefwindow.title;"
-	    onload="extensions['{52b8c721-5d3a-4a2b-835e-d3f044b74351}'].Options.onLoad();"
+	    onload="SenderName.Options.onLoad();"
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <prefpane id="prefpane.displayAttribute" label="&prefpane.displayAttribute;">
+    <preferences id="preference.columns" />
 
-    <preferences id="columns.preferences">
-      <!-- enabled attributes -->
-      <preference id="column0.enabled"
-		  name="extensions.sender_name.column0.enabled" type="bool"/>
-    </preferences>
-    
     <vbox>
       <vbox>
+	<hbox>
+	  <listbox id="listbox.columns" onselect="SenderName.Options.onSelect();"  rows="5" flex="1">
+	    <listhead>
+	      <listheader label="On"/>
+	      <listheader label="Column Label"/>
+	      <listheader label="Field Name"/>
+	      <listheader label="Attribute"/>
+	      <listheader label="Custom Format"/>
+	    </listhead>
+
+            <listcols>
+	      <listcol/>
+	      <listcol flex="1"/>
+	      <listcol flex="1"/>
+	      <listcol flex="1"/>
+	      <listcol flex="1"/>
+            </listcols>
+	  </listbox>
+	</hbox>
+
 	<groupbox>
-	  <caption label="Display Columns"/>
-	  <hbox>
+	  <grid>
+	    <columns>
+	      <column/>
+	      <column flex="1"/>
+	    </columns>
+	    <rows>
+	      <row>
+		<checkbox id="input.enabled" label="Enable this column" oncommand="SenderName.Options.onInput('enabled');"/>
+	      </row>
+	      <row>
+		<label value="Column Label: "/>
+		<textbox id="input.label" oninput="SenderName.Options.onInput('label');"/>
+	      </row>
+	      <row align="center">
+		<label value="Field Name: "/>
+		<menulist id="input.field" oncommand="SenderName.Options.onInput('field');">
+		  <menupopup>
+		    <menuitem id="menuitem.field." label="" value="undefined"/>
+		    <menuitem id="menuitem.field.sender" label="From" value="sender"/>
+		    <menuitem id="menuitem.field.recipient" label="To" value="recipient"/>
+		    <menuitem id="menuitem.field.copy" label="Cc" value="copy"/>
+		    <menuitem id="menuitem.field.custom" label="Custom" value="custom"/>
+		  </menupopup>
+		</menulist>
+	      </row>
+	      <row align="center">
+		<label value="Attribute: "/>
+		<menulist id="input.attr" oncommand="SenderName.Options.onInput('attr');">
+		  <menupopup>
+		    <menuitem id="menuitem.attr." label="" value="undefined"/>
+		    <menuitem id="menuitem.attr.displayName" label="Display Name" value="displayName"/>
+		    <menuitem id="menuitem.attr.organization" label="Organization" value="organization"/>
+		    <menuitem id="menuitem.attr.custom" label="Custom" value="custom"/>
+		  </menupopup>
+		</menulist>
+	      </row>
+	      <row align="center">
+		<label value="Column Format: "/>
+		<textbox id="input.format" oninput="SenderName.Options.onInput('format');"/>
+	      </row>
+	    </rows>
+	  </grid>
 
-<tree flex="1" rows="5" editable="true">
-  <treecols>
-    <treecol label="On" type="checkbox" editable="false"/>
-    <treecol label="Column Label"/>
-    <treecol label="Field Name"/>
-    <treecol label="AddressBook Attribute"/>
-    <treecol label="Custom Format" flex="1"/>
-  </treecols>
-  <treechildren id="columns.list">
-    <treeitem>
-      <treerow>
-	<treecell value="true"/>
-	<treecell label="1"/>
-	<treecell label="1"/>
-	<treecell label="1"/>
-	<treecell label="1"/>
-      </treerow>
-    </treeitem>
-  </treechildren>
-</tree>
-
-	  </hbox>
-	  <hbox>
-	    <button label="New" oncommand="alert('You pressed me!');"/>
-	    <button label="Edit" oncommand="alert('You pressed me!');"/>
-	    <button label="Delete" oncommand="alert('You pressed me!');"/>
-	    <checkbox id="treecell.column0.enabled" preference="column0.enabled" value="true"/>
-	  </hbox>
 	</groupbox>
+
+	<hbox>
+	  <button label="New" oncommand="SenderName.Options.onPressNew();"/>
+	  <button label="Del" oncommand="SenderName.Options.onPressDel()"/>
+	</hbox>
+
       </vbox>
     </vbox>
 

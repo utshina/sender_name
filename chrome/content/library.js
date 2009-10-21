@@ -1,18 +1,12 @@
-/* -*- Mode: JavaScript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- *
- * Sender Name: library file
- *
- */
+/* -*- Mode: JavaScript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
+// library
 (function () {
 
     // begin the namespace
     const SenderName = extensions["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
     with (SenderName) {
         
-        SenderName.ID = "{52b8c721-5d3a-4a2b-835e-d3f044b74351}";
-        SenderName.Components = Components; // cache
-
         SenderName.Service = {
             getService: function (class, interface) {
                 class = Components.classes["@mozilla.org/" + class];
@@ -31,11 +25,14 @@
             branch: PreferenceRoot.getBranch(""),
 
             getBranch: function (key) { return PreferenceRoot.getBranch(key); },
-            getCharPref: function (key) { return this.branch.getCharPref(key); },
-            setCharPref: function (key, value) { return this.branch.setCharPref(key, value); },
             getBoolPref: function (key) { return this.branch.getBoolPref(key); },
             setBoolPref: function (key, value) { return this.branch.setBoolPref(key, value); },
+            getCharPref: function (key) { return this.branch.getCharPref(key); },
+            setCharPref: function (key, value) { return this.branch.setCharPref(key, value); },
+            getIntPref: function (key) { return this.branch.getIntPref(key); },
+            setIntPref: function (key, value) { return this.branch.setIntPref(key, value); },
             prefHasUserValue: function(key) { return this.branch.prefHasUserValue(key); },
+            clearUserPref: function (key) { return this.branch.clearUserPref(key);  },
 
             getLocalizedString: function (key) {
                 return this.branch.getComplexValue(key, Components.interfaces.nsIPrefLocalizedString).data;
@@ -45,10 +42,24 @@
                 return this.branch.getComplexValue(key, Components.interfaces.nsISupportsString).data;
             },
 
+            getPref: function (key, type) {
+                switch(type) {
+                case "bool":
+                    return this.getBoolPref(key);
+                case "char":
+                    return this.getCharPref(key);
+                case "int":
+                    return this.getIntPref(key);
+                case "wstring":
+                    return this.getLocalizedString(key);
+                };
+            },
+
             addObserver: function (key, observer) {
                 this.branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
                 this.branch.addObserver(key, observer, false);      
-            }
+            },
+
         };
 
         SenderName.Property = {

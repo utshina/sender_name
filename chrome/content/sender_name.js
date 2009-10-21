@@ -165,7 +165,6 @@
             this.column = column;
             this.cache = new Object;
         };
-
         SenderName.ColumnHandler.prototype = {
             flush: function () { this.cache = new Object; },
 
@@ -317,28 +316,8 @@
                 }
             },
 
-            loadPreferences: function () {
-                this.columns = new Object;
-                try {
-                    for (var i = 0; ; i++) {
-                        var column = new Object;
-                        var prefix = "column" + i;
-                        column.enabled = Preference.getBoolPref(prefix + ".enabled");
-                        column.field = Preference.getCharPref(prefix + ".field");
-                        column.attr = Preference.getCharPref(prefix + ".attr");
-                        column.label = Preference.getLocalizedString(prefix + ".label");
-                        if (Preference.prefHasUserValue(prefix + ".format"))
-                            column.format = Preference.getLocalizedString(prefix + ".format");
-                        column.id = column.field + "." + column.attr;
-                        if (column.field == "free")
-                            column.id = column.format;
-                        this.columns[column.id] = column;
-                    }
-                } catch (e) { }
-            },
-
             setColumns: function () {
-                this.loadPreferences();
+                this.columns = ColumnInfo.getColumns();
                 this.initThreadCols();
             },
 
