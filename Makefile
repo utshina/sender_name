@@ -6,3 +6,5 @@ FILE=$(NAME)-$(VERSION)-tb.xpi
 $(FILE): 
 	zip -r $(FILE) install.rdf chrome.manifest chrome/ defaults/
 
+clean:
+	rm -f $(FILE)
