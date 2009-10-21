@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+<?xml-stylesheet href="chrome://messenger/skin/preferences/preferences.css"?>
+<?xml-stylesheet href="chrome://mozapps/content/preferences/preferences.css"?>
+<?xml-stylesheet href="options.css" type="text/css"?>
+<!DOCTYPE prefwindow SYSTEM "chrome://sender_name/locale/options.dtd">
+
+<prefwindow type="child"
+	    id="SenderNameEditColumn"
+	    title="SenderNameEditColumn"
+	    onload=""
+            xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+    <prefpane>
+      <groupbox flex="1">
+	<caption label="Edit Column"/>
+	<grid>
+	  <columns>
+	    <column/>
+	    <column/>
+	  </columns>
+	  <rows>
+
+	    <row align="center">
+	      <label value="Column Label"/>
+	      <textbox/>
+	    </row>
+
+	    <row align="center">
+	      <label value="Field Name"/>
+	      <menulist label="From">
+		<menupopup>
+		  <menuitem label="From" selected="true"/>
+		  <menuitem label="To"/>
+		  <menuitem label="Cc"/>
+		  <menuitem label="Custom"/>
+		</menupopup>
+	      </menulist>
+	    </row>
+
+	    <row align="center">
+	      <label value="Addressbook Attribute"/>
+	      <menulist label="displayName">
+		<menupopup>
+		  <menuitem label="displayName" selected="true"/>
+		  <menuitem label="Organization"/>
+		  <menuitem label=""/>
+		  <menuitem label="Custom"/>
+		</menupopup>
+	      </menulist>
+	    </row>
+
+	    <row align="center">
+	      <label value="Format"/>
+	      <textbox label="Format"/>
+	    </row>
+
+	  </rows>
+	</grid>
+
+      </groupbox>
+    </prefpane>
+
+</prefwindow>
