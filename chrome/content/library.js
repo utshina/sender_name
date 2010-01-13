@@ -32,6 +32,7 @@
             getIntPref: function (key) { return this.branch.getIntPref(key); },
             setIntPref: function (key, value) { return this.branch.setIntPref(key, value); },
             prefHasUserValue: function(key) { return this.branch.prefHasUserValue(key); },
+            getPrefType: function (key) { return this.branch.getPrefType(key);  },
             clearUserPref: function (key) { return this.branch.clearUserPref(key);  },
 
             getLocalizedString: function (key) {

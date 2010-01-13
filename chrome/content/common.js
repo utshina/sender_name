@@ -31,7 +31,7 @@
                 return column;
             },
 
-            loadPreference: function () {
+            loadPreference2: function () {
                 this.list = new Array;
                 this.hash = new Object;
 	            const n = Preference.getIntPref("colnum");
@@ -45,6 +45,20 @@
                     if (branch.getChildList("", {}).length == 0)
                         break;
                     branch.deleteBranch("");
+                }
+            },
+
+            loadPreference: function () {
+                this.list = new Array;
+                this.hash = new Object;
+                const pref = Preference.getLocalizedString("columns");
+                const columns = eval(pref);
+                for (var i = 0; i < columns.length; i++) {
+                    var column = columns[i];
+                    column.id = (column.field == "custom") ? column.format : column.field + "." + column.attr;
+                    column.index = i;
+                    this.list[i] = column;
+                    this.hash[column.id] = column;
                 }
             },
 

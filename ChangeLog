@@ -1,3 +1,6 @@
+0.4:
+	* 
+
 0.3:
 	* Add options to select attributes and labels to be displayed, and to specify format strings
 	* Add support of displaying any address book attributes

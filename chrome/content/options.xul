@@ -12,83 +12,119 @@
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
   <prefpane id="prefpane.displayAttribute" label="&prefpane.displayAttribute;">
-    <preferences id="preference.columns" />
+    <preferences>
+      <preference id="options.columns" name="extensions.sender_name.columns" type="unichar"/>
+    </preferences>
 
-    <vbox>
-      <vbox>
-	<hbox>
-	  <listbox id="listbox.columns" onselect="SenderName.Options.onSelect();"  rows="5" flex="1">
-	    <listhead>
-	      <listheader label="On"/>
-	      <listheader label="Column Label"/>
-	      <listheader label="Field Name"/>
-	      <listheader label="Attribute"/>
-	      <listheader label="Custom Format"/>
-	    </listhead>
+    <groupbox>
+      <caption label="Display Columns List"/>
+      <tree id="options.tree" rows="10"
+	    editable="true" hidecolumnpicker="true" seltype="single" enableColumnDrag="false"
+	    onselect="SenderName.Options.onSelect();"
+	    preference-editable="true" preference="options.columns"
+	    onsynctopreference="return SenderName.Options.onSyncToPreference();">
+	<treecols>
+	  <treecol label="Enabled" type="checkbox"/>
+	  <treecol label="Mail Field"/>
+	  <treecol label="Addressbook Attribute"/>
+	  <treecol label="Column Label"/>
+	  <treecol label="Custom Format" flex="1"/>
+	</treecols>
+	<treechildren id="options.treechildren"/>
+      </tree>
 
-            <listcols>
-	      <listcol/>
-	      <listcol flex="1"/>
-	      <listcol flex="1"/>
-	      <listcol flex="1"/>
-	      <listcol flex="1"/>
-            </listcols>
-	  </listbox>
-	</hbox>
+      <hbox>
+	<button label="New" oncommand="SenderName.Options.onNew();"/>
+	<button label="Delete" oncommand="SenderName.Options.onDelete();"/>
+      </hbox>
+    </groupbox>
 
-	<groupbox>
-	  <grid>
-	    <columns>
-	      <column/>
-	      <column flex="1"/>
-	    </columns>
-	    <rows>
-	      <row>
-		<checkbox id="input.enabled" label="Enable this column" oncommand="SenderName.Options.onInput('enabled');"/>
-	      </row>
-	      <row>
-		<label value="Column Label: "/>
-		<textbox id="input.label" oninput="SenderName.Options.onInput('label');"/>
-	      </row>
-	      <row align="center">
-		<label value="Field Name: "/>
-		<menulist id="input.field" oncommand="SenderName.Options.onInput('field');">
-		  <menupopup>
-		    <menuitem id="menuitem.field." label="" value="undefined"/>
-		    <menuitem id="menuitem.field.sender" label="From" value="sender"/>
-		    <menuitem id="menuitem.field.recipient" label="To" value="recipient"/>
-		    <menuitem id="menuitem.field.copy" label="Cc" value="copy"/>
-		    <menuitem id="menuitem.field.custom" label="Custom" value="custom"/>
-		  </menupopup>
-		</menulist>
-	      </row>
-	      <row align="center">
-		<label value="Attribute: "/>
-		<menulist id="input.attr" oncommand="SenderName.Options.onInput('attr');">
-		  <menupopup>
-		    <menuitem id="menuitem.attr." label="" value="undefined"/>
-		    <menuitem id="menuitem.attr.displayName" label="Display Name" value="displayName"/>
-		    <menuitem id="menuitem.attr.organization" label="Organization" value="organization"/>
-		    <menuitem id="menuitem.attr.custom" label="Custom" value="custom"/>
-		  </menupopup>
-		</menulist>
-	      </row>
-	      <row align="center">
-		<label value="Column Format: "/>
-		<textbox id="input.format" oninput="SenderName.Options.onInput('format');"/>
-	      </row>
-	    </rows>
-	  </grid>
+    <groupbox>
+      <caption label="Edit Column"/>
+      <grid>
+	<columns>
+	  <column/>
+	  <column/>
+	</columns>
 
-	</groupbox>
-
-	<hbox>
-	  <button label="New" oncommand="SenderName.Options.onPressNew();"/>
-	  <button label="Del" oncommand="SenderName.Options.onPressDel()"/>
-	</hbox>
-
-      </vbox>
-    </vbox>
+	<rows>
+	  <row align="center">
+	    <checkbox id="options.enabled" label="Enabled"/>
+	  </row>
+	  <row align="center">
+	    <label value="Mail Field: "/>
+	    <menulist id="options.field">
+	      <menupopup>
+		<menuitem label="From" value="sender"/>
+		<menuitem label="To" value="recipient"/>
+		<menuitem label="Cc" value="copy"/>
+		<menuitem label="Custom" value="custom"/>
+              </menupopup>
+	    </menulist>
+	  </row>
+	  <row align="center">
+	    <label value="Addressbook Attribute: "/>
+	  <menulist id="options.attr" oncommand="SenderName.Options.onSelectAttr();">
+	    <menupopup>
+	      <menuitem label="&lastName.label;" value="lastName"/>
+	      <menuitem label="&firstField.label;" value="firstField"/>
+	      <menuitem label="&phoneticLastName.label;" value="phoneticLastName"/>
+	      <menuitem label="&phoneticFirstName.label;" value="phoneticFirstName"/>
+	      <menuitem label="&displayName.label;" value="displayName"/>
+	      <menuitem label="&nickName.label;" value="nickName"/>
+	      <menuseparator/>
+	      <menuitem label="&primaryEmail.label;" value="primaryEmail"/>
+	      <menuitem label="&secondEmail.label;" value="secondEmail"/>
+	      <menuitem label="&aimScreenName.label;" value="aimScreenName"/>
+	      <menuitem label="&preferMailFormat.label;" value="preferMailFormat"/>
+	      <menuseparator/>
+	      <menuitem label="&workPhone.label;" value="workPhone"/>
+	      <menuitem label="&homePhone.label;" value="homePhone"/>
+	      <menuitem label="&faxNumber.label;" value="faxNumber"/>
+	      <menuitem label="&pagerNumber.label;" value="pagerNumber"/>
+	      <menuitem label="&cellularNumber.label;" value="cellularNumber"/>
+	      <menuseparator/>
+	      <menuitem label="&homeAddress.label;" value="homeAddress"/>
+	      <menuitem label="&homeAddress2.label;" value="homeAddress2"/>
+	      <menuitem label="&homeCity.label;" value="homeCity"/>
+	      <menuitem label="&homeState.label;" value="homeState"/>
+	      <menuitem label="&homeZipCode.label;" value="homeZipCode"/>
+	      <menuitem label="&homeCountry.label;" value="homeCountry"/>
+	      <menuitem label="&webPage1.label;" value="webPage1"/>
+	      <menuseparator/>
+	      <menuitem label="&jobTitle.label;" value="jobTitle"/>
+	      <menuitem label="&department.label;" value="department"/>
+	      <menuitem label="&company.label;" value="company"/>
+	      <menuitem label="&workAddress.label;" value="workAddress"/>
+	      <menuitem label="&workAddress2.label;" value="workAddress2"/>
+	      <menuitem label="&workCity.label;" value="workCity"/>
+	      <menuitem label="&workState.label;" value="workState"/>
+	      <menuitem label="&workZipCode.label;" value="workZipCode"/>
+	      <menuitem label="&workCountry.label;" value="workCountry"/>
+	      <menuitem label="&WebPage2.label;" value="WebPage2"/>
+	      <menuseparator/>
+	      <menuitem label="&custom1.label;" value="custom1"/>
+	      <menuitem label="&custom2.label;" value="custom2"/>
+	      <menuitem label="&custom3.label;" value="custom3"/>
+	      <menuitem label="&custom4.label;" value="custom4"/>
+	      <menuitem label="&notes.label;" value="notes"/>
+            </menupopup>
+	  </menulist>
+	  </row>
+	  <row align="center">
+	    <label value="Column Label: "/>
+	    <textbox id="options.label"/>
+	  </row>
+	  <row align="center">
+	    <label value="Custom Format: "/>
+	    <textbox id="options.format"/>
+	  </row>
+	</rows>
+      </grid>
+      <hbox>
+	<button label="Apply" oncommand="SenderName.Options.onApply();"/>
+      </hbox>
+    </groupbox>
 
   </prefpane>
 
@@ -159,5 +195,5 @@
   <script type="application/x-javascript" src="chrome://sender_name/content/namespace.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/library.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/options.js"/>
-
+    
 </prefwindow>

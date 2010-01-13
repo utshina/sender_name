@@ -294,7 +294,17 @@
                 return false;
             },
 
-            initThreadCols: function () {
+            initThreadCols: function (old) {
+                for (var id in this.treecols) {
+                    if (this.columns[id])
+                        continue;
+                    var treecol = this.treecols[id];
+                    if (treecol.isSenderNameCol)
+                        this.exitSenderNameTreecol(old.column[id], treecol);
+                    else
+                        this.exitThunderbirdTreecol(old.column[id], treecol);
+                }
+
                 for (var id in this.columns) {
                     var column = this.columns[id];
                     var treecol = this.treecols[id];
@@ -317,8 +327,9 @@
             },
 
             setColumns: function () {
+                var old = this.columns;
                 this.columns = ColumnInfo.getColumns();
-                this.initThreadCols();
+                this.initThreadCols(old);
             },
 
             onLoad: function () {
@@ -330,7 +341,7 @@
 
             init: function () {
                 this.setColumns();
-                Preference.addObserver("column", this);
+                Preference.addObserver("columns", this);
                 Preference.addObserver("options", this);
             },
 
@@ -338,7 +349,6 @@
             observe: function (subject, topic, data) {
                 switch (topic) {
                 case "nsPref:changed": // nsIPrefBranch2
-                    alert("prefchanged");
                     this.setColumns();
                     this.addColumnHandlers();
                     this.flush();

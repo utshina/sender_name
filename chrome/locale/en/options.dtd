@@ -5,54 +5,49 @@
 
 <!ENTITY Description.displayAttribute	"Check the attributes to be displayed. If you want to change the column name, input the alternate string into the textbox.">
 
-<!ENTITY Name.box			"Name"> 
-<!ENTITY NameField1.label		"Last Name">
-<!ENTITY NameField2.label		"First Name">
-<!ENTITY PhoneticField1.label		"Last Name (phonetic)">
-<!ENTITY PhoneticField2.label		"First Name (phonetic)">
-<!ENTITY DisplayName.label		"Display Name">
-<!ENTITY NickName.label			"Nickname">
+<!ENTITY lastName.label			"Last Name">
+<!ENTITY firstName.label		"First Name">
+<!ENTITY phoneticLastName.label		"Last Name (phonetic)">
+<!ENTITY phoneticFirstName.label		"First Name (phonetic)">
+<!ENTITY displayName.label		"Display Name">
+<!ENTITY nickName.label			"Nickname">
 
-<!ENTITY Internet.box			"Internet">
-<!ENTITY PrimaryEmail.label		"E-mail">
-<!ENTITY SecondEmail.label		"2nd E-mail">
-<!ENTITY PreferMailFormat.label		"Prefer Mail Format">
-<!ENTITY ScreenName.label		"Screen Name">
+<!ENTITY primaryEmail.label		"E-mail">
+<!ENTITY secondEmail.label		"2nd E-mail">
+<!ENTITY aimScreenName.label		"Screen Name">
+<!ENTITY preferMailFormat.label		"Prefer Mail Format">
 
-<!ENTITY Phones.box			"Phones">
-<!ENTITY WorkPhone.label		"Work Phone">
-<!ENTITY HomePhone.label		"Home Phone">
-<!ENTITY FaxNumber.label		"FAX">
-<!ENTITY PagerNumber.label		"Pager Number">
-<!ENTITY CellularNumber.label		"Cellular Number">
+<!ENTITY workPhone.label		"Work Phone">
+<!ENTITY homePhone.label		"Home Phone">
+<!ENTITY faxNumber.label		"FAX">
+<!ENTITY pagerNumber.label		"Pager Number">
+<!ENTITY cellularNumber.label		"Cellular Number">
 
-<!ENTITY Address.tab			"Address"> 
-<!ENTITY Home.box			"Home"> 
-<!ENTITY HomeAddress.label		"Home Address"> 
-<!ENTITY HomeAddress2.label		"Home Address 2"> 
-<!ENTITY HomeCity.label			"Home City"> 
-<!ENTITY HomeState.label		"Home State"> 
-<!ENTITY HomeZipCode.label		"Home Zipcode"> 
-<!ENTITY HomeCountry.label		"Home Country">
-<!ENTITY HomeWebPage.label		"Home Web Page"> 
-<!ENTITY Work.box			"Work"> 
-<!ENTITY JobTitle.label			"Job Title"> 
-<!ENTITY Department.label		"Department"> 
-<!ENTITY Company.label			"Company"> 
-<!ENTITY WorkAddress.label		"Work Address"> 
-<!ENTITY WorkAddress2.label		"Work Address 2"> 
-<!ENTITY WorkCity.label			"Work City"> 
-<!ENTITY WorkState.label		"Work State"> 
-<!ENTITY WorkZipCode.label		"Work Zip Code"> 
-<!ENTITY WorkCountry.label		"Work Contry">
-<!ENTITY WorkWebPage.label		"Work Web Page"> 
+<!ENTITY home.box			"Home"> 
+<!ENTITY homeAddress.label		"Home Address"> 
+<!ENTITY homeAddress2.label		"Home Address 2"> 
+<!ENTITY homeCity.label			"Home City"> 
+<!ENTITY homeState.label		"Home State"> 
+<!ENTITY homeZipCode.label		"Home Zipcode"> 
+<!ENTITY homeCountry.label		"Home Country">
+<!ENTITY webPage1.label			"Home Web Page"> 
 
-<!ENTITY Other.tab			"Other">
-<!ENTITY Custom1.label			"Custom 1">
-<!ENTITY Custom2.label			"Custom 2">
-<!ENTITY Custom3.label			"Custom 3">
-<!ENTITY Custom4.label			"Custom 4">
-<!ENTITY Notes.box			"Notes">
+<!ENTITY jobTitle.label			"Job Title"> 
+<!ENTITY department.label		"Department"> 
+<!ENTITY company.label			"Company"> 
+<!ENTITY workAddress.label		"Work Address"> 
+<!ENTITY workAddress2.label		"Work Address 2"> 
+<!ENTITY workCity.label			"Work City"> 
+<!ENTITY workState.label		"Work State"> 
+<!ENTITY workZipCode.label		"Work Zip Code"> 
+<!ENTITY workCountry.label		"Work Contry">
+<!ENTITY webPage2.label			"Work Web Page"> 
+
+<!ENTITY custom1.label			"Custom 1">
+<!ENTITY custom2.label			"Custom 2">
+<!ENTITY custom3.label			"Custom 3">
+<!ENTITY custom4.label			"Custom 4">
+<!ENTITY notes.label			"Notes">
 
 <!ENTITY Format.tab.displayName		'Options for "Display Name"'>
 <!ENTITY Format.tab.displayName.description1	"&#x0025;s is replaced with the name in the From field if it exists, or replaced with the mail address.">
