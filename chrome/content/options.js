@@ -1,8 +1,4 @@
-/* -*- Mode: JavaScript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
- *
- * Sender Name: options file
- *
- */
+/* -*- Mode: JavaScript; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
 const SenderName = extensions["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
 with (SenderName) {
@@ -11,7 +7,7 @@ with (SenderName) {
         prefpane: document.getElementById("prefpane.displayAttribute"),
         tree: document.getElementById("options.tree"),
         treechildren: document.getElementById("options.treechildren"),
-        // menulist
+
         enabled: document.getElementById("options.enabled"),
         field: document.getElementById("options.field"),
         attr: document.getElementById("options.attr"),
@@ -27,8 +23,8 @@ with (SenderName) {
         },
 
         onSelect: function () {
-            var index = this.tree.currentIndex; if (index < 0) return;
-            var treecells = this.tree.contentView.getItemAtIndex(index).firstChild.childNodes;
+            const index = this.tree.currentIndex; if (index < 0) return;
+            const treecells = this.tree.contentView.getItemAtIndex(index).firstChild.childNodes;
 
             this.enabled.checked = treecells[0].getAttribute("value");
             this.field.selectedItem = this.findMenuItem(this.field, treecells[1].getAttribute("value"));
@@ -38,13 +34,13 @@ with (SenderName) {
         },
 
         setMenuValue: function (treecell, value, menulist) {
-            var label = this.findMenuItem(menulist, value).label;
+            const label = this.findMenuItem(menulist, value).label;
             treecell.setAttribute("label", label);
             treecell.setAttribute("value", value);
         },
 
         setTreeItem: function (treeitem, values) {
-            var treecells = treeitem.firstChild.childNodes;
+            const treecells = treeitem.firstChild.childNodes;
             treecells[0].setAttribute("value", values[0]);
             this.setMenuValue(treecells[1], values[1], this.field);
             this.setMenuValue(treecells[2], values[2], this.attr);
@@ -53,8 +49,8 @@ with (SenderName) {
         },
 
         createTreeItem: function () {
-            var treeitem = document.createElement("treeitem");
-            var treerow = document.createElement("treerow");
+            const treeitem = document.createElement("treeitem");
+            const treerow = document.createElement("treerow");
             for (var i = 0; i < 5; i++)
                 treerow.appendChild(document.createElement("treecell"));
             treeitem.appendChild(treerow);
@@ -76,8 +72,8 @@ with (SenderName) {
         },
 
         onNew: function () {
-            var treeitem = this.createTreeItem();
-            var values = [
+            const treeitem = this.createTreeItem();
+            const values = [
                 "true", "sender", "displayName", "", ""
             ];
 
@@ -90,7 +86,7 @@ with (SenderName) {
 
         onDelete: function () {
             var index = this.tree.currentIndex; if (index < 0) return;
-            var treeitem = this.treechildren.childNodes.item(index);
+            const treeitem = this.treechildren.childNodes.item(index);
             this.treechildren.removeChild(treeitem);
             const id = this.field.selectedItem.value + "." + this.attr.selectedItem.value;
             if (index > this.tree.view.rowCount - 1)
@@ -100,15 +96,16 @@ with (SenderName) {
         },
 
         onDefault: function () {
-            delete all treeitems
-            delete preference
-            call onLoad
+            while (this.treechildren.childNodes.length)
+                this.treechildren.removeChild(this.treechildren.firstChild);
+            Preference.clearUserPref("columns");
+            this.onLoad();
         },
 
         onApply: function () {
             var index = this.tree.currentIndex; if (index < 0) return;
-            var treeitem = this.tree.contentView.getItemAtIndex(index);
-            var values = [
+            const treeitem = this.tree.contentView.getItemAtIndex(index);
+            const values = [
                 this.enabled.checked,
                 this.field.selectedItem.value,
                 this.attr.selectedItem.value,
@@ -125,7 +122,7 @@ with (SenderName) {
         },
 
         onSyncToPreference: function () {
-            var columns = new Array;
+            const columns = new Array;
             const n = this.tree.view.rowCount;
             for (var i = 0; i < n; i++) {
                 var treecells = this.tree.contentView.getItemAtIndex(i).firstChild.childNodes;
