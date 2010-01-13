@@ -11,37 +11,37 @@
 	    onload="SenderName.Options.onLoad();"
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-  <prefpane id="prefpane.displayAttribute" label="&prefpane.displayAttribute;">
+  <prefpane id="prefpane.columns" label="&prefpane.columns;">
     <preferences>
       <preference id="options.columns" name="extensions.sender_name.columns" type="unichar"/>
     </preferences>
 
     <groupbox>
-      <caption label="Display Columns List"/>
+      <caption label="&columns.list;"/>
       <tree id="options.tree" rows="10"
 	    editable="true" hidecolumnpicker="true" seltype="single" enableColumnDrag="false"
 	    onselect="SenderName.Options.onSelect();"
 	    preference-editable="true" preference="options.columns"
 	    onsynctopreference="return SenderName.Options.onSyncToPreference();">
 	<treecols>
-	  <treecol label="Enabled" type="checkbox"/>
-	  <treecol label="Mail Field"/>
-	  <treecol label="Addressbook Attribute"/>
-	  <treecol label="Column Label"/>
-	  <treecol label="Custom Format" flex="1"/>
+	  <treecol label="&columns.enabled;" type="checkbox"/>
+	  <treecol label="&columns.field;"/>
+	  <treecol label="&columns.attr;"/>
+	  <treecol label="&columns.label;" flex="1"/>
+	  <treecol label="&columns.format;"/>
 	</treecols>
 	<treechildren id="options.treechildren"/>
       </tree>
 
       <hbox>
-	<button label="New" oncommand="SenderName.Options.onNew();"/>
-	<button label="Delete" oncommand="SenderName.Options.onDelete();"/>
-	<button label="Default" oncommand="SenderName.Options.onDefault();"/>
+	<button label="&button.new;" oncommand="SenderName.Options.onNew();"/>
+	<button label="&button.del;" oncommand="SenderName.Options.onDelete();"/>
+	<button label="&button.default;" oncommand="SenderName.Options.onDefault();"/>
       </hbox>
     </groupbox>
 
     <groupbox>
-      <caption label="Edit Column"/>
+      <caption label="&columns.edit;"/>
       <grid>
 	<columns>
 	  <column/>
@@ -50,10 +50,10 @@
 
 	<rows>
 	  <row align="center">
-	    <checkbox id="options.enabled" label="Enabled"/>
+	    <checkbox id="options.enabled" label="&columns.enabled;"/>
 	  </row>
 	  <row align="center">
-	    <label value="Mail Field: "/>
+	    <label value="&columns.field;: "/>
 	    <menulist id="options.field" oncommand="SenderName.Options.onSelectMenu();">
 	      <menupopup>
 		<menuitem label="From" value="author"/>
@@ -63,7 +63,7 @@
 	    </menulist>
 	  </row>
 	  <row align="center">
-	    <label value="Addressbook Attribute: "/>
+	    <label value="&columns.attr;: "/>
 	  <menulist id="options.attr" oncommand="SenderName.Options.onSelectMenu();">
 	    <menupopup>
 	      <menuitem label="&lastName.label;" value="lastName"/>
@@ -112,17 +112,18 @@
 	  </menulist>
 	  </row>
 	  <row align="center">
-	    <label value="Column Label: "/>
+	    <label value="&columns.label;: "/>
 	    <textbox id="options.label"/>
 	  </row>
 	  <row align="center">
-	    <label value="Custom Format: "/>
+	    <label value="&columns.format;: "/>
 	    <textbox id="options.format"/>
+	    <label value="* not supported yet"/>
 	  </row>
 	</rows>
       </grid>
       <hbox>
-	<button label="Apply" oncommand="SenderName.Options.onApply();"/>
+	<button label="&button.apply;" oncommand="SenderName.Options.onApply();"/>
       </hbox>
     </groupbox>
 

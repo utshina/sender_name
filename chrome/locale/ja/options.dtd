@@ -1,9 +1,20 @@
 <!ENTITY prefwindow.title		"Sender Name 設定">
-<!ENTITY prefpane.displayAttribute	"表示する属性">
+<!ENTITY prefpane.columns		"表示するカラム">
 <!ENTITY prefpane.format		"フォーマット">
 <!ENTITY prefpane.options		"オプション">
 
-<!ENTITY Description.displayAttribute	"表示する属性にチェックを入れてください．カラムの名称を変えたい場合は，テキストボックス内に入力してください．">
+<!ENTITY columns.list			"カラムの一覧">
+<!ENTITY columns.edit			"カラムの編集">
+<!ENTITY columns.enabled		"有効">
+<!ENTITY columns.field			"メールのヘッダ名">
+<!ENTITY columns.attr			"アドレス帳の属性">
+<!ENTITY columns.label			"カラムのラベル">
+<!ENTITY columns.format			"フォーマット">
+
+<!ENTITY button.new			"新規">
+<!ENTITY button.del			"削除">
+<!ENTITY button.default			"デフォルト">
+<!ENTITY button.apply			"適用">
 
 <!ENTITY lastName.label			"姓">
 <!ENTITY firstField.label		"名">
@@ -55,7 +66,7 @@
 <!ENTITY Format.undefined.label		"メールアドレスがアドレス帳にない場合のフォーマット文字列: ">
 
 <!ENTITY Format.tab.separator		"区切り文字の設定">
-<!ENTITY Format.separator.label		"送信者が複数いる場合の区切り文字: ">
+<!ENTITY Format.separator.label		"アドレスが複数ある場合の区切り文字: ">
 <!ENTITY Format.insep.label		"表示内容に区切り文字が含まれていた場合のフォーマット文字列: ">
 
 <!ENTITY Format.insep.label		"表示内容に区切り文字が含まれていた場合のフォーマット文字列: ">

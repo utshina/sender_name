@@ -4,7 +4,7 @@ const SenderName = extensions["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
 with (SenderName) {
         
 	SenderName.Options = {
-        prefpane: document.getElementById("prefpane.displayAttribute"),
+        prefpane: document.getElementById("prefpane.columns"),
         tree: document.getElementById("options.tree"),
         treechildren: document.getElementById("options.treechildren"),
 

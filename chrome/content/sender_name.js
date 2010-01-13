@@ -330,6 +330,10 @@
 
 
             addColumnHandlers2: function () {
+                const dbview = Thunderbird.getDBView();
+                if (dbview == null)
+                    return;
+
                 for (var i = 0; i < this.treecols.length; i++) {
                     const column = this.columns[i];
                     const treecol = this.treecols[i];
@@ -338,7 +342,7 @@
                         this.columnHandlers[column.id] = new ColumnHandler(column);
                     const handler = this.columnHandlers[column.id];
                     const id = treecol.getAttribute("id");
-                    Thunderbird.getDBView().addColumnHandler(id, handler);
+                    dbview.addColumnHandler(id, handler);
                 }
             },
 
@@ -354,7 +358,9 @@
             exitThunderbirdTreecol2: function (field) {
                 if (!this.savedAttributes[field])
                     return;
-                Thunderbird.getDBView().removeColumnHandler(this.ThunderbirdColumnIDs[field]);
+                const dbview = Thunderbird.getDBView();
+                if (dbview)
+                    dbview.removeColumnHandler(this.ThunderbirdColumnIDs[field]);
                 const treecol = document.getElementById(this.ThunderbirdColumnIDs[field]);
                 treecol.setAttribute("label", this.savedAttributes[field][0]);
                 treecol.setAttribute("tooltip", this.savedAttributes[field][1]);
