@@ -104,7 +104,7 @@
             headerParser: Service.getService("messenger/headerparser;1", "nsIMsgHeaderParser"),
             format: new Object,
             preferMailFormats: ["unknown", "plainText", "HTML"],
-            fieldNames: { sender: "mime2DecodedAuthor", recipient: "mime2DecodedRecipients" },
+            fieldNames: { sender: "mime2DecodedAuthor", recipient: "mime2DecodedRecipients", copy: "", },
 
             formatMultiSender: function (value) {
                 if (value.indexOf(this.format.separator.replace(/^\s+|\s+$/g, '')) < 0)
@@ -327,20 +327,111 @@
             },
 
             setColumns: function () {
-                var old = this.columns;
                 this.columns = ColumnInfo.getColumns();
                 this.initThreadCols(old);
+            },
+
+
+
+
+            addColumnHandlers2: function () {
+                for (var i = 0; i < this.treecols.length; i++) {
+                    const column = this.columns[i];
+                    const treecol = this.treecols[i];
+
+                    if (this.columnHandlers[column.id] == null)
+                        this.columnHandlers[column.id] = new ColumnHandler(column);
+                    const handler = this.columnHandlers[column.id];
+                    const id = treecol.getAttribute("id");
+                    Thunderbird.getDBView().addColumnHandler(id, handler);
+                }
+            },
+
+            ThunderbirdColumnIDs: { sender: "senderCol", recipient: "recipientCol" },
+
+            initThunderbirdTreecol2: function (field) {
+                if (this.savedAttributes[field])
+                    return false;
+                const treecol = document.getElementById(this.ThunderbirdColumnIDs[field]);
+                this.savedAttributes[field] = [treecol.getAttribute("label"), treecol.getAttribute("tooltip")];
+                return treecol;
+            },
+
+            exitThunderbirdTreecol2: function (field) {
+                if (!this.savedAttributes[field])
+                    return false;
+                Thunderbird.getDBView().removeColumnHandler(this.ThunderbirdColumnIDs[field]);
+                const treecol = document.getElementById(this.ThunderbirdColumnIDs[field]);
+                treecol.setAttribute("label", this.savedAttributes[field][0]);
+                treecol.setAttribute("tooltip", this.savedAttributes[field][1]);
+                return treecol;
+            },
+
+            treecol_pool: new Array,
+
+            shrinkTreecol: function (index) {
+                for (var i = index; i < this.treecol_pool.length; i++) {
+                    var treecol = this.treecol_pool[i];
+                    this.threadCols.removeChild(treecol);
+                    // document.deleteElement();
+                    delete this.treecol_pool[i];
+                }                    
+            },
+
+            getTreecol: function (i) {
+                if (this.treecol_pool[i] == null) {
+		            const treecol = document.createElement("treecol");
+		            treecol.setAttribute("id", this.prefix + "column" + i);
+		            treecol.setAttribute("persist", "hidden ordinal width");
+		            treecol.setAttribute("flex", "4");
+                    this.threadCols.appendChild(this.createSplitter());
+                    this.threadCols.appendChild(treecol);
+                    this.treecol_pool[i] = treecol;
+                    alert("append");
+                }
+                return this.treecol_pool[i]
+            },
+
+            initColumns: function () {
+                var columnList = ColumnInfo.getColumnList();
+                var thunderbirdColumnFlags = { sender: false, recipient: false };
+                var ci = 0, ti = 0;
+
+                this.columns = new Array;
+                this.treecols = new Array;
+                for (var i = 0; i < columnList.length; i++) {
+                    var column = columnList[i];
+                    if (column.enabled == false)
+                        continue;
+
+                    var treecol = null;
+                    var replace = this.isReplaceDefaultColumn(column);
+                    if (replace) {
+                        thunderbirdColumnFlags[column.field] = true;
+                        treecol = this.initThunderbirdTreecol2(column.field);
+                    }
+                    if (treecol == null)
+                        treecol = this.getTreecol(ti++);
+                    this.treecols[ti++] = treecol;
+                    this.columns[ci++] = column;
+                    this.setLabels(column, treecol);
+                }
+                this.shrinkTreecol(ti);
+                for (var field in thunderbirdColumnFlags)
+                    if (thunderbirdColumnFlags[field] == false)
+                        this.exitThunderbirdTreecol2(field);
             },
 
             onLoad: function () {
                 Service.getService("observer-service;1", "nsIObserverService")
                        .addObserver(this, "MsgCreateDBView", false);
                 if (Thunderbird.getDBView()) // for Search Dialog
-                    this.addColumnHandlers();
+                    this.addColumnHandlers2();
             },
 
             init: function () {
-                this.setColumns();
+                // this.setColumns();
+                this.initColumns();
                 Preference.addObserver("columns", this);
                 Preference.addObserver("options", this);
             },
@@ -349,13 +440,14 @@
             observe: function (subject, topic, data) {
                 switch (topic) {
                 case "nsPref:changed": // nsIPrefBranch2
-                    this.setColumns();
-                    this.addColumnHandlers();
+                    // this.setColumns();
+                    this.initColumns();
+                    this.addColumnHandlers2();
                     this.flush();
                     break;
 
                 case "MsgCreateDBView": // nsIObserverService
-                    this.addColumnHandlers();
+                    this.addColumnHandlers2();
                     break;
                 }
             },

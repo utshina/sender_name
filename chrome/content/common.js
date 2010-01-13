@@ -67,6 +67,11 @@
                 return this.hash;
             },
 
+            getColumnList: function () {
+                this.loadPreference();
+                return this.list;
+            },
+
         };
 
     } // end namespace

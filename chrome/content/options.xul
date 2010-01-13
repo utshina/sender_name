@@ -58,7 +58,6 @@
 		<menuitem label="From" value="sender"/>
 		<menuitem label="To" value="recipient"/>
 		<menuitem label="Cc" value="copy"/>
-		<menuitem label="Custom" value="custom"/>
               </menupopup>
 	    </menulist>
 	  </row>
