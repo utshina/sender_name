@@ -36,6 +36,7 @@
       <hbox>
 	<button label="New" oncommand="SenderName.Options.onNew();"/>
 	<button label="Delete" oncommand="SenderName.Options.onDelete();"/>
+	<button label="Default" oncommand="SenderName.Options.onDefault();"/>
       </hbox>
     </groupbox>
 
@@ -53,17 +54,17 @@
 	  </row>
 	  <row align="center">
 	    <label value="Mail Field: "/>
-	    <menulist id="options.field">
+	    <menulist id="options.field" oncommand="SenderName.Options.onSelectMenu();">
 	      <menupopup>
-		<menuitem label="From" value="sender"/>
-		<menuitem label="To" value="recipient"/>
-		<menuitem label="Cc" value="copy"/>
+		<menuitem label="From" value="author"/>
+		<menuitem label="To" value="recipients"/>
+		<menuitem label="Cc" value="ccList"/>
               </menupopup>
 	    </menulist>
 	  </row>
 	  <row align="center">
 	    <label value="Addressbook Attribute: "/>
-	  <menulist id="options.attr" oncommand="SenderName.Options.onSelectAttr();">
+	  <menulist id="options.attr" oncommand="SenderName.Options.onSelectMenu();">
 	    <menupopup>
 	      <menuitem label="&lastName.label;" value="lastName"/>
 	      <menuitem label="&firstField.label;" value="firstField"/>

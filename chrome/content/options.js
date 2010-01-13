@@ -18,14 +18,12 @@ with (SenderName) {
         label: document.getElementById("options.label"), 
         format: document.getElementById("options.format"),
 
-        ids: null,
-
         findMenuItem: function (menulist, key) {
             for each (var menuitem in menulist.firstChild.childNodes) {
                 if (menuitem.value == key)
                     return menuitem;
             }
-            return null;
+            return menulist.firstChild.firstChild;
         },
 
         onSelect: function () {
@@ -66,7 +64,6 @@ with (SenderName) {
         onLoad: function () {
             const pref = Preference.getLocalizedString("columns");
             const columns = eval(pref);
-            this.ids = new Object;
             for (var i = 0; i < columns.length; i++) {
                 var values = [
                     columns[i].enabled, columns[i].field, columns[i].attr, columns[i].label, columns[i].format,
@@ -74,8 +71,6 @@ with (SenderName) {
                 var treeitem = this.createTreeItem();
                 this.setTreeItem(treeitem, values);
                 this.treechildren.appendChild(treeitem);
-                const id = columns[i].field + "." + columns[i].attr;
-                this.ids[id] = true;
             }
             this.tree.view.selection.select(0);
         },
@@ -83,12 +78,13 @@ with (SenderName) {
         onNew: function () {
             var treeitem = this.createTreeItem();
             var values = [
-                "true", "sender", "lastName", "", ""
+                "true", "sender", "displayName", "", ""
             ];
 
             this.setTreeItem(treeitem, values);
             this.treechildren.appendChild(treeitem);
             this.tree.view.selection.select(this.tree.view.rowCount - 1);
+            this.onSelectMenu();
             this.prefpane.userChangedValue(this.tree);
         },
 
@@ -97,11 +93,16 @@ with (SenderName) {
             var treeitem = this.treechildren.childNodes.item(index);
             this.treechildren.removeChild(treeitem);
             const id = this.field.selectedItem.value + "." + this.attr.selectedItem.value;
-            this.ids[id] = true;
             if (index > this.tree.view.rowCount - 1)
                 index--;
             this.tree.view.selection.select(index);
             this.prefpane.userChangedValue(this.tree);
+        },
+
+        onDefault: function () {
+            delete all treeitems
+            delete preference
+            call onLoad
         },
 
         onApply: function () {
@@ -115,18 +116,12 @@ with (SenderName) {
                 this.format.value,
             ];
 
-            const id = this.field.selectedItem.value + "." + this.attr.selectedItem.value;
-            if (this.ids[id] == true) {
-                alert(id);
-                return;
-            }
-            this.ids[id] = true;
             this.setTreeItem(treeitem, values);
             this.prefpane.userChangedValue(this.tree);
         },
 
-        onSelectAttr: function () {
-            this.label.value = this.attr.selectedItem.label;
+        onSelectMenu: function () {
+            this.label.value = this.attr.selectedItem.label + "(" + this.field.selectedItem.label + ")";
         },
 
         onSyncToPreference: function () {

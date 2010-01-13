@@ -104,7 +104,6 @@
             headerParser: Service.getService("messenger/headerparser;1", "nsIMsgHeaderParser"),
             format: new Object,
             preferMailFormats: ["unknown", "plainText", "HTML"],
-            fieldNames: { sender: "mime2DecodedAuthor", recipient: "mime2DecodedRecipients", copy: "", },
 
             formatMultiSender: function (value) {
                 if (value.indexOf(this.format.separator.replace(/^\s+|\s+$/g, '')) < 0)
@@ -132,7 +131,7 @@
                 var addrs = new Object; var names = new Object; var fulls = new Object;
                 var values = new Array;
 
-                var line = header[this.fieldNames[column.field]];
+                var line = header[column.field];
                 var attr = column.attr;
                 const count = this.headerParser.parseHeadersWithArray(line, addrs, names, fulls);
                 for (var i = 0; i < count; i++) {
@@ -201,7 +200,7 @@
         SenderName.ThreadPane = {
             prefix: "SenderNameCol.",
             threadCols: document.getElementById('threadCols'),
-            defaultColumnIDs: { sender: "senderCol", recipient: "recipientCol" },
+            defaultColumnIDs: { author: "senderCol", recipients: "recipientCol" },
             columns: null,
             treecols: new Object,
             columnHandlers: new Array,
@@ -347,35 +346,40 @@
                 }
             },
 
-            ThunderbirdColumnIDs: { sender: "senderCol", recipient: "recipientCol" },
+            ThunderbirdColumnIDs: { author: "senderCol", recipients: "recipientCol" },
 
             initThunderbirdTreecol2: function (field) {
-                if (this.savedAttributes[field])
-                    return false;
                 const treecol = document.getElementById(this.ThunderbirdColumnIDs[field]);
-                this.savedAttributes[field] = [treecol.getAttribute("label"), treecol.getAttribute("tooltip")];
+                if (!this.savedAttributes[field])
+                    this.savedAttributes[field] = [treecol.getAttribute("label"), treecol.getAttribute("tooltip")];
                 return treecol;
             },
 
             exitThunderbirdTreecol2: function (field) {
                 if (!this.savedAttributes[field])
-                    return false;
+                    return;
                 Thunderbird.getDBView().removeColumnHandler(this.ThunderbirdColumnIDs[field]);
                 const treecol = document.getElementById(this.ThunderbirdColumnIDs[field]);
                 treecol.setAttribute("label", this.savedAttributes[field][0]);
                 treecol.setAttribute("tooltip", this.savedAttributes[field][1]);
-                return treecol;
+                delete this.savedAttributes[field];
+                return;
             },
 
             treecol_pool: new Array,
 
             shrinkTreecol: function (index) {
-                for (var i = index; i < this.treecol_pool.length; i++) {
-                    var treecol = this.treecol_pool[i];
+
+                var num = this.treecol_pool.length - index;
+                while (num-- > 0) {
+                    var treecol = this.treecol_pool.pop();
                     this.threadCols.removeChild(treecol);
-                    // document.deleteElement();
-                    delete this.treecol_pool[i];
-                }                    
+                }
+
+                for (var i = 0; i < this.treecol_pool.length; i++)
+                    dump(i + ":" + this.treecol_pool[i].id + "\n"); 
+
+
             },
 
             getTreecol: function (i) {
@@ -387,15 +391,14 @@
                     this.threadCols.appendChild(this.createSplitter());
                     this.threadCols.appendChild(treecol);
                     this.treecol_pool[i] = treecol;
-                    alert("append");
                 }
                 return this.treecol_pool[i]
             },
 
             initColumns: function () {
                 var columnList = ColumnInfo.getColumnList();
-                var thunderbirdColumnFlags = { sender: false, recipient: false };
-                var ci = 0, ti = 0;
+                var replaced = { author: false, recipients: false };
+                var ti = 0;
 
                 this.columns = new Array;
                 this.treecols = new Array;
@@ -406,19 +409,19 @@
 
                     var treecol = null;
                     var replace = this.isReplaceDefaultColumn(column);
-                    if (replace) {
-                        thunderbirdColumnFlags[column.field] = true;
+                    if (replace && !replaced[column.field]) {
+                        replaced[column.field] = true;
                         treecol = this.initThunderbirdTreecol2(column.field);
                     }
                     if (treecol == null)
                         treecol = this.getTreecol(ti++);
-                    this.treecols[ti++] = treecol;
-                    this.columns[ci++] = column;
+                    this.treecols.push(treecol);
+                    this.columns.push(column);
                     this.setLabels(column, treecol);
                 }
                 this.shrinkTreecol(ti);
-                for (var field in thunderbirdColumnFlags)
-                    if (thunderbirdColumnFlags[field] == false)
+                for (var field in replaced)
+                    if (replaced[field] == false)
                         this.exitThunderbirdTreecol2(field);
             },
 
