@@ -28,7 +28,7 @@
 	  <treecol label="&columns.field;"/>
 	  <treecol label="&columns.attr;"/>
 	  <treecol label="&columns.label;" flex="1"/>
-	  <treecol label="&columns.format;"/>
+	  <!-- treecol label="&columns.format;" -->
 	</treecols>
 	<treechildren id="options.treechildren"/>
       </tree>
@@ -115,11 +115,10 @@
 	    <label value="&columns.label;: "/>
 	    <textbox id="options.label"/>
 	  </row>
-	  <row align="center">
-	    <label value="&columns.format;: "/>
-	    <textbox id="options.format"/>
-	    <label value="* not supported yet"/>
-	  </row>
+	  <!-- row align="center" -->
+	    <!-- label value="&columns.format;: " -->
+	    <!-- textbox id="options.format" -->
+	  <!-- /row -->
 	</rows>
       </grid>
       <hbox>

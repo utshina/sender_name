@@ -1,6 +1,9 @@
 0.4:
-	* 
-
+	* Add support of displaying recipient's attributes in addition to sender's attributes
+	* Add support for up to Thunderbird 3.2a1pre
+	* Change the default behavior to replace the contents of default columns instead of creating new columns
+	* Fix several bugs about displaying
+	
 0.3:
 	* Add options to select attributes and labels to be displayed, and to specify format strings
 	* Add support of displaying any address book attributes

@@ -2,8 +2,7 @@
 
 (function () {
 
-    // begin the namespace (defined in "namespace.js")
-    const SenderName = extensions["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
+    const SenderName = window["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
     with (SenderName) {
 
         // for compatibility with Thunderbird 2.0 and 3.0
