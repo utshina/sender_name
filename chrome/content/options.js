@@ -82,7 +82,7 @@ with (SenderName) {
             this.treechildren.appendChild(treeitem);
             this.tree.view.selection.select(this.tree.view.rowCount - 1);
             this.onSelectMenu();
-            this.prefpane.userChangedValue(this.tree);
+            this.onApply();
         },
 
         onDelete: function () {
@@ -132,7 +132,7 @@ with (SenderName) {
                 column.field = treecells[1].getAttribute("value");
                 column.attr = treecells[2].getAttribute("value");
                 column.label = treecells[3].getAttribute("label");
-                // column.format = treecells[4].getAttribute("label")
+                column.format = "";
                 columns.push(column);
             }
             return uneval(columns);

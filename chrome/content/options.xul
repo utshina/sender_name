@@ -67,7 +67,7 @@
 	  <menulist id="options.attr" oncommand="SenderName.Options.onSelectMenu();">
 	    <menupopup>
 	      <menuitem label="&lastName.label;" value="lastName"/>
-	      <menuitem label="&firstField.label;" value="firstField"/>
+	      <menuitem label="&firstName.label;" value="firstName"/>
 	      <menuitem label="&phoneticLastName.label;" value="phoneticLastName"/>
 	      <menuitem label="&phoneticFirstName.label;" value="phoneticFirstName"/>
 	      <menuitem label="&displayName.label;" value="displayName"/>
@@ -101,7 +101,7 @@
 	      <menuitem label="&workState.label;" value="workState"/>
 	      <menuitem label="&workZipCode.label;" value="workZipCode"/>
 	      <menuitem label="&workCountry.label;" value="workCountry"/>
-	      <menuitem label="&WebPage2.label;" value="WebPage2"/>
+	      <menuitem label="&webPage2.label;" value="webPage2"/>
 	      <menuseparator/>
 	      <menuitem label="&custom1.label;" value="custom1"/>
 	      <menuitem label="&custom2.label;" value="custom2"/>

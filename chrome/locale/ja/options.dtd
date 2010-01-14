@@ -17,7 +17,7 @@
 <!ENTITY button.apply			"適用">
 
 <!ENTITY lastName.label			"姓">
-<!ENTITY firstField.label		"名">
+<!ENTITY firstName.label		"名">
 <!ENTITY phoneticLastName.label		"よみがな(姓)">
 <!ENTITY phoneticFirstName.label	"よみがな(名)">
 <!ENTITY displayName.label		"表示名">
@@ -51,7 +51,7 @@
 <!ENTITY workState.label		"都道府県(勤務先)"> 
 <!ENTITY workZipCode.label		"郵便番号(勤務先)"> 
 <!ENTITY workCountry.label		"国(勤務先)">
-<!ENTITY WebPage2.label			"Webページ(勤務先)"> 
+<!ENTITY webPage2.label			"Webページ(勤務先)"> 
 
 <!ENTITY custom1.label			"追加情報 1">
 <!ENTITY custom2.label			"追加情報 2">
@@ -67,8 +67,6 @@
 
 <!ENTITY Format.tab.separator		"区切り文字の設定">
 <!ENTITY Format.separator.label		"アドレスが複数ある場合の区切り文字: ">
-<!ENTITY Format.insep.label		"表示内容に区切り文字が含まれていた場合のフォーマット文字列: ">
-
 <!ENTITY Format.insep.label		"表示内容に区切り文字が含まれていた場合のフォーマット文字列: ">
 
 <!ENTITY Options.tab.columns		"カラムの設定">

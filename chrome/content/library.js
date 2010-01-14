@@ -62,11 +62,12 @@
         };
 
         SenderName.Property = {
+            prefix: "extensions.sender_name.",
             bundle: Service.getService("intl/stringbundle;1", "nsIStringBundleService")
                            .createBundle("chrome://sender_name/locale/sender_name.properties"),
 
             getFormattedString: function (key, array) {
-                return this.bundle.formatStringFromName(key, array, array.length);
+                return this.bundle.formatStringFromName(this.prefix + key, array, array.length);
             },
         };
 

@@ -1,14 +1,25 @@
 <!ENTITY prefwindow.title		"Sender Name Options">
-<!ENTITY prefpane.displayAttribute	"Display Attribute">
+<!ENTITY prefpane.columns		"Display Attribute">
 <!ENTITY prefpane.format		"Format">
 <!ENTITY prefpane.options		"Option">
 
-<!ENTITY Description.displayAttribute	"Check the attributes to be displayed. If you want to change the column name, input the alternate string into the textbox.">
+<!ENTITY columns.list			"Column List">
+<!ENTITY columns.edit			"Edit Column">
+<!ENTITY columns.enabled		"Enabled">
+<!ENTITY columns.field			"Mail Field">
+<!ENTITY columns.attr			"Addressbook Attribute">
+<!ENTITY columns.label			"Column Label">
+<!ENTITY columns.format			"Format">
+
+<!ENTITY button.new			"New">
+<!ENTITY button.del			"Del">
+<!ENTITY button.default			"Default">
+<!ENTITY button.apply			"Apply">
 
 <!ENTITY lastName.label			"Last Name">
 <!ENTITY firstName.label		"First Name">
 <!ENTITY phoneticLastName.label		"Last Name (phonetic)">
-<!ENTITY phoneticFirstName.label		"First Name (phonetic)">
+<!ENTITY phoneticFirstName.label	"First Name (phonetic)">
 <!ENTITY displayName.label		"Display Name">
 <!ENTITY nickName.label			"Nickname">
 
@@ -23,7 +34,6 @@
 <!ENTITY pagerNumber.label		"Pager Number">
 <!ENTITY cellularNumber.label		"Cellular Number">
 
-<!ENTITY home.box			"Home"> 
 <!ENTITY homeAddress.label		"Home Address"> 
 <!ENTITY homeAddress2.label		"Home Address 2"> 
 <!ENTITY homeCity.label			"Home City"> 
@@ -56,7 +66,7 @@
 <!ENTITY Format.undefined.label		"The format string used when the mail address is not included in any address book: ">
 
 <!ENTITY Format.tab.separator		"Options for separators">
-<!ENTITY Format.separator.label		"The separator character used for separating multiple senders: ">
+<!ENTITY Format.separator.label		"The separator character for separating multiple addresses: ">
 <!ENTITY Format.insep.label		"The format string used when the separator is included in the address book field: ">
 
 <!ENTITY Options.tab.columns		"Options for columns">

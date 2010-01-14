@@ -195,13 +195,13 @@
         SenderName.ThreadPane = {
             prefix: "SenderNameCol.",
             threadCols: document.getElementById('threadCols'),
-            defaultColumnIDs: { author: "senderCol", recipients: "recipientCol" },
-            columns: null,
-            treecols: new Object,
-            columnHandlers: new Array,
+            thunderbirdColumnIDs: { author: "senderCol", recipients: "recipientCol" },
+            columnHandlers: new Object,
             savedAttributes: new Object,
+            treecol_pool: new Array,
+            treecols: null,
+            columns: null,
 
-            // column handlers
             flush: function () {
                 for each (var handler in this.columnHandlers)
                     handler.flush();
@@ -209,129 +209,7 @@
             },
 
             addColumnHandlers: function () {
-                for (var cid in this.treecols) {
-                    const column = this.columns[cid];
-                    const treecol = this.treecols[cid];
-
-                    const id = treecol.getAttribute("id");
-                    const handler = new ColumnHandler(column);
-                    this.columnHandlers[id] = handler;
-                    Thunderbird.getDBView().addColumnHandler(id, handler);
-                }
-            },
-
-            // handle treecol
-            createSplitter: function () {
-		        const splitter = document.createElement("splitter");
-		        splitter.setAttribute("class", "tree-splitter");
-		        return splitter;
-            },
-
-            setLabels: function (column, treecol) {
-                const label = column.label;
-                const tooltip = Property.getFormattedString("tooltip", [label]);
-
-		        treecol.setAttribute("label", label);
-		        treecol.setAttribute("tooltiptext", tooltip);
-            },
-
-            saveLabels: function (treecol) {
-                var id = treecol.getAttribute("id");
-                this.savedAttributes[id] = [treecol.getAttribute("label"), treecol.getAttribute("tooltip")];
-            },
-
-            restoreLabels: function (treecol) {
-                var id = treecol.getAttribute("id");
-                treecol.setAttribute("label", this.savedAttributes[id][0]);
-                treecol.setAttribute("tooltip", this.savedAttributes[id][1]);
-            },
-
-            createTreecol: function (column) {
-		        const treecol = document.createElement("treecol");
-
-		        treecol.setAttribute("id", this.prefix + column.id);
-		        treecol.setAttribute("persist", "hidden ordinal width");
-		        treecol.setAttribute("flex", "4");
-                treecol.isSenderNameCol = true;
-		        return treecol;
-            },
-
-            initThunderbirdTreecol: function (column) {
-                treecol = document.getElementById(this.defaultColumnIDs[column.field]);
-                this.saveLabels(treecol);
-                return treecol;
-            },
-
-            exitThunderbirdTreecol: function (column, treecol) {
-                Thunderbird.getDBView().removeColumnHandler(this.defaultColumnIDs[column.field]);
-                this.restoreLabels(treecol);
-                delete this.treecols[column.id];
-            },
-
-            initSenderNameTreecol: function (column) {
-                treecol = this.createTreecol(column)
-                this.threadCols.appendChild(this.createSplitter());
-                this.threadCols.appendChild(treecol);
-                return treecol;
-            },
-
-            exitSenderNameTreecol: function (column, treecol) {
-                this.threadCols.removeChild(treecol);
-                delete this.treecols[column.id];
-            },
-
-            isReplaceDefaultColumn: function (column) {
-                if (column.attr == "displayName" && 
-                    !Preference.getBoolPref("options.create_display_name_column") &&
-                    this.defaultColumnIDs[column.field])
-                    return true;
-                return false;
-            },
-
-            initThreadCols: function (old) {
-                for (var id in this.treecols) {
-                    if (this.columns[id])
-                        continue;
-                    var treecol = this.treecols[id];
-                    if (treecol.isSenderNameCol)
-                        this.exitSenderNameTreecol(old.column[id], treecol);
-                    else
-                        this.exitThunderbirdTreecol(old.column[id], treecol);
-                }
-
-                for (var id in this.columns) {
-                    var column = this.columns[id];
-                    var treecol = this.treecols[id];
-                    var replace = this.isReplaceDefaultColumn(column);
-
-                    if (treecol) {
-                        if (treecol.isSenderNameCol && (replace || !column.enabled))
-                            this.exitSenderNameTreecol(column, treecol);
-                        else if (!treecol.isSenderNameCol && (!replace || !column.enabled))
-                            this.exitThunderbirdTreecol(column, treecol);
-                    }
-
-                    if (column.enabled) {
-                        if (!this.treecols[id])
-                            this.treecols[id] = replace ?
-                            this.initThunderbirdTreecol(column) : this.initSenderNameTreecol(column);
-                        this.setLabels(column, this.treecols[id]);
-                    }
-                }
-            },
-
-            setColumns: function () {
-                this.columns = ColumnInfo.getColumns();
-                this.initThreadCols(old);
-            },
-
-
-
-
-            addColumnHandlers2: function () {
-                const dbview = Thunderbird.getDBView();
-                if (dbview == null)
-                    return;
+                const dbview = Thunderbird.getDBView(); if (dbview == null) return;
 
                 for (var i = 0; i < this.treecols.length; i++) {
                     const column = this.columns[i];
@@ -345,66 +223,88 @@
                 }
             },
 
-            ThunderbirdColumnIDs: { author: "senderCol", recipients: "recipientCol" },
+            setLabels: function (column, treecol) {
+                const label = column.label;
+                const tooltip = Property.getFormattedString("tooltip", [label]);
 
-            initThunderbirdTreecol2: function (field) {
-                const treecol = document.getElementById(this.ThunderbirdColumnIDs[field]);
+		        treecol.setAttribute("label", label);
+		        treecol.setAttribute("tooltiptext", tooltip);
+            },
+
+            initThunderbirdTreecol: function (field) {
+                const treecol = document.getElementById(this.thunderbirdColumnIDs[field]);
                 if (!this.savedAttributes[field])
-                    this.savedAttributes[field] = [treecol.getAttribute("label"), treecol.getAttribute("tooltip")];
+                    this.savedAttributes[field] = [treecol.getAttribute("label"), treecol.getAttribute("tooltiptext")];
                 return treecol;
             },
 
-            exitThunderbirdTreecol2: function (field) {
-                if (!this.savedAttributes[field])
-                    return;
-                const dbview = Thunderbird.getDBView();
-                if (dbview)
-                    dbview.removeColumnHandler(this.ThunderbirdColumnIDs[field]);
-                const treecol = document.getElementById(this.ThunderbirdColumnIDs[field]);
-                treecol.setAttribute("label", this.savedAttributes[field][0]);
-                treecol.setAttribute("tooltip", this.savedAttributes[field][1]);
-                delete this.savedAttributes[field];
-                return;
+            exitThunderbirdTreecol: function (field) {
+                const treecol = document.getElementById(this.thunderbirdColumnIDs[field]);
+                if (this.savedAttributes[field]) {
+                    const dbview = Thunderbird.getDBView();
+                    if (dbview)
+                        dbview.removeColumnHandler(this.thunderbirdColumnIDs[field]);
+
+                    treecol.setAttribute("label", this.savedAttributes[field][0]);
+                    treecol.setAttribute("tooltiptext", this.savedAttributes[field][1]);
+                    delete this.savedAttributes[field];
+                }
+                return treecol;
             },
 
-            treecol_pool: new Array,
+            isReplaceDefaultColumn: function (column) {
+                if (column.attr == "displayName" && 
+                    this.thunderbirdColumnIDs[column.field] &&
+                    !Preference.getBoolPref("options.create_display_name_column"))
+                    return true;
+                return false;
+            },
 
-            shrinkTreecol: function (index) {
-
+            shrinkTreecols: function (index) {
                 var num = this.treecol_pool.length - index;
                 while (num-- > 0) {
                     var treecol = this.treecol_pool.pop();
                     this.threadCols.removeChild(treecol);
                 }
-
-                for (var i = 0; i < this.treecol_pool.length; i++)
-                    dump(i + ":" + this.treecol_pool[i].id + "\n"); 
-
-
             },
 
             getTreecol: function (i) {
                 if (this.treecol_pool[i] == null) {
+		            const splitter = document.createElement("splitter");
+		            splitter.setAttribute("class", "tree-splitter");
+                    this.threadCols.appendChild(splitter);
+
 		            const treecol = document.createElement("treecol");
 		            treecol.setAttribute("id", this.prefix + "column" + i);
 		            treecol.setAttribute("persist", "hidden ordinal width");
 		            treecol.setAttribute("flex", "4");
-                    this.threadCols.appendChild(this.createSplitter());
                     this.threadCols.appendChild(treecol);
+
                     this.treecol_pool[i] = treecol;
                 }
                 return this.treecol_pool[i]
             },
 
+            getColumnList: function () {
+                const pref = Preference.getLocalizedString("columns");
+                const columns = eval(pref);
+                for (var i = 0; i < columns.length; i++) {
+                    var column = columns[i];
+                    column.id = (column.attr == "custom") ? column.format : column.field + "." + column.attr;
+                    column.index = i;
+                }
+                return columns;
+            },
+
             initColumns: function () {
-                var columnList = ColumnInfo.getColumnList();
+                var list = this.getColumnList();
                 var replaced = { author: false, recipients: false };
                 var ti = 0;
 
                 this.columns = new Array;
                 this.treecols = new Array;
-                for (var i = 0; i < columnList.length; i++) {
-                    var column = columnList[i];
+                for (var i = 0; i < list.length; i++) {
+                    var column = list[i];
                     if (column.enabled == false)
                         continue;
 
@@ -412,29 +312,27 @@
                     var replace = this.isReplaceDefaultColumn(column);
                     if (replace && !replaced[column.field]) {
                         replaced[column.field] = true;
-                        treecol = this.initThunderbirdTreecol2(column.field);
-                    }
-                    if (treecol == null)
+                        treecol = this.initThunderbirdTreecol(column.field);
+                    } else
                         treecol = this.getTreecol(ti++);
                     this.treecols.push(treecol);
                     this.columns.push(column);
                     this.setLabels(column, treecol);
                 }
-                this.shrinkTreecol(ti);
+                this.shrinkTreecols(ti);
                 for (var field in replaced)
                     if (replaced[field] == false)
-                        this.exitThunderbirdTreecol2(field);
+                        this.exitThunderbirdTreecol(field);
             },
 
             onLoad: function () {
                 Service.getService("observer-service;1", "nsIObserverService")
                        .addObserver(this, "MsgCreateDBView", false);
                 if (Thunderbird.getDBView()) // for Search Dialog
-                    this.addColumnHandlers2();
+                    this.addColumnHandlers();
             },
 
             init: function () {
-                // this.setColumns();
                 this.initColumns();
                 Preference.addObserver("columns", this);
                 Preference.addObserver("options", this);
@@ -444,14 +342,13 @@
             observe: function (subject, topic, data) {
                 switch (topic) {
                 case "nsPref:changed": // nsIPrefBranch2
-                    // this.setColumns();
                     this.initColumns();
-                    this.addColumnHandlers2();
+                    this.addColumnHandlers();
                     this.flush();
                     break;
 
                 case "MsgCreateDBView": // nsIObserverService
-                    this.addColumnHandlers2();
+                    this.addColumnHandlers();
                     break;
                 }
             },
