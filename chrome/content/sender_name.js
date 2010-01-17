@@ -100,7 +100,7 @@
             format: new Object,
             preferMailFormats: ["unknown", "plainText", "HTML"],
 
-            formatMultiSender: function (value) {
+            formatMultiAddress: function (value) {
                 if (value.indexOf(this.format.separator.replace(/^\s+|\s+$/g, '')) < 0)
                     return value;
                 return this.format.insep.replace("%s", value);
@@ -119,6 +119,8 @@
                     return Preference.getLocalizedString("attr.label." + type);
                 } else if (attr == "notes")
                     return value.replace("\n", " ", "g");
+                if (value == undefined)
+                    return "";
                 return value;
             },
 
@@ -134,8 +136,8 @@
                     const card = AddressBook.getCard(addr);
                     const value = card ? this.formatAttribute(attr, card[attr]) :
                                        this.formatUndefined(attr, addr, names.value[i]);
-                    if (count > 0)
-                        value = this.formatMultiSender(value);
+                    if (count > 1)
+                        value = this.formatMultiAddress(value);
                     values.push(value);
                 }
                 return values.join(this.format.separator);
