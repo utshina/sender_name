@@ -135,7 +135,7 @@
                     const addr = addrs.value[i];
                     const card = AddressBook.getCard(addr);
                     const value = card ? this.formatAttribute(attr, card[attr]) :
-                                       this.formatUndefined(attr, addr, names.value[i]);
+                        this.formatUndefined(attr, addr, names.value[i]);
                     if (count > 1)
                         value = this.formatMultiAddress(value);
                     values.push(value);
@@ -206,7 +206,7 @@
 
             flush: function () {
                 for each (var handler in this.columnHandlers)
-                    handler.flush();
+                handler.flush();
                 GetThreadTree().treeBoxObject.invalidate();
             },
 
@@ -229,8 +229,8 @@
                 const label = column.label;
                 const tooltip = Property.getFormattedString("tooltip", [label]);
 
-		        treecol.setAttribute("label", label);
-		        treecol.setAttribute("tooltiptext", tooltip);
+                treecol.setAttribute("label", label);
+                treecol.setAttribute("tooltiptext", tooltip);
             },
 
             initThunderbirdTreecol: function (field) {
@@ -272,14 +272,14 @@
 
             getTreecol: function (i) {
                 if (this.treecol_pool[i] == null) {
-		            const splitter = document.createElement("splitter");
-		            splitter.setAttribute("class", "tree-splitter");
+                    const splitter = document.createElement("splitter");
+                    splitter.setAttribute("class", "tree-splitter");
                     this.threadCols.appendChild(splitter);
 
-		            const treecol = document.createElement("treecol");
-		            treecol.setAttribute("id", this.prefix + "column" + i);
-		            treecol.setAttribute("persist", "hidden ordinal width");
-		            treecol.setAttribute("flex", "4");
+                    const treecol = document.createElement("treecol");
+                    treecol.setAttribute("id", this.prefix + "column" + i);
+                    treecol.setAttribute("persist", "hidden ordinal width");
+                    treecol.setAttribute("flex", "4");
                     this.threadCols.appendChild(treecol);
 
                     this.treecol_pool[i] = treecol;
@@ -288,8 +288,7 @@
             },
 
             getColumnList: function () {
-                const pref = Preference.getLocalizedString("columns");
-                const columns = eval(pref);
+                const columns = Config.loadColumns();
                 for (var i = 0; i < columns.length; i++) {
                     var column = columns[i];
                     column.id = (column.attr == "custom") ? column.format : column.field + "." + column.attr;
@@ -329,7 +328,7 @@
 
             onLoad: function () {
                 Service.getService("observer-service;1", "nsIObserverService")
-                       .addObserver(this, "MsgCreateDBView", false);
+                .addObserver(this, "MsgCreateDBView", false);
                 if (Thunderbird.getDBView()) // for Search Dialog
                     this.addColumnHandlers();
             },

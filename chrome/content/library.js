@@ -17,10 +17,12 @@
             prefs: Service.getService("preferences-service;1", "nsIPrefService"),
 
             getBranch: function (key) { return this.prefs.getBranch(this.prefix + key); },
+            getDefaultBranch: function (key) { return this.prefs.getDefaultBranch(this.prefix + key); },
         };
 
         SenderName.Preference = {
             branch: PreferenceRoot.getBranch(""),
+            default_branch: PreferenceRoot.getDefaultBranch(""),
 
             getBranch: function (key) { return PreferenceRoot.getBranch(key); },
             getBoolPref: function (key) { return this.branch.getBoolPref(key); },
@@ -41,17 +43,8 @@
                 return this.branch.getComplexValue(key, Components.interfaces.nsISupportsString).data;
             },
 
-            getPref: function (key, type) {
-                switch(type) {
-                case "bool":
-                    return this.getBoolPref(key);
-                case "char":
-                    return this.getCharPref(key);
-                case "int":
-                    return this.getIntPref(key);
-                case "wstring":
-                    return this.getLocalizedString(key);
-                };
+            getDefaultLocalizedString: function (key) {
+                return this.default_branch.getComplexValue(key, Components.interfaces.nsIPrefLocalizedString).data;
             },
 
             addObserver: function (key, observer) {

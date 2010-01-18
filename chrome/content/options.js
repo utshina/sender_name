@@ -58,9 +58,7 @@ with (SenderName) {
             return treeitem;
         },
 
-        onLoad: function () {
-            const pref = Preference.getLocalizedString("columns");
-            const columns = eval(pref);
+        setTree: function (columns) {
             for (var i = 0; i < columns.length; i++) {
                 const values = [
                     columns[i].enabled, columns[i].field, columns[i].attr, columns[i].label, // columns[i].format,
@@ -70,6 +68,11 @@ with (SenderName) {
                 this.treechildren.appendChild(treeitem);
             }
             this.tree.view.selection.select(0);
+        },
+
+        onLoad: function () {
+            const columns = Config.loadColumns();
+            this.setTree(columns);
         },
 
         onNew: function () {
@@ -99,8 +102,9 @@ with (SenderName) {
         onDefault: function () {
             while (this.treechildren.childNodes.length)
                 this.treechildren.removeChild(this.treechildren.firstChild);
-            Preference.clearUserPref("columns");
-            this.onLoad();
+            const columns = Config.loadDefaultColumns();
+            this.setTree(columns);
+            this.prefpane.userChangedValue(this.tree);
         },
 
         onApply: function () {
@@ -135,7 +139,7 @@ with (SenderName) {
                 column.format = "";
                 columns.push(column);
             }
-            return uneval(columns);
+            return Config.stringify(columns);
         },
 	};
 
