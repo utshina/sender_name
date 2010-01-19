@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
-<?xml-stylesheet href="chrome://messenger/skin/preferences/preferences.css"?>
-<?xml-stylesheet href="chrome://mozapps/content/preferences/preferences.css"?>
-<?xml-stylesheet href="options.css" type="text/css"?>
+<?xml-stylesheet href="chrome://mozapps/content/preferences/preferences.css" type="text/css"?> 
+<?xml-stylesheet href="chrome://sender_name/skin/options.css" type="text/css"?>
 <!DOCTYPE prefwindow SYSTEM "chrome://sender_name/locale/options.dtd">
 
 <prefwindow type="prefwindow"
@@ -191,6 +190,8 @@
       </vbox>
     </vbox>
   </prefpane>
+
+
 
   <script type="application/x-javascript" src="chrome://sender_name/content/namespace.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/library.js"/>

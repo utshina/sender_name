@@ -97,8 +97,8 @@
 
         SenderName.Formatter = {
             headerParser: Service.getService("messenger/headerparser;1", "nsIMsgHeaderParser"),
-            format: new Object,
             preferMailFormats: ["unknown", "plainText", "HTML"],
+            format: new Object,
 
             formatMultiAddress: function (value) {
                 if (value.indexOf(this.format.separator.replace(/^\s+|\s+$/g, '')) < 0)
@@ -114,13 +114,13 @@
             },
 
             formatAttribute: function (attr, value) {
+                if (value == undefined)
+                    return "";
                 if (attr == "preferMailFormat") {
                     const type = value <= 2 ? this.preferMailFormats[value] : "undefined";
                     return Preference.getLocalizedString("attr.label." + type);
                 } else if (attr == "notes")
                     return value.replace("\n", " ", "g");
-                if (value == undefined)
-                    return "";
                 return value;
             },
 

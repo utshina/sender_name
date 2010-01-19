@@ -64,6 +64,14 @@
             },
         };
 
+        SenderName.Log = {
+            console: Service.getService("consoleservice;1", "nsIConsoleService"),
+
+            put: function (str) {
+                this.console.logStringMessage(str);
+            },
+        };
+
     } // end namespace
 
 })();
