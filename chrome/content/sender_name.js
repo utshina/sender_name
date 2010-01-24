@@ -5,9 +5,7 @@
     const SenderName = window["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
     with (SenderName) {
 
-        // for compatibility with Thunderbird 2.0 and 3.0
         SenderName.Thunderbird = {
-
             getDBView: function () {
                 if (gDBView)
                     return gDBView;
@@ -15,78 +13,48 @@
                     return GetDBView();
                 return null;
             },
-
-            getAddrbooks: function () {
-                // Thunderbird 3.0
-                const abManager = Service.getService("abmanager;1", "nsIAbManager");
-                if (abManager)
-                    return abManager.directories;
-                // Thunderbird 2.0
-                const RDF = Service.getService("rdf/rdf-service;1", "nsIRDFService");
-                const nsIAbDirectory = Components.interfaces.nsIAbDirectory;
-                const parentDir = RDF.GetResource("moz-abdirectory://").QueryInterface(nsIAbDirectory);
-                return parentDir.childNodes;
-            },
-
-            getAddrbookURI: function (addrbook) {
-                // Thunderbird 3.0
-                if (addrbook.URI)
-                    return addrbook.URI;
-                // Thunderbird 2.0
-                else if (addrbook instanceof Components.interfaces.nsIAbMDBDirectory &&
-                         typeof(addrbook.getDirUri) == "function")
-                    return addrbook.getDirUri();
-                return "";
-            },
-
-            addAddressBookListener: function (listener) {
-                // Thunderbird 3.0
-                const abManager = Service.getService("abmanager;1", "nsIAbManager");
-                if (abManager) {
-                    abManager.addAddressBookListener(listener, Components.interfaces.nsIAbListener.all);
-                    return;
-                }
-                // Thunderbird 2.0
-                const addrbookSession = Service.getService("addressbook/services/session;1", "nsIAddrBookSession");
-                addrbookSession.addAddressBookListener(listener, Components.interfaces.nsIAddrBookSession.all);
-            },
         },
 
-        SenderName.AddressBook = {
-            addrDBs: new Array,
-            cardCache: new Object,
+        SenderName.Contact = {
+            directories: new Array,
+            contacts: new Object,
 
-            getCardFromDB: function (addr) {
-                for each (var ab in this.addrDBs) {
-                    var card = ab.cardForEmailAddress(addr);
-                    if (card != null)
-                        return card;
+            getContactFromDirectories: function (addr) {
+                for each (var dir in this.directories) {
+                    var contact = dir.cardForEmailAddress(addr);
+                    if (contact)
+                        return contact;
                 }
                 return null;
             },
 
-            getCard: function (addr) {
-                if (this.cardCache[addr] == undefined)
-                    this.cardCache[addr] = this.getCardFromDB(addr);
-                return this.cardCache[addr];
+            getContact: function (addr) {
+                if (!this.contacts[addr])
+                    this.contacts[addr] = this.getContactFromDirectories(addr);
+                return this.contacts[addr];
+            },
+
+            getAttribute: function (addr, attr) {
+                const contact = this.getContact(addr);
+                return Addressbook.getAttributeFromContact(contact, attr);
             },
 
             onChange: function() {
-                this.cardCache = new Object;
+                this.contacts = new Object;
                 ThreadPane.flush();
             },
 
             init: function () {
-                const addrbooks = Thunderbird.getAddrbooks();
+                const addrbooks = Addressbook.getAddressbooks();
                 while (addrbooks.hasMoreElements()) {
                     var addrbook = addrbooks.getNext();
                     if (!(addrbook instanceof Components.interfaces.nsIAbDirectory))
                         continue;
-                    if (!addrbook.isRemote && Thunderbird.getAddrbookURI(addrbook).indexOf("history.mab") >= 0)
+                    if (!addrbook.isRemote && Addressbook.getAddressbookURI(addrbook).indexOf("history.mab") >= 0)
                         continue;
-                    this.addrDBs.push(addrbook);
+                    this.directories.push(addrbook);
                 }
-                Thunderbird.addAddressBookListener(this);
+                Addressbook.addListener(this);
             },
 
             // Implement nsIAbListener
@@ -98,6 +66,7 @@
         SenderName.Formatter = {
             headerParser: Service.getService("messenger/headerparser;1", "nsIMsgHeaderParser"),
             preferMailFormats: ["unknown", "plainText", "HTML"],
+            attrLabels: new Object,
             format: new Object,
 
             formatMultiAddress: function (value) {
@@ -106,47 +75,65 @@
                 return this.format.insep.replace("%s", value);
             },
 
-            formatUndefined: function (attr, addr, name) {
-                if (attr != "displayName")
-                    return "";
-                const args = { s: name ? name : addr, n: name, a: addr};
-                return this.format.undefined.replace(/%([sna])/g, function (all, key) { return args[key]; });
-            },
+            formatOneAddress: function (addr, attr, name) {
+                const value = Contact.getAttribute(addr, attr);
 
-            formatAttribute: function (attr, value) {
-                if (value == undefined)
-                    return "";
-                if (attr == "preferMailFormat") {
-                    const type = value <= 2 ? this.preferMailFormats[value] : "undefined";
-                    return Preference.getLocalizedString("attr.label." + type);
-                } else if (attr == "notes")
+                if (typeof(value) == "undefined")
+                    return this.format.unsupported;
+
+                if (attr == "DisplayName" && value == null) {
+                    const args = { s: name ? name : addr, n: name, a: addr};
+                    return this.format.undefined.replace
+                    (/%([sna])/g, function (all, key) { return args[key]; });
+                }
+
+                if (value == null)
+                    return this.format.nocard;
+
+                if (attr == "PreferMailFormat") {
+                    const type = this.preferMailFormats[value];
+                    return this.attrLabels[type];
+                } else if (attr == "AllowRemoteContent") {
+                    return value ? this.attrLabels["allowed"] : this.attrLabels["denied"];
+                }
+
+                if (value == "")
+                    return this.format.nullstr;
+
+                if (attr == "LastModifiedDate") {
+                    return (new Date(value*1000)).toLocaleString();
+                } else if (attr == "Notes") {
                     return value.replace("\n", " ", "g");
+                }
                 return value;
             },
 
             formatAttrValue: function (column, header) {
                 var addrs = new Object; var names = new Object; var fulls = new Object;
-                var values = new Array;
-
+                var strs = new Array;
                 var line = header[column.field];
                 var attr = column.attr;
                 const count = this.headerParser.parseHeadersWithArray(line, addrs, names, fulls);
                 for (var i = 0; i < count; i++) {
                     const addr = addrs.value[i];
-                    const card = AddressBook.getCard(addr);
-                    const value = card ? this.formatAttribute(attr, card[attr]) :
-                        this.formatUndefined(attr, addr, names.value[i]);
+                    const name = names.value[i];
+                    var str = this.formatOneAddress(addr, attr, name);
                     if (count > 1)
-                        value = this.formatMultiAddress(value);
-                    values.push(value);
+                        str = this.formatMultiAddress(str);
+                    strs.push(str);
                 }
-                return values.join(this.format.separator);
+                return strs.join(this.format.separator);
             },
 
             init: function () {
                 const types = Preference.getBranch("format.").getChildList("", {});
                 for (var type; type = types.shift();)
-                    this.format[type] = Preference.getUnicodePref("format." + type);
+                    this.format[type] = Preference.getLocalizedString("format." + type);
+                const keys = ["unknown", "plainText", "HTML", "allowed", "denied"];
+                for (var i = 0; i < keys.length; i++) {
+                    var key = keys[i];
+                    this.attrLabels[key] = Preference.getLocalizedString("attr.label." + key);
+                }
                 Preference.addObserver("format.", this);
             },
 
@@ -166,7 +153,7 @@
 
             getAttributeValue: function (header) {
                 const uri = header.folder.getUriForMsg(header);
-                if (this.cache[uri] == undefined)
+                if (!this.cache[uri])
                     this.cache[uri] = Formatter.formatAttrValue(this.column, header);
                 return this.cache[uri];
             },
@@ -255,7 +242,7 @@
             },
 
             isReplaceDefaultColumn: function (column) {
-                if (column.attr == "displayName" && 
+                if (column.attr == "DisplayName" && 
                     this.thunderbirdColumnIDs[column.field] &&
                     !Preference.getBoolPref("options.create_display_name_column"))
                     return true;
@@ -306,7 +293,7 @@
                 this.treecols = new Array;
                 for (var i = 0; i < list.length; i++) {
                     var column = list[i];
-                    if (column.enabled == false)
+                    if (!column.enabled)
                         continue;
 
                     var treecol = null;
@@ -353,11 +340,12 @@
                     break;
                 }
             },
-        };
+        }; // end ThreadPane
 
         SenderName.Main = {
             onLoad: function () {
-                AddressBook.init();
+                Tasks.init();
+                Contact.init();
                 ThreadPane.onLoad();
             },
 
@@ -367,6 +355,8 @@
                 window.addEventListener("load", Main.onLoad, false);
             },
         };
+
+        // initialize
         Main.main();
 
     } // end namespace

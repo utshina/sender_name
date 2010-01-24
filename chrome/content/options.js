@@ -27,11 +27,11 @@ with (SenderName) {
             const index = this.tree.currentIndex; if (index < 0) return;
             const treecells = this.tree.contentView.getItemAtIndex(index).firstChild.childNodes;
 
-            this.enabled.checked = treecells[0].getAttribute("value");
-            this.field.selectedItem = this.findMenuItem(this.field, treecells[1].getAttribute("value"));
-            this.attr.selectedItem = this.findMenuItem(this.attr, treecells[2].getAttribute("value"));
-            this.label.value = treecells[3].getAttribute("label");
-            // this.format.value = treecells[4].getAttribute("label");
+            this.enabled.setAttribute("checked", treecells[0].getAttribute("value"));
+            this.field.setAttribute("selectedItem", this.findMenuItem(this.field, treecells[1].getAttribute("value")));
+            this.attr.setAttribute("selectedItem", this.findMenuItem(this.attr, treecells[2].getAttribute("value")));
+            this.label.setAttribute("value", treecells[3].getAttribute("label"));
+            // this.format.setAttribute("value", treecells[4].getAttribute("label"));
         },
 
         setMenuValue: function (treecell, value, menulist) {
@@ -61,7 +61,8 @@ with (SenderName) {
         setTree: function (columns) {
             for (var i = 0; i < columns.length; i++) {
                 const values = [
-                    columns[i].enabled, columns[i].field, columns[i].attr, columns[i].label, // columns[i].format,
+                    columns[i].enabled ? "true" : "false",
+                    columns[i].field, columns[i].attr, columns[i].label, // columns[i].format,
                 ];
                 const treeitem = this.createTreeItem();
                 this.setTreeItem(treeitem, values);
@@ -78,7 +79,7 @@ with (SenderName) {
         onNew: function () {
             const treeitem = this.createTreeItem();
             const values = [
-                "true", "sender", "displayName", "", ""
+                true, "sender", "displayName", "", ""
             ];
 
             this.setTreeItem(treeitem, values);
@@ -139,7 +140,7 @@ with (SenderName) {
                 column.format = "";
                 columns.push(column);
             }
-            return Config.stringify(columns);
+            return Config.saveColumns(columns);
         },
 	};
 

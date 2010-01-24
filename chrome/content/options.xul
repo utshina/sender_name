@@ -10,7 +10,9 @@
 	    onload="SenderName.Options.onLoad();"
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
+  <!-- Columns -->
   <prefpane id="prefpane.columns" label="&prefpane.columns;">
+
     <preferences>
       <preference id="options.columns" name="extensions.sender_name.columns" type="unichar"/>
     </preferences>
@@ -65,48 +67,61 @@
 	    <label value="&columns.attr;: "/>
 	  <menulist id="options.attr" oncommand="SenderName.Options.onSelectMenu();">
 	    <menupopup>
-	      <menuitem label="&lastName.label;" value="lastName"/>
-	      <menuitem label="&firstName.label;" value="firstName"/>
-	      <menuitem label="&phoneticLastName.label;" value="phoneticLastName"/>
-	      <menuitem label="&phoneticFirstName.label;" value="phoneticFirstName"/>
-	      <menuitem label="&displayName.label;" value="displayName"/>
-	      <menuitem label="&nickName.label;" value="nickName"/>
+	      <menuitem label="&attr.lastName;" value="LastName"/>
+	      <menuitem label="&attr.firstName;" value="FirstName"/>
+	      <menuitem label="&attr.phoneticLastName;" value="PhoneticLastName"/>
+	      <menuitem label="&attr.phoneticFirstName;" value="PhoneticFirstName"/>
+	      <menuitem label="&attr.displayName;" value="DisplayName"/>
+	      <menuitem label="&attr.nickName;" value="NickName"/>
+	      <menuitem label="&attr.spouseName;" value="SpouseName"/>
+	      <menuitem label="&attr.familyName;" value="FamilyName"/>
 	      <menuseparator/>
-	      <menuitem label="&primaryEmail.label;" value="primaryEmail"/>
-	      <menuitem label="&secondEmail.label;" value="secondEmail"/>
-	      <menuitem label="&aimScreenName.label;" value="aimScreenName"/>
-	      <menuitem label="&preferMailFormat.label;" value="preferMailFormat"/>
+	      <menuitem label="&attr.primaryEmail;" value="PrimaryEmail"/>
+	      <menuitem label="&attr.secondEmail;" value="SecondEmail"/>
+	      <menuitem label="&attr.aimScreenName;" value="AimScreenName"/>
+	      <menuitem label="&attr.preferMailFormat;" value="PreferMailFormat"/>
 	      <menuseparator/>
-	      <menuitem label="&workPhone.label;" value="workPhone"/>
-	      <menuitem label="&homePhone.label;" value="homePhone"/>
-	      <menuitem label="&faxNumber.label;" value="faxNumber"/>
-	      <menuitem label="&pagerNumber.label;" value="pagerNumber"/>
-	      <menuitem label="&cellularNumber.label;" value="cellularNumber"/>
+	      <menuitem label="&attr.workPhone;" value="WorkPhone"/>
+	      <menuitem label="&attr.homePhone;" value="HomePhone"/>
+	      <menuitem label="&attr.faxNumber;" value="FaxNumber"/>
+	      <menuitem label="&attr.pagerNumber;" value="PagerNumber"/>
+	      <menuitem label="&attr.cellularNumber;" value="CellularNumber"/>
 	      <menuseparator/>
-	      <menuitem label="&homeAddress.label;" value="homeAddress"/>
-	      <menuitem label="&homeAddress2.label;" value="homeAddress2"/>
-	      <menuitem label="&homeCity.label;" value="homeCity"/>
-	      <menuitem label="&homeState.label;" value="homeState"/>
-	      <menuitem label="&homeZipCode.label;" value="homeZipCode"/>
-	      <menuitem label="&homeCountry.label;" value="homeCountry"/>
-	      <menuitem label="&webPage1.label;" value="webPage1"/>
+	      <menuitem label="&attr.homeAddress;" value="HomeAddress"/>
+	      <menuitem label="&attr.homeAddress2;" value="HomeAddress2"/>
+	      <menuitem label="&attr.homeCity;" value="HomeCity"/>
+	      <menuitem label="&attr.homeState;" value="HomeState"/>
+	      <menuitem label="&attr.homeZipCode;" value="HomeZipCode"/>
+	      <menuitem label="&attr.homeCountry;" value="HomeCountry"/>
+	      <menuitem label="&attr.webPage2;" value="WebPage2"/>
 	      <menuseparator/>
-	      <menuitem label="&jobTitle.label;" value="jobTitle"/>
-	      <menuitem label="&department.label;" value="department"/>
-	      <menuitem label="&company.label;" value="company"/>
-	      <menuitem label="&workAddress.label;" value="workAddress"/>
-	      <menuitem label="&workAddress2.label;" value="workAddress2"/>
-	      <menuitem label="&workCity.label;" value="workCity"/>
-	      <menuitem label="&workState.label;" value="workState"/>
-	      <menuitem label="&workZipCode.label;" value="workZipCode"/>
-	      <menuitem label="&workCountry.label;" value="workCountry"/>
-	      <menuitem label="&webPage2.label;" value="webPage2"/>
+	      <menuitem label="&attr.jobTitle;" value="JobTitle"/>
+	      <menuitem label="&attr.department;" value="Department"/>
+	      <menuitem label="&attr.company;" value="Company"/>
+	      <menuitem label="&attr.workAddress;" value="WorkAddress"/>
+	      <menuitem label="&attr.workAddress2;" value="WorkAddress2"/>
+	      <menuitem label="&attr.workCity;" value="WorkCity"/>
+	      <menuitem label="&attr.workState;" value="WorkState"/>
+	      <menuitem label="&attr.workZipCode;" value="WorkZipCode"/>
+	      <menuitem label="&attr.workCountry;" value="WorkCountry"/>
+	      <menuitem label="&attr.webPage1;" value="WebPage1"/>
 	      <menuseparator/>
-	      <menuitem label="&custom1.label;" value="custom1"/>
-	      <menuitem label="&custom2.label;" value="custom2"/>
-	      <menuitem label="&custom3.label;" value="custom3"/>
-	      <menuitem label="&custom4.label;" value="custom4"/>
-	      <menuitem label="&notes.label;" value="notes"/>
+	      <menuitem label="&attr.custom1;" value="Custom1"/>
+	      <menuitem label="&attr.custom2;" value="Custom2"/>
+	      <menuitem label="&attr.custom3;" value="Custom3"/>
+	      <menuitem label="&attr.custom4;" value="Custom4"/>
+	      <menuitem label="&attr.notes;" value="Notes"/>
+	      <menuseparator/>
+	      <menuitem label="&attr.lastModifiedDate;" value="LastModifiedDate"/>
+	      <menuitem label="&attr.popularityIndex;" value="PopularityIndex"/>
+	      <menuitem label="&attr.allowRemoteContent;" value="AllowRemoteContent"/>
+	      <menuseparator/>
+	      <menuitem label="&attr.anniversaryYear;" value="AnniversaryYear"/>
+	      <menuitem label="&attr.anniversaryMonth;" value="AnniversaryMonth"/>
+	      <menuitem label="&attr.anniversaryDay;" value="AnniversaryDay"/>
+	      <menuitem label="&attr.birthYear;" value="BirthYear"/>
+	      <menuitem label="&attr.birthMonth;" value="BirthMonth"/>
+	      <menuitem label="&attr.birthDay;" value="BirthDay"/>
             </menupopup>
 	  </menulist>
 	  </row>
@@ -127,12 +142,17 @@
 
   </prefpane>
 
+
+  <!-- Formats -->
   <prefpane id="prefpane.format" label="&prefpane.format;">
+
     <preferences>
-      <!-- format -->
-      <preference id="format.undefined" name="extensions.sender_name.format.undefined" type="unichar"/>
-      <preference id="format.separator" name="extensions.sender_name.format.separator" type="unichar"/>
-      <preference id="format.insep" name="extensions.sender_name.format.insep" type="unichar"/>
+      <preference id="format.undefined" name="extensions.sender_name.format.undefined" type="wstring"/>
+      <preference id="format.separator" name="extensions.sender_name.format.separator" type="wstring"/>
+      <preference id="format.insep" name="extensions.sender_name.format.insep" type="wstring"/>
+      <preference id="format.nocard" name="extensions.sender_name.format.nocard" type="wstring"/>
+      <preference id="format.nullstr" name="extensions.sender_name.format.nullstr" type="wstring"/>
+      <preference id="format.unsupported" name="extensions.sender_name.format.unsupported" type="wstring"/>
     </preferences>
 
     <vbox>
@@ -148,6 +168,30 @@
 	    <description>&Format.tab.displayName.description2;</description>
 	    <description>&Format.tab.displayName.description3;</description>
 	  </vbox>
+	</groupbox>
+
+	<groupbox>
+	  <caption label="&format.tab.attributes;"/>
+	  <grid>
+	    <columns>
+	      <column/>
+	      <column/>
+	    </columns>
+	    <rows>
+	      <row align="center">
+		<label id="format.nocard.label" value="&format.nocard.label;"/>
+		<textbox id="format.nocard.string" preference="format.nocard"/>
+	      </row>
+	      <row align="center">
+		<label id="format.nullstr.label" value="&format.nullstr.label;"/>
+		<textbox id="format.nullstr.string" preference="format.nullstr"/>
+	      </row>
+	      <row align="center">
+		<label id="format.unsupported.label" value="&format.unsupported.label;"/>
+		<textbox id="format.unsupported.string" preference="format.unsupported"/>
+	      </row>
+	    </rows>
+	  </grid>
 	</groupbox>
 
 	<groupbox>
@@ -169,14 +213,18 @@
 	    </rows>
 	  </grid>
 	</groupbox>
+
       </vbox>
     </vbox>
   </prefpane>
 
+
+  <!-- Options -->
   <prefpane id="prefpane.options" label="&prefpane.options;">
     <preferences>
       <!-- format -->
       <preference id="options.create_display_name_column" name="extensions.sender_name.options.create_display_name_column" type="bool"/>
+      <preference id="options.append_menu_item" name="extensions.sender_name.options.append_menu_item" type="bool"/>
     </preferences>
 
     <vbox>
@@ -185,16 +233,16 @@
 	  <caption label="&Options.tab.columns;"/>
 	  <vbox>
 	    <checkbox id="options.create_display_name_column.enabled" preference="options.create_display_name_column" label="&Options.create_display_name_column.label;"/>
+	    <checkbox id="options.append_menu_item.enabled" preference="options.append_menu_item" label="&Options.append_menu_item.label;"/>
 	  </vbox>
 	</groupbox>
       </vbox>
     </vbox>
   </prefpane>
 
-
-
   <script type="application/x-javascript" src="chrome://sender_name/content/namespace.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/library.js"/>
+  <script type="application/x-javascript" src="chrome://sender_name/content/version.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/common.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/options.js"/>
     

@@ -4,8 +4,7 @@
 <overlay id="sender_name" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script type="application/x-javascript" src="chrome://sender_name/content/namespace.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/library.js"/>
-  <script type="application/x-javascript" src="chrome://sender_name/content/version.js"/>
+  <script type="application/x-javascript" src="chrome://sender_name/content/thunderbird2.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/common.js"/>
-  <script type="application/x-javascript" src="chrome://sender_name/content/tasks.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/sender_name.js"/>
 </overlay>

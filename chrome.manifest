@@ -2,6 +2,5 @@ content	sender_name		chrome/content/
 locale	sender_name en		chrome/locale/en/
 locale	sender_name ja		chrome/locale/ja/
 skin	sender_name classic/1.0	chrome/skin/
-overlay	chrome://messenger/content/messenger.xul		chrome://sender_name/content/sender_name.xul
-overlay	chrome://messenger/content/SearchDialog.xul		chrome://sender_name/content/sender_name.xul
-overlay	chrome://messenger/content/mailWindowOverlay.xul	chrome://sender_name/content/tasks.xul
+overlay	chrome://messenger/content/messenger.xul	 chrome://sender_name/content/sender_name.xul
+overlay	chrome://messenger/content/SearchDialog.xul	 chrome://sender_name/content/sender_name.xul

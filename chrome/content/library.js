@@ -64,6 +64,15 @@
             },
         };
 
+        SenderName.Version = {
+            compare: function (version) {
+                // called only once or so
+                const info = Service.getService("xre/app-info;1", "nsIXULAppInfo");
+                const comparator = Service.getService("xpcom/version-comparator;1", "nsIVersionComparator");
+                return comparator.compare(info.version, version);
+            }
+        };
+
         SenderName.Log = {
             console: Service.getService("consoleservice;1", "nsIConsoleService"),
 

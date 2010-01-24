@@ -6,7 +6,7 @@
 <!ENTITY columns.list			"カラムの一覧">
 <!ENTITY columns.edit			"カラムの編集">
 <!ENTITY columns.enabled		"有効">
-<!ENTITY columns.field			"メールのヘッダ名">
+<!ENTITY columns.field			"メールヘッダのフィールド名">
 <!ENTITY columns.attr			"アドレス帳の属性">
 <!ENTITY columns.label			"カラムのラベル">
 <!ENTITY columns.format			"フォーマット">
@@ -16,48 +16,60 @@
 <!ENTITY button.default			"デフォルト">
 <!ENTITY button.apply			"適用">
 
-<!ENTITY lastName.label			"姓">
-<!ENTITY firstName.label		"名">
-<!ENTITY phoneticLastName.label		"よみがな(姓)">
-<!ENTITY phoneticFirstName.label	"よみがな(名)">
-<!ENTITY displayName.label		"表示名">
-<!ENTITY nickName.label			"ニックネーム">
+<!ENTITY attr.lastName			"姓">
+<!ENTITY attr.firstName			"名">
+<!ENTITY attr.phoneticLastName		"よみがな(姓)">
+<!ENTITY attr.phoneticFirstName		"よみがな(名)">
+<!ENTITY attr.displayName		"表示名">
+<!ENTITY attr.nickName			"ニックネーム">
+<!ENTITY attr.spouseName		"配偶者">
+<!ENTITY attr.familyName		"ファミリーネーム">
 
-<!ENTITY primaryEmail.label		"メールアドレス">
-<!ENTITY secondEmail.label		"別のメールアドレス">
-<!ENTITY aimScreenName.label		"スクリーンネーム">
-<!ENTITY preferMailFormat.label		"使用メール形式">
+<!ENTITY attr.primaryEmail		"メールアドレス">
+<!ENTITY attr.secondEmail		"別のメールアドレス">
+<!ENTITY attr.aimScreenName		"スクリーンネーム">
+<!ENTITY attr.preferMailFormat		"使用メール形式">
 
-<!ENTITY workPhone.label		"電話(勤務先)">
-<!ENTITY homePhone.label		"電話(自宅)">
-<!ENTITY faxNumber.label		"FAX">
-<!ENTITY pagerNumber.label		"ポケットベル">
-<!ENTITY cellularNumber.label		"携帯電話">
+<!ENTITY attr.workPhone			"電話(勤務先)">
+<!ENTITY attr.homePhone			"電話(自宅)">
+<!ENTITY attr.faxNumber			"FAX">
+<!ENTITY attr.pagerNumber		"ポケットベル">
+<!ENTITY attr.cellularNumber		"携帯電話">
 
-<!ENTITY homeAddress.label		"番地(自宅)"> 
-<!ENTITY homeAddress2.label		"番地2(自宅)"> 
-<!ENTITY homeCity.label			"市町村(自宅)"> 
-<!ENTITY homeState.label		"都道府県(自宅)"> 
-<!ENTITY homeZipCode.label		"郵便番号(自宅)"> 
-<!ENTITY homeCountry.label		"国(自宅)">
-<!ENTITY webPage1.label			"Webページ(自宅)"> 
+<!ENTITY attr.homeAddress		"番地(自宅)"> 
+<!ENTITY attr.homeAddress2		"番地2(自宅)"> 
+<!ENTITY attr.homeCity			"市町村(自宅)"> 
+<!ENTITY attr.homeState			"都道府県(自宅)"> 
+<!ENTITY attr.homeZipCode		"郵便番号(自宅)"> 
+<!ENTITY attr.homeCountry		"国(自宅)">
+<!ENTITY attr.webPage1			"Webページ(自宅)"> 
 
-<!ENTITY jobTitle.label			"役職"> 
-<!ENTITY department.label		"部門"> 
-<!ENTITY company.label			"組織"> 
-<!ENTITY workAddress.label		"番地(勤務先)"> 
-<!ENTITY workAddress2.label		"番地2(勤務先)"> 
-<!ENTITY workCity.label			"市町村(勤務先)"> 
-<!ENTITY workState.label		"都道府県(勤務先)"> 
-<!ENTITY workZipCode.label		"郵便番号(勤務先)"> 
-<!ENTITY workCountry.label		"国(勤務先)">
-<!ENTITY webPage2.label			"Webページ(勤務先)"> 
+<!ENTITY attr.jobTitle			"役職"> 
+<!ENTITY attr.department		"部門"> 
+<!ENTITY attr.company			"組織"> 
+<!ENTITY attr.workAddress		"番地(勤務先)"> 
+<!ENTITY attr.workAddress2		"番地2(勤務先)"> 
+<!ENTITY attr.workCity			"市町村(勤務先)"> 
+<!ENTITY attr.workState			"都道府県(勤務先)"> 
+<!ENTITY attr.workZipCode		"郵便番号(勤務先)"> 
+<!ENTITY attr.workCountry		"国(勤務先)">
+<!ENTITY attr.webPage2			"Webページ(勤務先)"> 
 
-<!ENTITY custom1.label			"追加情報 1">
-<!ENTITY custom2.label			"追加情報 2">
-<!ENTITY custom3.label			"追加情報 3">
-<!ENTITY custom4.label			"追加情報 4">
-<!ENTITY notes.label			"メモ">
+<!ENTITY attr.custom1			"追加情報 1">
+<!ENTITY attr.custom2			"追加情報 2">
+<!ENTITY attr.custom3			"追加情報 3">
+<!ENTITY attr.custom4			"追加情報 4">
+<!ENTITY attr.notes			"メモ">
+
+<!ENTITY attr.lastModifiedDate		"最終更新日">
+<!ENTITY attr.popularityIndex		"使用頻度">
+<!ENTITY attr.allowRemoteContent	"リモートコンテンツの可否">
+<!ENTITY attr.anniversaryYear		"年(記念日)">
+<!ENTITY attr.anniversaryMonth		"月(記念日)">
+<!ENTITY attr.anniversaryDay		"日(記念日)">
+<!ENTITY attr.birthYear			"年(誕生日)">
+<!ENTITY attr.birthMonth		"月(誕生日)">
+<!ENTITY attr.birthDay			"日(誕生日)">
 
 <!ENTITY Format.tab.displayName		"「表示名」の設定">
 <!ENTITY Format.tab.displayName.description1	"&#x0025;s は，From 欄に名前がある場合はその名前，ない場合はメールアドレスで置き換わります．">
@@ -65,9 +77,15 @@
 <!ENTITY Format.tab.displayName.description3	"&#x0025;a は，メールアドレスで置き換わります．">
 <!ENTITY Format.undefined.label		"メールアドレスがアドレス帳にない場合のフォーマット文字列: ">
 
+<!ENTITY format.tab.attributes		"その他の属性の設定">
+<!ENTITY format.unsupported.label	"未サポートの属性を指定した場合: ">
+<!ENTITY format.nocard.label		"連絡先（カード）がない場合: ">
+<!ENTITY format.nullstr.label		"未入力（空文字）の場合: ">
+
 <!ENTITY Format.tab.separator		"区切り文字の設定">
 <!ENTITY Format.separator.label		"アドレスが複数ある場合の区切り文字: ">
 <!ENTITY Format.insep.label		"表示内容に区切り文字が含まれていた場合のフォーマット文字列: ">
 
 <!ENTITY Options.tab.columns		"カラムの設定">
 <!ENTITY Options.create_display_name_column.label	"「表示名」のカラムを新しく作成する（既存のカラムの内容を置き換えない）">
+<!ENTITY Options.append_menu_item.label	"「ツール」メニューに「Sender Name」のメニュー項目を追加する">
