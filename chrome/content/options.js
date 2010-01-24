@@ -28,8 +28,8 @@ with (SenderName) {
             const treecells = this.tree.contentView.getItemAtIndex(index).firstChild.childNodes;
 
             this.enabled.setAttribute("checked", treecells[0].getAttribute("value"));
-            this.field.setAttribute("selectedItem", this.findMenuItem(this.field, treecells[1].getAttribute("value")));
-            this.attr.setAttribute("selectedItem", this.findMenuItem(this.attr, treecells[2].getAttribute("value")));
+            this.field.selectedItem = this.findMenuItem(this.field, treecells[1].getAttribute("value"));
+            this.attr.selectedItem = this.findMenuItem(this.attr, treecells[2].getAttribute("value"));
             this.label.setAttribute("value", treecells[3].getAttribute("label"));
             // this.format.setAttribute("value", treecells[4].getAttribute("label"));
         },

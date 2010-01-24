@@ -6,6 +6,7 @@
     with (SenderName) {
         SenderName.Tasks = {
             id: "sender_name_options",
+            pref_key: "others.append_menu_item",
             enabled: false,
 
             openDialog: function () {
@@ -19,8 +20,6 @@
                         return;
                     }
                 }
-
-                // var instantApply = gPref.getBoolPref("browser.preferences.instantApply");
                 openDialog(optionsURL, "Preferences", "chrome,titlebar,toolbar,centerscreen");
             },
 
@@ -43,7 +42,7 @@
             },
 
             setMenuItem: function () {
-                const appendMenuItem = Preference.getBoolPref("options.append_menu_item");
+                const appendMenuItem = Preference.getBoolPref(this.pref_key);
                 if (appendMenuItem && !this.enabled)
                     this.appendMenuItem();
                 else if (!appendMenuItem && this.enabled)
@@ -57,10 +56,9 @@
 
             init: function () {
                 this.setMenuItem();
-                Preference.addObserver("options.append_menu_item", this);
+                Preference.addObserver(this.pref_key, this);
                 return;
             },
-            
         };
     }
 

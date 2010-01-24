@@ -68,9 +68,10 @@
             preferMailFormats: ["unknown", "plainText", "HTML"],
             attrLabels: new Object,
             format: new Object,
+            sepchar: ",",
 
-            formatMultiAddress: function (value) {
-                if (value.indexOf(this.format.separator.replace(/^\s+|\s+$/g, '')) < 0)
+            formatMultiAddresses: function (value) {
+                if (value.indexOf(this.sepchar) < 0)
                     return value;
                 return this.format.insep.replace("%s", value);
             },
@@ -108,18 +109,18 @@
                 return value;
             },
 
-            formatAttrValue: function (column, header) {
-                var addrs = new Object; var names = new Object; var fulls = new Object;
-                var strs = new Array;
-                var line = header[column.field];
-                var attr = column.attr;
+            formatAttributeValue: function (column, header) {
+                const addrs = new Object; const names = new Object; const fulls = new Object;
+                const strs = new Array;
+                const line = header[column.field];
+                const attr = column.attr;
                 const count = this.headerParser.parseHeadersWithArray(line, addrs, names, fulls);
                 for (var i = 0; i < count; i++) {
                     const addr = addrs.value[i];
                     const name = names.value[i];
                     var str = this.formatOneAddress(addr, attr, name);
                     if (count > 1)
-                        str = this.formatMultiAddress(str);
+                        str = this.formatMultiAddresses(str);
                     strs.push(str);
                 }
                 return strs.join(this.format.separator);
@@ -129,6 +130,7 @@
                 const types = Preference.getBranch("format.").getChildList("", {});
                 for (var type; type = types.shift();)
                     this.format[type] = Preference.getLocalizedString("format." + type);
+                this.sepchar = this.format.separator.replace(/^\s+|\s+$/g, '');
                 const keys = ["unknown", "plainText", "HTML", "allowed", "denied"];
                 for (var i = 0; i < keys.length; i++) {
                     var key = keys[i];
@@ -154,7 +156,7 @@
             getAttributeValue: function (header) {
                 const uri = header.folder.getUriForMsg(header);
                 if (!this.cache[uri])
-                    this.cache[uri] = Formatter.formatAttrValue(this.column, header);
+                    this.cache[uri] = Formatter.formatAttributeValue(this.column, header);
                 return this.cache[uri];
             },
 
@@ -244,7 +246,7 @@
             isReplaceDefaultColumn: function (column) {
                 if (column.attr == "DisplayName" && 
                     this.thunderbirdColumnIDs[column.field] &&
-                    !Preference.getBoolPref("options.create_display_name_column"))
+                    !Preference.getBoolPref("others.create_display_name_column"))
                     return true;
                 return false;
             },
@@ -323,7 +325,7 @@
             init: function () {
                 this.initColumns();
                 Preference.addObserver("columns", this);
-                Preference.addObserver("options", this);
+                Preference.addObserver("others", this);
             },
 
             // implement nsIObserver interface

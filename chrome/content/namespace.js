@@ -10,4 +10,5 @@
             subdomain[d] = new Object;
 
 })("{52b8c721-5d3a-4a2b-835e-d3f044b74351}");
-// window.GUID is used for the namespace of this extension
+
+// window.GUID is currently used for the namespace of this extension

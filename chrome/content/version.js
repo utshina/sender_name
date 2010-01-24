@@ -64,6 +64,7 @@
                 },
 
                 getAttributeFromContact: function (card, attr) {
+                    if (attr.charAt(0) == '_') attr = attr.substr(1);
                     attr = attr.charAt(0).toLowerCase() + attr.substr(1);
                     return card != null ? card[attr] : null;
                 },

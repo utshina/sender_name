@@ -20,7 +20,7 @@
       <Description>
         <em:locale>ja-JP</em:locale>
 	<em:name>Sender Name</em:name>
-	<em:description>差出人の表示名（及びアドレス帳の任意の属性）をメッセージリストペインに表示します．</em:description>
+	<em:description>差出人及び受取人の表示名（及びアドレス帳の任意の属性）をメッセージリストペインに表示します．</em:description>
 	<em:creator>品川 高廣</em:creator>
 	<em:homepageURL>http://www.osss.cs.tsukuba.ac.jp/~shina/software/sender_name/</em:homepageURL>
 	<em:iconURL>chrome://sender_name/skin/sender_name.png</em:iconURL>
@@ -29,7 +29,7 @@
     </em:localized>
 
     <em:name>Sender Name</em:name>
-    <em:description>Shows the sender's display name (and any other address book attributes) in the message list pane.</em:description>
+    <em:description>Show the sender's and recipent's display names (and any address book attributes) in the message list pane.</em:description>
     <em:creator>Takahiro Shinagawa</em:creator>
     <em:homepageURL>http://www.osss.cs.tsukuba.ac.jp/~shina/software/sender_name/</em:homepageURL>
     <em:iconURL>chrome://sender_name/skin/sender_name.png</em:iconURL>

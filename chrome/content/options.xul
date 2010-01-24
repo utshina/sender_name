@@ -57,9 +57,9 @@
 	    <label value="&columns.field;: "/>
 	    <menulist id="options.field" oncommand="SenderName.Options.onSelectMenu();">
 	      <menupopup>
-		<menuitem label="From" value="author"/>
-		<menuitem label="To" value="recipients"/>
-		<menuitem label="Cc" value="ccList"/>
+		<menuitem label="&field.from;" value="author"/>
+		<menuitem label="&field.to;" value="recipients"/>
+		<menuitem label="&field.cc;" value="ccList"/>
               </menupopup>
 	    </menulist>
 	  </row>
@@ -78,8 +78,9 @@
 	      <menuseparator/>
 	      <menuitem label="&attr.primaryEmail;" value="PrimaryEmail"/>
 	      <menuitem label="&attr.secondEmail;" value="SecondEmail"/>
-	      <menuitem label="&attr.aimScreenName;" value="AimScreenName"/>
+	      <menuitem label="&attr.aimScreenName;" value="_AimScreenName"/>
 	      <menuitem label="&attr.preferMailFormat;" value="PreferMailFormat"/>
+	      <menuitem label="&attr.allowRemoteContent;" value="AllowRemoteContent"/>
 	      <menuseparator/>
 	      <menuitem label="&attr.workPhone;" value="WorkPhone"/>
 	      <menuitem label="&attr.homePhone;" value="HomePhone"/>
@@ -114,7 +115,6 @@
 	      <menuseparator/>
 	      <menuitem label="&attr.lastModifiedDate;" value="LastModifiedDate"/>
 	      <menuitem label="&attr.popularityIndex;" value="PopularityIndex"/>
-	      <menuitem label="&attr.allowRemoteContent;" value="AllowRemoteContent"/>
 	      <menuseparator/>
 	      <menuitem label="&attr.anniversaryYear;" value="AnniversaryYear"/>
 	      <menuitem label="&attr.anniversaryMonth;" value="AnniversaryMonth"/>
@@ -158,15 +158,15 @@
     <vbox>
       <vbox>
 	<groupbox>
-	  <caption label="&Format.tab.displayName;"/>
+	  <caption label="&format.tab.displayName;"/>
 	  <hbox align="center">
-	    <label id="format.undefined.label" value="&Format.undefined.label;"/>
+	    <label id="format.undefined.label" value="&format.undefined.label;"/>
 	    <textbox id="format.undefined.string" preference="format.undefined"/>
 	  </hbox>
 	  <vbox>
-	    <description>&Format.tab.displayName.description1;</description>
-	    <description>&Format.tab.displayName.description2;</description>
-	    <description>&Format.tab.displayName.description3;</description>
+	    <description>&format.tab.displayName.description1;</description>
+	    <description>&format.tab.displayName.description2;</description>
+	    <description>&format.tab.displayName.description3;</description>
 	  </vbox>
 	</groupbox>
 
@@ -195,7 +195,7 @@
 	</groupbox>
 
 	<groupbox>
-	  <caption label="&Format.tab.separator;"/>
+	  <caption label="&format.tab.separator;"/>
 	  <grid>
 	    <columns>
 	      <column/>
@@ -203,11 +203,11 @@
 	    </columns>
 	    <rows>
 	      <row align="center">
-		<label id="format.separator.label" value="&Format.separator.label;"/>
+		<label id="format.separator.label" value="&format.separator.label;"/>
 		<textbox id="format.separator.string" preference="format.separator"/>
 	      </row>
 	      <row align="center">
-		<label id="format.insep.label" value="&Format.insep.label;"/>
+		<label id="format.insep.label" value="&format.insep.label;"/>
 		<textbox id="format.insep.string" preference="format.insep"/>
 	      </row>
 	    </rows>
@@ -219,21 +219,21 @@
   </prefpane>
 
 
-  <!-- Options -->
-  <prefpane id="prefpane.options" label="&prefpane.options;">
+  <!-- Others -->
+  <prefpane id="prefpane.others" label="&prefpane.others;">
     <preferences>
       <!-- format -->
-      <preference id="options.create_display_name_column" name="extensions.sender_name.options.create_display_name_column" type="bool"/>
-      <preference id="options.append_menu_item" name="extensions.sender_name.options.append_menu_item" type="bool"/>
+      <preference id="others.create_display_name_column" name="extensions.sender_name.others.create_display_name_column" type="bool"/>
+      <preference id="others.append_menu_item" name="extensions.sender_name.others.append_menu_item" type="bool"/>
     </preferences>
 
     <vbox>
       <vbox>
 	<groupbox>
-	  <caption label="&Options.tab.columns;"/>
+	  <caption label="&others.tab.columns;"/>
 	  <vbox>
-	    <checkbox id="options.create_display_name_column.enabled" preference="options.create_display_name_column" label="&Options.create_display_name_column.label;"/>
-	    <checkbox id="options.append_menu_item.enabled" preference="options.append_menu_item" label="&Options.append_menu_item.label;"/>
+	    <checkbox id="others.create_display_name_column.enabled" preference="others.create_display_name_column" label="&others.create_display_name_column.label;"/>
+	    <checkbox id="others.append_menu_item.enabled" preference="others.append_menu_item" label="&others.append_menu_item.label;"/>
 	  </vbox>
 	</groupbox>
       </vbox>

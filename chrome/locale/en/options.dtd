@@ -1,7 +1,7 @@
 <!ENTITY prefwindow.title		"Sender Name Options">
 <!ENTITY prefpane.columns		"Display Attribute">
 <!ENTITY prefpane.format		"Format">
-<!ENTITY prefpane.options		"Option">
+<!ENTITY prefpane.others		"Others">
 
 <!ENTITY columns.list			"Column List">
 <!ENTITY columns.edit			"Edit Column">
@@ -9,12 +9,16 @@
 <!ENTITY columns.field			"Mail Header Field">
 <!ENTITY columns.attr			"Address Book Attribute">
 <!ENTITY columns.label			"Column Label">
-<!ENTITY columns.format			"Format">
+<!ENTITY columns.format			"Custom Format">
 
 <!ENTITY button.new			"New">
 <!ENTITY button.del			"Del">
 <!ENTITY button.default			"Default">
 <!ENTITY button.apply			"Apply">
+
+<!ENTITY field.from			"From">
+<!ENTITY field.to			"To">
+<!ENTITY field.cc			"Cc">
 
 <!ENTITY attr.lastName			"Last Name">
 <!ENTITY attr.firstName			"First Name">
@@ -29,6 +33,7 @@
 <!ENTITY attr.secondEmail		"2nd E-mail">
 <!ENTITY attr.aimScreenName		"Screen Name">
 <!ENTITY attr.preferMailFormat		"Prefer Mail Format">
+<!ENTITY attr.allowRemoteContent	"Allow Remote Content">
 
 <!ENTITY attr.workPhone			"Work Phone">
 <!ENTITY attr.homePhone			"Home Phone">
@@ -42,7 +47,7 @@
 <!ENTITY attr.homeState			"Home State"> 
 <!ENTITY attr.homeZipCode		"Home Zipcode"> 
 <!ENTITY attr.homeCountry		"Home Country">
-<!ENTITY attr.webPage1			"Home Web Page"> 
+<!ENTITY attr.webPage2			"Home Web Page"> 
 
 <!ENTITY attr.jobTitle			"Job Title"> 
 <!ENTITY attr.department		"Department"> 
@@ -53,7 +58,7 @@
 <!ENTITY attr.workState			"Work State"> 
 <!ENTITY attr.workZipCode		"Work Zip Code"> 
 <!ENTITY attr.workCountry		"Work Contry">
-<!ENTITY attr.webPage2			"Work Web Page"> 
+<!ENTITY attr.webPage1			"Work Web Page"> 
 
 <!ENTITY attr.custom1			"Custom 1">
 <!ENTITY attr.custom2			"Custom 2">
@@ -63,7 +68,6 @@
 
 <!ENTITY attr.lastModifiedDate		"Last Modified Date">
 <!ENTITY attr.popularityIndex		"Popularity Index">
-<!ENTITY attr.allowRemoteContent	"Allow Remote Content">
 <!ENTITY attr.anniversaryYear		"Aniversary Year">
 <!ENTITY attr.anniversaryMonth		"Aniversary Month">
 <!ENTITY attr.anniversaryDay		"Aniversary Day">
@@ -71,21 +75,21 @@
 <!ENTITY attr.birthMonth		"Birth Month">
 <!ENTITY attr.birthDay			"Birth Day">
 
-<!ENTITY Format.tab.displayName		'Options for "Display Name"'>
-<!ENTITY Format.tab.displayName.description1	"&#x0025;s is replaced with the name in the From field if it exists, or replaced with the mail address.">
-<!ENTITY Format.tab.displayName.description2	"&#x0025;n is replaced with the name in the From field.">
-<!ENTITY Format.tab.displayName.description3	"&#x0025;a is replaced with the mail address.">
-<!ENTITY Format.undefined.label		"The format string used when the mail address is not included in any address book: ">
+<!ENTITY format.tab.displayName		'Options for "Display Name"'>
+<!ENTITY format.tab.displayName.description1	"&#x0025;s is replaced with the name in the From field if it exists, or replaced with the mail address.">
+<!ENTITY format.tab.displayName.description2	"&#x0025;n is replaced with the name in the From field.">
+<!ENTITY format.tab.displayName.description3	"&#x0025;a is replaced with the mail address.">
+<!ENTITY format.undefined.label		"The format string used when the mail address is not included in any address book: ">
 
 <!ENTITY format.tab.attributes		"Options for other attributes">
-<!ENTITY format.unsupported.label	"String for unsupported attribute: ">
-<!ENTITY format.nocard.label		"String when there is no contact (card): ">
-<!ENTITY format.nullstr.label		"String when string field is null: ">
+<!ENTITY format.nocard.label		"String used when there is no corresponding contact (card): ">
+<!ENTITY format.nullstr.label		"String used when field value is null string: ">
+<!ENTITY format.unsupported.label	"String used when an unsupported attribute is specified: ">
 
-<!ENTITY Format.tab.separator		"Options for separators">
-<!ENTITY Format.separator.label		"The separator character for separating multiple addresses: ">
-<!ENTITY Format.insep.label		"The format string used when the separator is included in the address book field: ">
+<!ENTITY format.tab.separator		"Options for separators">
+<!ENTITY format.separator.label		"The character(s) for separating multiple addresses: ">
+<!ENTITY format.insep.label		"The format string used when the separator is included in the address book field: ">
 
-<!ENTITY Options.tab.columns		"Options for columns">
-<!ENTITY Options.create_display_name_column.label	"Create a new column for display names, instead of replacing the content of the existing columns">
-<!ENTITY Options.append_menu_item.label	'Append "Sender Name" menu item to "Tool" menu'>
+<!ENTITY others.tab.columns		"Options for others">
+<!ENTITY others.create_display_name_column.label	"Do not replace the contents of the existing columns">
+<!ENTITY others.append_menu_item.label	'Append "Sender Name" menu item to "Tool" menu'>
