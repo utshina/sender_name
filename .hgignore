@@ -1,0 +1,3 @@
+syntax: glob
+chrome/sender_name.jar
+img/*
