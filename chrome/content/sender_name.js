@@ -12,7 +12,7 @@
                 else if (typeof(GetDBView) == "function") // for Search Dialog
                     return GetDBView();
                 return null;
-            },
+            }
         },
 
         SenderName.Contact = {
@@ -75,7 +75,7 @@
             observe: function (subject, topic, data) {
                 if(topic != "nsPref:changed") return;
                 this.onChange();
-            },
+            }
         };
 
         SenderName.Formatter = {
@@ -147,7 +147,7 @@
                 const keys = ["unknown", "plainText", "HTML", "allowed", "denied"];
                 for (var i = 0; i < keys.length; i++) {
                     var key = keys[i];
-                    this.attrLabels[key] = Preference.getLocalizedString("attr.label." + key);
+                    this.attrLabels[key] = Property.getString("attr.label." + key);
                 }
                 Preference.addObserver("format.", this);
             },
@@ -156,7 +156,7 @@
                 if(topic != "nsPref:changed") return;
                 this.format[data.split(".")[1]] = Preference.getUnicodePref(data);
                 ThreadPane.flush();
-            },
+            }
         };
 
         SenderName.ColumnHandler = function (column) {
@@ -193,7 +193,7 @@
             getCellProperties: function (row, col, props) { },
             getRowProperties:  function (row, props) {},
             getImageSrc:       function (row, col) { return null; },
-            getSortLongForRow: function (hdr) { return 0; },
+            getSortLongForRow: function (hdr) { return 0; }
         };
 
         SenderName.ThreadPane = {
@@ -354,7 +354,7 @@
                     this.addColumnHandlers();
                     break;
                 }
-            },
+            }
         }; // end ThreadPane
 
         SenderName.Main = {
@@ -368,7 +368,7 @@
                 ThreadPane.init();
                 Formatter.init();
                 window.addEventListener("load", Main.onLoad, false);
-            },
+            }
         };
 
         // initialize

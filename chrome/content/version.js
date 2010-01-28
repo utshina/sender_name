@@ -38,7 +38,7 @@
                         } catch (e) { value = undefined; }
                     }
                     return value;
-                },
+                }
 
             };
 
@@ -78,7 +78,7 @@
                     if (attr.charAt(0) == '_') attr = attr.substr(1);
                     attr = attr.charAt(0).toLowerCase() + attr.substr(1);
                     return card != null ? card[attr] : null;
-                },
+                }
             };
 
             SenderName.JSON = {
@@ -119,7 +119,7 @@
                     }
                     const string = '[' + str.join(',') + ']';
                     return string;
-                },
+                }
             };
 
         } // end Thunderbird 2

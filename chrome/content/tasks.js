@@ -26,7 +26,7 @@
             appendMenuItem: function () {
                 const menuitem = document.createElement("menuitem");
                 menuitem.setAttribute("id", this.id);
-                menuitem.setAttribute("label", "Sender Name");
+                menuitem.setAttribute("label", Property.getString("options_title"));
                 menuitem.setAttribute("oncommand", "window['{52b8c721-5d3a-4a2b-835e-d3f044b74351}'].Tasks.openDialog();");
                 const taskPopup = document.getElementById("taskPopup");
                 const separator = document.getElementById("devToolsSeparator");
@@ -58,7 +58,7 @@
                 this.setMenuItem();
                 Preference.addObserver(this.pref_key, this);
                 return;
-            },
+            }
         };
     }
 

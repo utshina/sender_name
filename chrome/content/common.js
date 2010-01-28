@@ -19,7 +19,7 @@
 
             saveColumns: function (columns) {
                 return JSON.stringify(columns);
-            },
+            }
 
         };
 

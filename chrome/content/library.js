@@ -6,9 +6,9 @@
     with (SenderName) {
         
         SenderName.Service = {
-            getService: function (class, interface) {
-                class = Components.classes["@mozilla.org/" + class];
-                return class ? class.getService(Components.interfaces[interface]) : null;
+            getService: function (class_name, interface_name) {
+                class_name = Components.classes["@mozilla.org/" + class_name];
+                return class_name ? class_name.getService(Components.interfaces[interface_name]) : null;
             }
         };
 
@@ -17,7 +17,7 @@
             prefs: Service.getService("preferences-service;1", "nsIPrefService"),
 
             getBranch: function (key) { return this.prefs.getBranch(this.prefix + key); },
-            getDefaultBranch: function (key) { return this.prefs.getDefaultBranch(this.prefix + key); },
+            getDefaultBranch: function (key) { return this.prefs.getDefaultBranch(this.prefix + key); }
         };
 
         SenderName.Preference = {
@@ -50,7 +50,7 @@
             addObserver: function (key, observer) {
                 this.branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
                 this.branch.addObserver(key, observer, false);      
-            },
+            }
 
         };
 
@@ -59,9 +59,13 @@
             bundle: Service.getService("intl/stringbundle;1", "nsIStringBundleService")
                            .createBundle("chrome://sender_name/locale/sender_name.properties"),
 
+            getString: function (key) {
+                return this.bundle.GetStringFromName(this.prefix + key);
+            },
+
             getFormattedString: function (key, array) {
                 return this.bundle.formatStringFromName(this.prefix + key, array, array.length);
-            },
+            }
         };
 
         SenderName.Version = {
@@ -70,7 +74,7 @@
                 const info = Service.getService("xre/app-info;1", "nsIXULAppInfo");
                 const comparator = Service.getService("xpcom/version-comparator;1", "nsIVersionComparator");
                 return comparator.compare(info.version, version);
-            },
+            }
         };
 
         SenderName.Log = {
@@ -78,7 +82,7 @@
 
             put: function (str) {
                 this.console.logStringMessage(str);
-            },
+            }
         };
 
     } // end namespace

@@ -17,7 +17,7 @@ with (SenderName) {
 
         findMenuItem: function (menulist, key) {
             for each (var menuitem in menulist.firstChild.childNodes) {
-                if (menuitem.value == key)
+                if (menuitem.getAttribute("value") == key)
                     return menuitem;
             }
             return menulist.firstChild.firstChild;
@@ -141,7 +141,7 @@ with (SenderName) {
                 columns.push(column);
             }
             return Config.saveColumns(columns);
-        },
+        }
 	};
 
 }
