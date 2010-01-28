@@ -75,11 +75,11 @@
 <!ENTITY attr.birthMonth		"月(誕生日)">
 <!ENTITY attr.birthDay			"日(誕生日)">
 
-<!ENTITY format.tab.displayName		"「表示名」の設定">
-<!ENTITY format.tab.displayName.description1	"&#x0025;s は，From 欄に名前がある場合はその名前，ない場合はメールアドレスで置き換わります．">
-<!ENTITY format.tab.displayName.description2	"&#x0025;n は，From 欄の名前で置き換わります．">
-<!ENTITY format.tab.displayName.description3	"&#x0025;a は，メールアドレスで置き換わります．">
-<!ENTITY format.undefined.label		"メールアドレスがアドレス帳にない場合のフォーマット文字列: ">
+<!ENTITY format.tab.displayName			"「表示名」の設定">
+<!ENTITY format.displayName.description1	"&#x0025;s は，From 欄に名前がある場合はその名前，ない場合はメールアドレスで置き換わります．">
+<!ENTITY format.displayName.description2	"&#x0025;n は，From 欄の名前で置き換わります．">
+<!ENTITY format.displayName.description3	"&#x0025;a は，メールアドレスで置き換わります．">
+<!ENTITY format.undefined.label			"メールアドレスがアドレス帳にない場合のフォーマット文字列: ">
 
 <!ENTITY format.tab.attributes		"その他の属性の設定">
 <!ENTITY format.nocard.label		"連絡先（カード）がない場合: ">
@@ -90,7 +90,7 @@
 <!ENTITY format.separator.label		"アドレスが複数ある場合の区切り文字: ">
 <!ENTITY format.insep.label		"表示内容に区切り文字が含まれていた場合のフォーマット文字列: ">
 
-<!ENTITY others.tab.columns		"カラムの設定">
+<!ENTITY others.tab.others				"その他の設定">
 <!ENTITY others.create_display_name_column.label	"「表示名」のカラムを新たに作成する（既存のカラムを置き換えない）">
-<!ENTITY others.append_menu_item.label	"「ツール」メニューに「Sender Name」のメニュー項目を追加する">
+<!ENTITY others.append_menu_item.label			"「ツール」メニューに「Sender Name 設定」のメニュー項目を追加する">
 <!ENTITY others.exclude_history_address_book.label	"「記録用アドレス帳」を対象外にする">

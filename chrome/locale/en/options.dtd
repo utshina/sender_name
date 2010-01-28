@@ -75,11 +75,11 @@
 <!ENTITY attr.birthMonth		"Birth Month">
 <!ENTITY attr.birthDay			"Birth Day">
 
-<!ENTITY format.tab.displayName		'Options for "Display Name"'>
-<!ENTITY format.tab.displayName.description1	"&#x0025;s is replaced with the name in the From field if it exists, or replaced with the mail address.">
-<!ENTITY format.tab.displayName.description2	"&#x0025;n is replaced with the name in the From field.">
-<!ENTITY format.tab.displayName.description3	"&#x0025;a is replaced with the mail address.">
-<!ENTITY format.undefined.label		"The format string used when the mail address is not included in any address book: ">
+<!ENTITY format.tab.displayName			'Options for "Display Name"'>
+<!ENTITY format.displayName.description1	"&#x0025;s is replaced with the name in the From field if it exists, or replaced with the mail address.">
+<!ENTITY format.displayName.description2	"&#x0025;n is replaced with the name in the From field.">
+<!ENTITY format.displayName.description3	"&#x0025;a is replaced with the mail address.">
+<!ENTITY format.undefined.label			"The format string used when the mail address is not included in any address book: ">
 
 <!ENTITY format.tab.attributes		"Options for other attributes">
 <!ENTITY format.nocard.label		"String used when there is no corresponding contact (card): ">
@@ -90,7 +90,7 @@
 <!ENTITY format.separator.label		"The character(s) for separating multiple addresses: ">
 <!ENTITY format.insep.label		"The format string used when the separator is included in the address book field: ">
 
-<!ENTITY others.tab.columns		"Options for others">
+<!ENTITY others.tab.others				"Options for others">
 <!ENTITY others.create_display_name_column.label	'Create new columns for "Display Name" (Do not replace the contents of existing columns)'>
-<!ENTITY others.append_menu_item.label	'Append "Sender Name" menu item to "Tool" menu'>
+<!ENTITY others.append_menu_item.label			'Append "Sender Name Options" menu item to "Tool" menu'>
 <!ENTITY others.exclude_history_address_book.label	'Exclude "Collected Addresses" address book'>

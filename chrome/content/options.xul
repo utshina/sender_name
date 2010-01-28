@@ -164,9 +164,9 @@
 	    <textbox id="format.undefined.string" preference="format.undefined"/>
 	  </hbox>
 	  <vbox>
-	    <description>&format.tab.displayName.description1;</description>
-	    <description>&format.tab.displayName.description2;</description>
-	    <description>&format.tab.displayName.description3;</description>
+	    <description>&format.displayName.description1;</description>
+	    <description>&format.displayName.description2;</description>
+	    <description>&format.displayName.description3;</description>
 	  </vbox>
 	</groupbox>
 
@@ -231,7 +231,7 @@
     <vbox>
       <vbox>
 	<groupbox>
-	  <caption label="&others.tab.columns;"/>
+	  <caption label="&others.tab.others;"/>
 	  <vbox>
 	    <checkbox id="others.create_display_name_column.enabled" preference="others.create_display_name_column" label="&others.create_display_name_column.label;"/>
 	    <checkbox id="others.append_menu_item.enabled" preference="others.append_menu_item" label="&others.append_menu_item.label;"/>
