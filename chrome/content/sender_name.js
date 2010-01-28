@@ -21,8 +21,6 @@
 
             getContactFromDirectories: function (addr) {
                 for each (var dir in this.directories) {
-//                    if (!dir.cardForEmailAddress)
-//                        Log.put(AddressBook.getAddressBookURI(dir) + "\n");
                     var contact = dir.cardForEmailAddress(addr);
                     if (contact)
                         return contact;
