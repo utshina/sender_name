@@ -16,8 +16,8 @@
 <!ENTITY button.default			"デフォルト">
 <!ENTITY button.apply			"適用">
 
-<!ENTITY field.from			"差出人 (From)">
-<!ENTITY field.to			"宛先 (To)">
+<!ENTITY field.from			"差出人">
+<!ENTITY field.to			"宛先">
 <!ENTITY field.cc			"Cc">
 
 <!ENTITY attr.lastName			"姓">
@@ -91,5 +91,6 @@
 <!ENTITY format.insep.label		"表示内容に区切り文字が含まれていた場合のフォーマット文字列: ">
 
 <!ENTITY others.tab.columns		"カラムの設定">
-<!ENTITY others.create_display_name_column.label	"「表示名」のカラムを新しく作成する（既存のカラムの内容を置き換えない）">
+<!ENTITY others.create_display_name_column.label	"「表示名」のカラムを新たに作成する（既存のカラムを置き換えない）">
 <!ENTITY others.append_menu_item.label	"「ツール」メニューに「Sender Name」のメニュー項目を追加する">
+<!ENTITY others.exclude_history_address_book.label	"「記録用アドレス帳」を対象外にする">

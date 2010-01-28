@@ -70,7 +70,7 @@
                 const info = Service.getService("xre/app-info;1", "nsIXULAppInfo");
                 const comparator = Service.getService("xpcom/version-comparator;1", "nsIVersionComparator");
                 return comparator.compare(info.version, version);
-            }
+            },
         };
 
         SenderName.Log = {

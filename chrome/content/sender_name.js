@@ -21,6 +21,8 @@
 
             getContactFromDirectories: function (addr) {
                 for each (var dir in this.directories) {
+//                    if (!dir.cardForEmailAddress)
+//                        Log.put(AddressBook.getAddressBookURI(dir) + "\n");
                     var contact = dir.cardForEmailAddress(addr);
                     if (contact)
                         return contact;
@@ -36,31 +38,46 @@
 
             getAttribute: function (addr, attr) {
                 const contact = this.getContact(addr);
-                return Addressbook.getAttributeFromContact(contact, attr);
+                return AddressBook.getAttributeFromContact(contact, attr);
+            },
+
+            getAddressBooks: function () {
+                const addrbooks = AddressBook.getAddressBooks();
+                while (addrbooks.hasMoreElements()) {
+                    var addrbook = addrbooks.getNext();
+                    addrbook = AddressBook.checkInterface(addrbook);
+                    if (!addrbook)
+                        continue;
+                    if (Preference.getBoolPref("others.exclude_history_address_book"))
+                        if (AddressBook.getAddressBookURI(addrbook) == "moz-abmdbdirectory://history.mab")
+                            continue;
+                    this.directories.push(addrbook);
+                }
             },
 
             onChange: function() {
                 this.contacts = new Object;
+                this.directories = new Array;
+                this.getAddressBooks();
                 ThreadPane.flush();
             },
 
             init: function () {
-                const addrbooks = Addressbook.getAddressbooks();
-                while (addrbooks.hasMoreElements()) {
-                    var addrbook = addrbooks.getNext();
-                    if (!(addrbook instanceof Components.interfaces.nsIAbDirectory))
-                        continue;
-                    if (!addrbook.isRemote && Addressbook.getAddressbookURI(addrbook).indexOf("history.mab") >= 0)
-                        continue;
-                    this.directories.push(addrbook);
-                }
-                Addressbook.addListener(this);
+                this.getAddressBooks();
+                AddressBook.addListener(this);
+                Preference.addObserver("others.exclude_history_address_book", this);
             },
 
             // Implement nsIAbListener
             onItemAdded: function(parentDir, item) { this.onChange(); },
             onItemRemoved: function(parentDir, item) { this.onChange(); },
             onItemPropertyChanged: function(item, property, oldValue, newValue) { this.onChange(); },
+
+            // Implement nsIObserver interface
+            observe: function (subject, topic, data) {
+                if(topic != "nsPref:changed") return;
+                this.onChange();
+            },
         };
 
         SenderName.Formatter = {
@@ -79,16 +96,14 @@
             formatOneAddress: function (addr, attr, name) {
                 const value = Contact.getAttribute(addr, attr);
 
-                if (typeof(value) == "undefined")
-                    return this.format.unsupported;
-
-                if (attr == "DisplayName" && value == null) {
+                if (attr == "DisplayName" && !value) {
                     const args = { s: name ? name : addr, n: name, a: addr};
-                    return this.format.undefined.replace
-                    (/%([sna])/g, function (all, key) { return args[key]; });
+                    return this.format.undefined.replace(/%([sna])/g, function (all, key) { return args[key]; });
                 }
 
-                if (value == null)
+                if (typeof(value) == "undefined")
+                    return this.format.unsupported;
+                else if (value == null)
                     return this.format.nocard;
 
                 if (attr == "PreferMailFormat") {
@@ -325,10 +340,10 @@
             init: function () {
                 this.initColumns();
                 Preference.addObserver("columns", this);
-                Preference.addObserver("others", this);
+                Preference.addObserver("others.create_display_name_column", this);
             },
 
-            // implement nsIObserver interface
+            // Implement nsIObserver interface
             observe: function (subject, topic, data) {
                 switch (topic) {
                 case "nsPref:changed": // nsIPrefBranch2

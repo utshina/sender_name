@@ -91,5 +91,6 @@
 <!ENTITY format.insep.label		"The format string used when the separator is included in the address book field: ">
 
 <!ENTITY others.tab.columns		"Options for others">
-<!ENTITY others.create_display_name_column.label	"Do not replace the contents of the existing columns">
+<!ENTITY others.create_display_name_column.label	'Create new columns for "Display Name" (Do not replace the contents of existing columns)'>
 <!ENTITY others.append_menu_item.label	'Append "Sender Name" menu item to "Tool" menu'>
+<!ENTITY others.exclude_history_address_book.label	'Exclude "Collected Addresses" address book'>

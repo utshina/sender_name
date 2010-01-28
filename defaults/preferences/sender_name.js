@@ -17,3 +17,4 @@ pref("extensions.sender_name.format.nullstr", "chrome://sender_name/locale/sende
 
 pref("extensions.sender_name.others.create_display_name_column", false);
 pref("extensions.sender_name.others.append_menu_item", true);
+pref("extensions.sender_name.others.exclude_history_address_book", false);

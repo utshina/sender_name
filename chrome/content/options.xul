@@ -225,6 +225,7 @@
       <!-- format -->
       <preference id="others.create_display_name_column" name="extensions.sender_name.others.create_display_name_column" type="bool"/>
       <preference id="others.append_menu_item" name="extensions.sender_name.others.append_menu_item" type="bool"/>
+      <preference id="others.exclude_history_address_book" name="extensions.sender_name.others.exclude_history_address_book" type="bool"/>
     </preferences>
 
     <vbox>
@@ -234,6 +235,7 @@
 	  <vbox>
 	    <checkbox id="others.create_display_name_column.enabled" preference="others.create_display_name_column" label="&others.create_display_name_column.label;"/>
 	    <checkbox id="others.append_menu_item.enabled" preference="others.append_menu_item" label="&others.append_menu_item.label;"/>
+	    <checkbox id="others.exclude_histroy_address_book.enabled" preference="others.exclude_history_address_book" label="&others.exclude_history_address_book.label;"/>
 	  </vbox>
 	</groupbox>
       </vbox>

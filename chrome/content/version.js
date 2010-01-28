@@ -8,15 +8,21 @@
         // Thunderbird 3 or later
         if (Version.compare("3.0") >= 0) {
 
-            SenderName.Addressbook = {
+            SenderName.AddressBook = {
 
-                getAddressbooks: function () {
+                getAddressBooks: function () {
                     const abManager = Service.getService("abmanager;1", "nsIAbManager");
                     return abManager.directories;
                 },
 
-                getAddressbookURI: function (addrbook) {
+                getAddressBookURI: function (addrbook) {
                     return addrbook.URI;
+                },
+
+                checkInterface: function (addrbook) {
+                    if (addrbook instanceof Components.interfaces.nsIAbDirectory)
+                        return addrbook;
+                    return null;
                 },
 
                 addListener: function (listener) {
@@ -42,20 +48,25 @@
         else
         {
 
-            SenderName.Addressbook = {
+            SenderName.AddressBook = {
 
-                getAddressbooks: function () {
+                getAddressBooks: function () {
                     const RDF = Service.getService("rdf/rdf-service;1", "nsIRDFService");
                     const nsIAbDirectory = Components.interfaces.nsIAbDirectory;
                     const parentDir = RDF.GetResource("moz-abdirectory://").QueryInterface(nsIAbDirectory);
                     return parentDir.childNodes;
                 },
 
-                getAddressbookURI: function (addrbook) {
-                    if (addrbook instanceof Components.interfaces.nsIAbMDBDirectory &&
-                        typeof(addrbook.getDirUri) == "function")
+                getAddressBookURI: function (addrbook) {
+                    if (typeof(addrbook.getDirUri) == "function")
                         return addrbook.getDirUri();
                     return "";
+                },
+
+                checkInterface: function (addrbook) {
+                    if (addrbook instanceof Components.interfaces.nsIAbMDBDirectory)
+                        return addrbook;
+                    return null;
                 },
 
                 addListener: function (listener) {
