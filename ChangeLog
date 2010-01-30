@@ -1,6 +1,6 @@
 0.4:
-	* Add support of displaying recipient's attributes in addition to sender's attributes
-	* Add support for up to Thunderbird 3.2a1pre
+	* Support recipients (To and Cc) in addition to senders
+	* Support up to Thunderbird 3.2a1pre
 	* Change the default behavior to replace the contents of default columns instead of creating new columns
 	* Fix several bugs about displaying
 	
