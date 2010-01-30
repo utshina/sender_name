@@ -19,8 +19,8 @@
 
     <groupbox>
       <caption label="&columns.list;"/>
-      <tree id="options.tree" rows="10"
-	    editable="true" hidecolumnpicker="true" seltype="single" enableColumnDrag="false"
+      <tree id="options.tree" rows="5"
+	    editable="false" hidecolumnpicker="true" seltype="single" enableColumnDrag="false"
 	    onselect="SenderName.Options.onSelect();"
 	    preference-editable="true" preference="options.columns"
 	    onsynctopreference="return SenderName.Options.onSyncToPreference();">
