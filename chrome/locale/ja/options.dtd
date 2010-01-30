@@ -6,7 +6,7 @@
 <!ENTITY columns.list			"カラムの一覧">
 <!ENTITY columns.edit			"カラムの編集">
 <!ENTITY columns.enabled		"有効">
-<!ENTITY columns.field			"メールヘッダのフィールド名">
+<!ENTITY columns.field			"ヘッダのフィールド名">
 <!ENTITY columns.attr			"アドレス帳の属性">
 <!ENTITY columns.label			"カラムのラベル">
 <!ENTITY columns.format			"カスタムフォーマット">

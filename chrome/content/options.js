@@ -4,7 +4,7 @@
 const SenderName = window["{52b8c721-5d3a-4a2b-835e-d3f044b74351}"];
 with (SenderName) {
         
-	SenderName.Options = {
+    SenderName.Options = {
         prefpane: document.getElementById("prefpane.columns"),
         tree: document.getElementById("options.tree"),
         treechildren: document.getElementById("options.treechildren"),
@@ -17,7 +17,7 @@ with (SenderName) {
 
         findMenuItem: function (menulist, key) {
             for each (var menuitem in menulist.firstChild.childNodes) {
-                if (menuitem.getAttribute("value") == key)
+                if (typeof(menuitem.getAttribute) == "function" && menuitem.getAttribute("value") == key)
                     return menuitem;
             }
             return menulist.firstChild.firstChild;
@@ -142,6 +142,6 @@ with (SenderName) {
             }
             return Config.saveColumns(columns);
         }
-	};
+    };
 
 }

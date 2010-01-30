@@ -29,7 +29,7 @@
     </em:localized>
 
     <em:name>Sender Name</em:name>
-    <em:description>Show the sender's and recipent's display names (and any address book attributes) in the message list pane.</em:description>
+    <em:description>Show the sender's and recipient's display names (and any address book attributes) in the message list pane.</em:description>
     <em:creator>Takahiro Shinagawa</em:creator>
     <em:homepageURL>http://www.osss.cs.tsukuba.ac.jp/~shina/software/sender_name/</em:homepageURL>
     <em:iconURL>chrome://sender_name/skin/sender_name.png</em:iconURL>

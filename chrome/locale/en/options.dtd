@@ -6,7 +6,7 @@
 <!ENTITY columns.list			"Column List">
 <!ENTITY columns.edit			"Edit Column">
 <!ENTITY columns.enabled		"Enabled">
-<!ENTITY columns.field			"Mail Header Field">
+<!ENTITY columns.field			"Header Field">
 <!ENTITY columns.attr			"Address Book Attribute">
 <!ENTITY columns.label			"Column Label">
 <!ENTITY columns.format			"Custom Format">
