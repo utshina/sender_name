@@ -1,3 +1,5 @@
 syntax: glob
 chrome/sender_name.jar
+package/*
+*.xpi
 img/*
