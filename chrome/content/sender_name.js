@@ -198,7 +198,6 @@
 
         SenderName.ThreadPane = {
             prefix: "SenderNameCol.",
-            threadCols: document.getElementById('threadCols'),
             thunderbirdColumnIDs: { author: "senderCol", recipients: "recipientCol" },
             columnHandlers: new Object,
             savedAttributes: new Object,
@@ -265,24 +264,27 @@
             },
 
             shrinkTreecols: function (index) {
+                var threadCols = document.getElementById('threadCols');
                 var num = this.treecol_pool.length - index;
                 while (num-- > 0) {
                     var treecol = this.treecol_pool.pop();
-                    this.threadCols.removeChild(treecol);
+                    threadCols.removeChild(treecol);
                 }
             },
 
             getTreecol: function (i) {
+                var threadCols = document.getElementById('threadCols');
                 if (this.treecol_pool[i] == null) {
                     const splitter = document.createElement("splitter");
                     splitter.setAttribute("class", "tree-splitter");
-                    this.threadCols.appendChild(splitter);
+                    threadCols.appendChild(splitter);
 
                     const treecol = document.createElement("treecol");
                     treecol.setAttribute("id", this.prefix + "column" + i);
                     treecol.setAttribute("persist", "hidden ordinal width");
                     treecol.setAttribute("flex", "4");
-                    this.threadCols.appendChild(treecol);
+                    treecol.setAttribute("hidden", "false");
+                    threadCols.appendChild(treecol);
 
                     this.treecol_pool[i] = treecol;
                 }
@@ -359,13 +361,13 @@
 
         SenderName.Main = {
             onLoad: function () {
+                ThreadPane.init();
                 Tasks.init();
                 Contact.init();
                 ThreadPane.onLoad();
             },
 
             main: function () {
-                ThreadPane.init();
                 Formatter.init();
                 window.addEventListener("load", Main.onLoad, false);
             }
