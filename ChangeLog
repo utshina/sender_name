@@ -1,6 +1,5 @@
 0.4:
-	* Fix the bug that other overlays do not work
-	* Change the default NOT to replace the contents of default columns (to prevent conflicts with other add-ons)
+	* Fix the bug that other overlays of other add-ons do not work
 
 0.4:
 	* Support recipients (To and Cc) in addition to senders

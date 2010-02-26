@@ -9,6 +9,6 @@ pref("extensions.sender_name.format.unsupported", "chrome://sender_name/locale/s
 pref("extensions.sender_name.format.nocard", "chrome://sender_name/locale/sender_name.properties");
 pref("extensions.sender_name.format.nullstr", "chrome://sender_name/locale/sender_name.properties");
 
-pref("extensions.sender_name.others.create_display_name_column", true);
-pref("extensions.sender_name.others.append_menu_item", true);
+pref("extensions.sender_name.others.create_display_name_column", false);
+pref("extensions.sender_name.others.append_menu_item", false);
 pref("extensions.sender_name.others.exclude_history_address_book", false);
