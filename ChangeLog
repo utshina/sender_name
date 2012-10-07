@@ -1,5 +1,15 @@
-0.4:
-	* Fix the bug that other overlays of other add-ons do not work
+0.6:
+	* Fix the bug that the column handler is not added
+	* Support version 13 and later
+	* Change code to use addEventListener intead of the "oncommand" attribute to prevent vulnerabilities
+	* Remove code using RDF, dropping support of version 2.0 or before
+	* Remove code using nsIPrefBranch2 which is merged into nsIPrefBranch, dropping support of version 12 or before
+	* Fix a string to avoid a validator bug
+
+0.5:
+	* Support new versions up to 5.*
+0.4a:
+	* Fix the bug that overlays of other add-ons do not work
 
 0.4:
 	* Support recipients (To and Cc) in addition to senders

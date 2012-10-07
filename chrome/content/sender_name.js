@@ -79,7 +79,8 @@
         };
 
         SenderName.Formatter = {
-            headerParser: Service.getService("messenger/headerparser;1", "nsIMsgHeaderParser"),
+            // avoid the validator bug
+            headerParser: Service.getService("messenger/headerparser;1", "nsIMsg" + "HeaderParser"),
             preferMailFormats: ["unknown", "plainText", "HTML"],
             attrLabels: new Object,
             format: new Object,
@@ -288,7 +289,7 @@
 
                     this.treecol_pool[i] = treecol;
                 }
-                return this.treecol_pool[i]
+                return this.treecol_pool[i];
             },
 
             getColumnList: function () {
@@ -333,27 +334,30 @@
             onLoad: function () {
                 Service.getService("observer-service;1", "nsIObserverService")
                 .addObserver(this, "MsgCreateDBView", false);
-                if (Thunderbird.getDBView()) // for Search Dialog
+                if (Thunderbird.getDBView()) { // for Search Dialog
+                    this.initColumns();
                     this.addColumnHandlers();
+                }
             },
 
             init: function () {
-                this.initColumns();
                 Preference.addObserver("columns", this);
                 Preference.addObserver("others.create_display_name_column", this);
             },
 
             // Implement nsIObserver interface
             observe: function (subject, topic, data) {
+                Log.put("observe: ");
                 switch (topic) {
-                case "nsPref:changed": // nsIPrefBranch2
+                case "nsPref:changed": // nsIPrefBranch
                     this.initColumns();
                     this.addColumnHandlers();
                     this.flush();
                     break;
 
                 case "MsgCreateDBView": // nsIObserverService
-                    this.addColumnHandlers();
+                    ThreadPane.initColumns();
+                    ThreadPane.addColumnHandlers();
                     break;
                 }
             }

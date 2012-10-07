@@ -48,8 +48,8 @@
             },
 
             addObserver: function (key, observer) {
-                this.branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
-                this.branch.addObserver(key, observer, false);      
+                this.branch.QueryInterface(Components.interfaces.nsIPrefBranch);
+                this.branch.addObserver(key, observer, false);
             }
 
         };

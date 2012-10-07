@@ -27,7 +27,8 @@
                 const menuitem = document.createElement("menuitem");
                 menuitem.setAttribute("id", this.id);
                 menuitem.setAttribute("label", Property.getString("options_title"));
-                menuitem.setAttribute("oncommand", "window['{52b8c721-5d3a-4a2b-835e-d3f044b74351}'].Tasks.openDialog();");
+                // menuitem.setAttribute("oncommand", "window['{52b8c721-5d3a-4a2b-835e-d3f044b74351}'].Tasks.openDialog();");
+                menuitem.addEventListener("command", function () { window['{52b8c721-5d3a-4a2b-835e-d3f044b74351}'].Tasks.openDialog(); }, false);
                 const taskPopup = document.getElementById("taskPopup");
                 const separator = document.getElementById("devToolsSeparator");
                 taskPopup.insertBefore(menuitem, separator);
