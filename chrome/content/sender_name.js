@@ -347,7 +347,6 @@
 
             // Implement nsIObserver interface
             observe: function (subject, topic, data) {
-                Log.put("observe: ");
                 switch (topic) {
                 case "nsPref:changed": // nsIPrefBranch
                     this.initColumns();
