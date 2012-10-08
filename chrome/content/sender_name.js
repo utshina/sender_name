@@ -362,9 +362,15 @@
         }; // end ThreadPane
 
         SenderName.Main = {
+            isMessenger: function () {
+                e = document.getElementById('messengerWindow');
+                return e != null;
+            },
+
             onLoad: function () {
                 ThreadPane.init();
-                Tasks.init();
+                if (Main.isMessenger())
+                    Tasks.init();
                 Contact.init();
                 ThreadPane.onLoad();
             },
