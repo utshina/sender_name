@@ -1,3 +1,8 @@
+0.7:
+	* Fix bugs that unexpected texts are displayed in group view mode
+	* Fix bugs that columns are not displayed in the  search dialog
+	* Clean up code
+
 0.6:
 	* Fix the bug that the column handler is not added
 	* Support version 13 and later
