@@ -13,7 +13,41 @@
                     return GetDBView();
                 return null;
             }
-        },
+        };
+
+        SenderName.AddressBook = {
+
+            getAddressBooks: function () {
+                const abManager = Service.getService("abmanager;1", "nsIAbManager");
+                return abManager.directories;
+            },
+
+            getAddressBookURI: function (addrbook) {
+                return addrbook.URI;
+            },
+
+            checkInterface: function (addrbook) {
+                if (addrbook instanceof Components.interfaces.nsIAbDirectory)
+                    return addrbook;
+                return null;
+            },
+
+            addListener: function (listener) {
+                const abManager = Service.getService("abmanager;1", "nsIAbManager");
+                abManager.addAddressBookListener(listener, Components.interfaces.nsIAbListener.all);
+            },
+
+            getAttributeFromContact: function (card, attr) {
+                var value = null;
+                if (card != null) {
+                    try {
+                        value = card.getProperty(attr, "");
+                    } catch (e) { value = undefined; }
+                }
+                return value;
+            }
+            
+        };
 
         SenderName.Contact = {
             directories: new Array,

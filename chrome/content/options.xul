@@ -244,7 +244,6 @@
 
   <script type="application/x-javascript" src="chrome://sender_name/content/namespace.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/library.js"/>
-  <script type="application/x-javascript" src="chrome://sender_name/content/version.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/common.js"/>
   <script type="application/x-javascript" src="chrome://sender_name/content/options.js"/>
     
