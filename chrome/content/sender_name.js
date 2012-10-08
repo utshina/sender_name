@@ -397,7 +397,7 @@
 
         SenderName.Main = {
             isMessenger: function () {
-                e = document.getElementById('messengerWindow');
+                const e = document.getElementById('messengerWindow');
                 return e != null;
             },
 
