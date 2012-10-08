@@ -177,9 +177,7 @@
             // Implement nsIMsgCustomColumnHandler interface
             getCellText: function (row, col) {
                 const dbview = Thunderbird.getDBView();
-                const key = dbview.getKeyAt(row);
-                const folder = dbview.getFolderForViewIndex(row);
-                const hdr = folder.GetMessageHeader(key);
+                const hdr = dbview.getMsgHdrAt(row);
                 if (dbview.isContainer(row))
                     return null;
                 return this.getAttributeValue(hdr);
