@@ -180,7 +180,8 @@
                 const key = dbview.getKeyAt(row);
                 const folder = dbview.getFolderForViewIndex(row);
                 const hdr = folder.GetMessageHeader(key);
-
+                if (dbview.isContainer(row))
+                    return null;
                 return this.getAttributeValue(hdr);
             },
 

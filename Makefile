@@ -1,5 +1,5 @@
 NAME=sender_name
-VERSION=0.6
+VERSION=0.69
 
 FILE=$(NAME)-$(VERSION)-tb.xpi
 
