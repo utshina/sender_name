@@ -1,3 +1,6 @@
+0.7.1:
+	* Fix add encoding information
+
 0.7:
 	* Fix bugs that unexpected texts are displayed in group view mode
 	* Fix bugs that columns are not displayed in the  search dialog
